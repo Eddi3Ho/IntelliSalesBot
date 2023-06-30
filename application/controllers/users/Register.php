@@ -17,7 +17,7 @@ class Register extends CI_Controller
 		//directed to sales list page with if the user is a staff
 
         $base_url = base_url();
-        $data['title'] = 'PHP-SRePS | Register';
+        $data['title'] = 'IntelliSalesBot | Register';
         $data['bootstrap_css'] = '
             <link rel="stylesheet" type="text/css" href="'.$base_url.'login/vendor/bootstrap/css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" href="'.$base_url.'login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">

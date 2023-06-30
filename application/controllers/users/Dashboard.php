@@ -27,7 +27,7 @@ class Dashboard extends CI_Controller
             redirect('users/login/verify_users');
         }
 
-        $data['title'] = 'PHP-SRePS | Dashboard';
+        $data['title'] = 'IntelliSalesBot | Dashboard';
         $data['include_js'] = 'employee_dashboard';
         $data['selected'] = 'dashboard';
 
@@ -55,7 +55,7 @@ class Dashboard extends CI_Controller
             redirect('users/login/verify_users');
         }
 
-        $data['title'] = 'PHP-SRePS | Dashboard';
+        $data['title'] = 'IntelliSalesBot | Dashboard';
         $data['include_js'] = 'manager_dashboard';
         $data['selected'] = 'dashboard';
 

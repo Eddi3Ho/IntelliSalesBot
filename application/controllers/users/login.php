@@ -23,7 +23,7 @@ class Login extends CI_Controller
                 redirect('items/Items');
             }
             // check user role is  Manager
-            else if ($this->session->userdata('user_role')=="Manager")
+            else if ($this->session->userdata('user_role')=="Admin")
             {
                 redirect('users/Dashboard/Manager');
             }
@@ -40,7 +40,7 @@ class Login extends CI_Controller
         if($this->form_validation->run() ==false)
         {
             $base_url = base_url();
-            $data['title'] = 'PHP-SRePS | Login';
+            $data['title'] = 'IntelliSalesBot | Login';
             $data['bootstrap_css'] = '
                 <link rel="stylesheet" type="text/css" href="'.$base_url.'login/vendor/bootstrap/css/bootstrap.min.css">
                 <link rel="stylesheet" type="text/css" href="'.$base_url.'login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -94,13 +94,13 @@ class Login extends CI_Controller
                 $this->session->set_userdata($data);
         
                 // check user role is IT
-                if($users['user_role']=="IT-admin")
+                if($users['user_role']=="IT")
                 {
                     redirect('items/Items');
                 }
 
                 // check user role is Manager
-                else if ($users['user_role']=="Manager")
+                else if ($users['user_role']=="Admin")
                 {
                     redirect('users/Dashboard/Manager');
                 }

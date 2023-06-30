@@ -28,5 +28,6 @@
             echo '<link href="' . base_url() . 'assets/css/' . $include_css . '.css" rel="stylesheet">';
         }
     ?>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>

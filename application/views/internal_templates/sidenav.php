@@ -23,11 +23,11 @@
             <?php $user_role = $this->session->userdata['user_role']; ?>
             <?php switch ($user_role) {
 
-                case "Manager": ?>
+                case "Admin": ?>
 
                     <!-- Sidebar - Brand -->
                     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('users/Dashboard/Manager'); ?>">
-                        <div class="sidebar-brand-text mx-3">PHP-SRePS</div>
+                        <div class="sidebar-brand-text mx-3">Intelli-SalesBot</div>
                     </a>
 
                     <!-- Divider -->
@@ -77,6 +77,22 @@
                         <a class="nav-link <?php if ($selected == "sales_prediction") echo 'active'; ?>" href="<?= base_url('sales/Sales_prediction/') ?>">
                             <i class="fas fa-hourglass-half <?php if ($selected == "sales_prediction") echo 'active'; ?>"></i>
                             <span>Predictions</span>
+                        </a>
+                    </li>
+
+                    <!-- Nav Item - Predictions -->
+                    <li class="nav-item">
+                        <a class="nav-link <?php if ($selected == "chatbot") echo 'active'; ?>" href="<?= base_url('bot/Chatbot/') ?>">
+                            <i class="fas fa-robot <?php if ($selected == "chatbot") echo 'active'; ?>"></i>
+                            <span>Chatbot</span>
+                        </a>
+                    </li>
+
+                    <!-- Nav Item - Predictions -->
+                    <li class="nav-item">
+                        <a class="nav-link <?php if ($selected == "document") echo 'active'; ?>" href="<?= base_url('bot/Chatbot/') ?>">
+                            <i class="fas fa-file <?php if ($selected == "document") echo 'active'; ?>"></i>
+                            <span>Document</span>
                         </a>
                     </li>
 

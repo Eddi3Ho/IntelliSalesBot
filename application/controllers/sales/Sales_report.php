@@ -17,7 +17,7 @@ class Sales_report extends CI_Controller
         $users['user_role'] = $this->session->userdata('user_role');
 
         // check user role is manager
-        if ($users['user_role'] != "Manager") {
+        if ($users['user_role'] != "Admin") {
             redirect('users/login/verify_users/');
         }
     }
@@ -31,7 +31,7 @@ class Sales_report extends CI_Controller
             $end_date = date('Y-m-d', $end);
         }
 
-        $data['title'] = 'PHP-SRePS | Weekly Sales';
+        $data['title'] = 'IntelliSalesBot | Weekly Sales';
         $data['selected'] = 'sales_report';
         $data['selected_period'] = 'weekly';
         $data['sales_report_data'] = $this->sales_report_model->select_weekly_sales_report($start_date, $end_date);
@@ -50,7 +50,7 @@ class Sales_report extends CI_Controller
     public function monthly_sales_report($month = 0, $year = 0)
     {
 
-        $data['title'] = 'PHP-SRePS | Monthly Sales';
+        $data['title'] = 'IntelliSalesBot | Monthly Sales';
         $data['selected'] = 'sales_report';
         $data['selected_period'] = 'monthly';
         $data['sales_report_data'] = $this->sales_report_model->select_monthly_sales_report($month, $year);

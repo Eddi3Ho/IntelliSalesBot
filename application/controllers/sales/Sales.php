@@ -25,12 +25,12 @@ class Sales extends CI_Controller
 	public function index()
 	{
 		//directed to monthly sales if the user is the manager
-		if ($this->session->userdata('user_role') == 'Manager') {
+		if ($this->session->userdata('user_role') == 'Admin') {
 			$this->daily_sales_list(date('Y-m-d'));
 		}
 		//directed to sales list page with if the user is a staff
 		else {
-			$data['title'] = 'PHP-SRePS | Sales';
+			$data['title'] = 'IntelliSalesBot | Sales';
 			$data['include_js'] = 'sales_list';
 			$data['subcategory_data'] = $this->sales_model->select_all_item_subcategory();
 			$data['selected'] = 'sales';
@@ -245,7 +245,7 @@ class Sales extends CI_Controller
 	//Function is loaded when user clicked on the pencil icon in the sales table
 	function load_edit_page($sale_id)
 	{
-		$data['title'] = 'PHP-SRePS | Edit Sales';
+		$data['title'] = 'IntelliSalesBot | Edit Sales';
 		$data['include_js'] = 'sales_edit';
 		$data['subcategory_data'] = $this->sales_model->select_all_item_subcategory();
 		$data['sales_data'] = $this->sales_model->select_one_sale($sale_id);
@@ -324,11 +324,11 @@ class Sales extends CI_Controller
 	public function daily_sales_list($date)
 	{
 		//check if the user is the manager
-		if ($this->session->userdata('user_role') != 'Manager') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('sales/sales/');
 		}
 
-		$data['title'] = 'PHP-SRePS | Daily Sales';
+		$data['title'] = 'IntelliSalesBot | Daily Sales';
 		$data['selected'] = 'sales';
 		$data['selected_period'] = 'daily';
 		$data['sales_data'] = $this->sales_model->select_daily_sales($date);
@@ -347,7 +347,7 @@ class Sales extends CI_Controller
 	{
 
 		//check if the user is the manager
-		if ($this->session->userdata('user_role') != 'Manager') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('sales/sales/');
 		}
 
@@ -357,7 +357,7 @@ class Sales extends CI_Controller
 			$end_date = date('Y-m-d', $end);
 		}
 
-		$data['title'] = 'PHP-SRePS | Weekly Sales';
+		$data['title'] = 'IntelliSalesBot | Weekly Sales';
 		$data['selected'] = 'sales';
 		$data['selected_period'] = 'weekly';
 		$data['sales_data'] = $this->sales_model->select_weekly_sales($start_date, $end_date);
@@ -376,11 +376,11 @@ class Sales extends CI_Controller
 	public function monthly_sales_list($month = 0, $year = 0)
 	{
 		//check if the user is the manager
-		if ($this->session->userdata('user_role') != 'Manager') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('sales/sales/');
 		}
 
-		$data['title'] = 'PHP-SRePS | Monthly Sales';
+		$data['title'] = 'IntelliSalesBot | Monthly Sales';
 		$data['selected'] = 'sales';
 		$data['selected_period'] = 'monthly';
 		$data['sales_data'] = $this->sales_model->select_monthly_sales($month, $year);

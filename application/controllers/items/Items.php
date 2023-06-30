@@ -19,11 +19,11 @@ class Items extends CI_Controller
     public function index()
     {
         // check if the user is not IT and not Manager
-		if ($this->session->userdata('user_role') != 'IT' && $this->session->userdata('user_role') != 'Manager') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/items_categories_log');
 		}
 
-        $data['title'] = 'PHP-SRePS | Items';
+        $data['title'] = 'IntelliSalesBot | Items';
         $data['include_js'] = 'items_list';
         $data['selected'] = 'items';
 
@@ -53,11 +53,8 @@ class Items extends CI_Controller
             $edit_opt = '<span class="px-1"><a type="button" href="'.$edit_link.'"class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-pencil-alt" style="color: black"></span></a></span>';
             $delete = '<span><button type="button" onclick="delete_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete" ><span class="fas fa-trash" style="color: black"></span></button></span>';
 			
-            if (($this->session->userdata('user_role') == 'IT' )) { 
-                $function = $view.$edit_opt.$delete;
-            } else {
-                $function = $view;
-            }
+            $function = $view.$edit_opt.$delete;
+
             
             $data [] = [ 
 				// '',
@@ -148,7 +145,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
 
-        $data['title'] = 'PHP-SRePS | Add Item';
+        $data['title'] = 'IntelliSalesBot | Add Item';
         $data['include_js'] = 'items_list';
         $data['item_data'] = $this->items_model->select_all_items();
         $data['item_subcategories_data'] = $this->items_model->select_all_item_subcategories();
@@ -205,7 +202,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
 
-        $data['title'] = 'PHP-SRePS | Edit an Item';
+        $data['title'] = 'IntelliSalesBot | Edit an Item';
         $data['include_js'] = 'items_list';
         $data['item_data'] = $this->items_model->select_item($item_id); 
         $data['item_subcategories_data'] = $this->items_model->select_all_item_subcategories();
@@ -288,7 +285,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
 
-        $data['title'] = 'PHP-SRePS | Item Categories';
+        $data['title'] = 'IntelliSalesBot | Item Categories';
         $data['include_js'] = 'items_list';
         $data['selected'] = 'items_categories';
 
@@ -409,7 +406,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
         
-        $data['title'] = 'PHP-SRePS | Item Subcategories';
+        $data['title'] = 'IntelliSalesBot | Item Subcategories';
         $data['include_js'] = 'items_list';
         $data['item_category_data'] = $this->items_model->select_item_category($item_category_id);
         $data['selected'] = 'items_categories';
@@ -539,7 +536,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
 
-        $data['title'] = 'PHP-SRePS | Items';
+        $data['title'] = 'IntelliSalesBot | Items';
         $data['include_js'] = 'items_list';
         $data['item_subcategory_data'] = $this->items_model->select_item_subcategory($item_subcategory_id);
         $data['selected'] = 'items_categories';
@@ -594,7 +591,7 @@ class Items extends CI_Controller
 			redirect('items/Items/');
 		}
 
-        $data['title'] = 'PHP-SRePS | Items by Category';
+        $data['title'] = 'IntelliSalesBot | Items by Category';
         $data['include_js'] = 'items_list';
         $data['items_categories_data'] = $this->items_model->select_all_item_categories();
         $data['selected'] = 'items';
@@ -610,7 +607,7 @@ class Items extends CI_Controller
 		if ($this->session->userdata('user_role') != 'Employee') {
 			redirect('items/Items/');
 		}
-        $data['title'] = 'PHP-SRePS | Items';
+        $data['title'] = 'IntelliSalesBot | Items';
         $data['include_js'] = 'items_list';
         $data['items_data'] = $this->items_model->select_all_items_in_category($item_category_id);
         $data['items_category_data'] = $this->items_model->select_item_category($item_category_id);
@@ -667,17 +664,17 @@ class Items extends CI_Controller
      // --------------------- ITEMS LOW ON STOCK (EMPLOYEE) --------------------------// 
      function items_low_on_stock(){
        // check if the user is not Manager and not Employee
-		if ($this->session->userdata('user_role') != 'Manager' && $this->session->userdata('user_role') != 'Employee') {
+		if ($this->session->userdata('user_role') != 'Admin' && $this->session->userdata('user_role') != 'Employee') {
 			redirect('items/Items/');
 		}
-        $data['title'] = 'PHP-SRePS | Items Running Low on Stock';
+        $data['title'] = 'IntelliSalesBot | Items Running Low on Stock';
         $data['include_js'] = 'items_list';
         $data['items_data'] = $this->items_model->select_all_items_low_on_stock();
         $data['selected'] = 'stock';
 
         // manager and employee are sharing the same low on stock page. 
         // if user is manager, sidenav is shown. for employee, topnav.
-        if (($this->session->userdata('user_role') == 'Manager' )) {
+        if (($this->session->userdata('user_role') == 'Admin' )) {
             $this->load->view('internal_templates/header', $data);
             $this->load->view('internal_templates/sidenav');
             $this->load->view('internal_templates/topbar');

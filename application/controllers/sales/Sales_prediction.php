@@ -21,7 +21,7 @@ class Sales_prediction extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'PHP-SRePS | Monthly Sales Prediction';
+        $data['title'] = 'IntelliSalesBot | Monthly Sales Prediction';
         $data['include_js'] = 'sales_prediction';
         $data['selected'] = 'sales_prediction';
 
@@ -64,7 +64,7 @@ class Sales_prediction extends CI_Controller
 
     public function generate_sales_prediction()
     {
-        $data['title'] = 'PHP-SRePS | Monthly Sales Prediction';
+        $data['title'] = 'IntelliSalesBot | Monthly Sales Prediction';
         $data['include_js'] = 'sales_prediction';
         $data['selected'] = 'sales_prediction';
 
