@@ -45,7 +45,10 @@
                             <div class="card">
                                 <div class="card-body">
 
-
+                                <?php
+                                if(isset($response)){echo $response;}
+                                ?>
+                                <a class = "button" href="<?php echo base_url('bot/chatbot/test_prompt'); ?>"><i class="fas fa-tachometer-alt pr-2"></i>Dashboard</a>
 
                                 </div>
                             </div>
