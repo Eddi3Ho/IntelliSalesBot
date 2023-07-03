@@ -10,6 +10,10 @@ class Chatbot extends CI_Controller
         $this->load->library('email');
         $this->load->model('user_model');
         $this->load->model('sales_model');
+
+        if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
+			redirect('users/login/verify_users/');
+		}
     }
 
     public function index()
