@@ -24,6 +24,10 @@
         outline: none;
         box-shadow: none;
     }
+
+    .chatbubble {
+        border-radius: 20px;
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -66,18 +70,52 @@
                         <div class="col-xl-12">
 
                             <div class="card shadow">
-                                <div class="card-body" style="height: 1000px;">
+                                <div class="card-body" style="min-height: 1000px;" id="conversation_body">
+                                    <div></div>
 
-                                    <div class="row" style="background-color: ;">
-                                        <div class="col-xl-4">
-                                            <a onclick="" class="btn btn-success mr-auto" ><i class="fas fa-paper-plane"></i></a>
+                                    <div class="row justify-content-center py-2" id="new_chat_info">
+                                        <div class="col-xl-7 py-2">
+                                            <div class="card shadow chatbubble" style=" color: black;">
+                                                <div class="card-body">
+                                                    Ask the chatbot about something
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-xl-6">
-                                            <p>In this example, we create a custom CSS class called .rounded-card. We set the border-radius property to 10px to apply a rounded corner effect to the card.
+                                        <div class="col-xl-7 py-2">
+                                            <div class="card shadow chatbubble" style="color: black;">
+                                                <div class="card-body">
+                                                    Do not know where to start? Try asking these question!
 
-                                                By adding the .rounded-card class to your card element, you can customize the border radius and give the card a rounded appearance. Feel free to adjust the border radius value as needed to achieve your desired design.</p>
+                                                    <div class="card my-2" style="color: black; background-color: #F2F0F0; border-radius: 40px; width: 50%; padding-top:0px; padding: bottom 0px;">
+                                                        <div class="card-body">
+                                                            List out the top 5 most profitable item sold in the past 12 months
+                                                        </div>
+                                                    </div>
+                                                    <div class="card my-2" style="color: black; background-color: #F2F0F0; border-radius: 40px; width: 50%; padding-top:0px; padding: bottom 0px;">
+                                                        <div class="card-body">
+                                                            What are the company’s policies on vacation time and sick leave?
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- <div class="row py-2 mr-5 my-1 ml-2">
+                                        <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">
+                                            <div class="card-body">
+                                                test
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                                        <div class="card chatbubble ml-4" style="background-color:  #007aff; color: white;">
+                                            <div class="card-body">
+                                                test
+                                            </div>
+                                        </div>
+                                    </div> -->
 
                                 </div>
                             </div>
@@ -93,7 +131,7 @@
                                 <div class="card shadow" style="border-radius: 15px;">
                                     <div class="card-body d-flex align-items-center" style="padding-top:10px; padding-bottom:10px;">
                                         <span id="user_prompt" class="textarea" role="textbox" contenteditable></span>
-                                        <a onclick="" class="btn btn-success ml-4 mt-auto" style="margin-right: -7px;"><i class="fas fa-paper-plane"></i></a>
+                                        <a onclick="enter_prompt()" class="btn btn-success ml-4 mt-auto" style="margin-right: -7px;"><i class="fas fa-paper-plane"></i></a>
                                     </div>
                                 </div>
 

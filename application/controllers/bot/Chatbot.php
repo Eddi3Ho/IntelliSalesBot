@@ -20,6 +20,7 @@ class Chatbot extends CI_Controller
     {
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'chatbot';
+        $data['include_js'] = 'chatbot';
 
         $this->load->view('internal_templates/header', $data);
         $this->load->view('internal_templates/sidenav');
@@ -28,19 +29,16 @@ class Chatbot extends CI_Controller
         $this->load->view('internal_templates/footer');
     }
 
-    public function test_prompt()
+    public function generate_response()
     {
+        
         // $prompt = 'Repeat "this is successful"';
         // $text = generate_text($prompt);
 
-        $data['title'] = 'IntelliSalesBot | Chatbot';
-        $data['selected'] = 'chatbot';
         // $data['response'] = $text;
+        
 
-        $this->load->view('internal_templates/header', $data);
-        $this->load->view('internal_templates/sidenav');
-        $this->load->view('internal_templates/topbar');
-        $this->load->view('bot/chatbot_view');
-        $this->load->view('internal_templates/footer');
     }
+    public function load_conversation_history()
+    {}
 }
