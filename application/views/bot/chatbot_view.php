@@ -71,7 +71,8 @@
 
                             <div class="card shadow">
                                 <div class="card-body" style="min-height: 1000px;" id="conversation_body">
-                                    <div></div>
+                                    It was a dark and stormy night, and the full moon illuminated a dense fog that hung in the air. Jack had a bad feeling about the evening ahead, but he forced himself to move forward bravely into the unknown. Jack took a deep breath, then knocked on the door of the ancient castle. He could hear the scurrying of small feet inside, but nobody answered his knock. Uncertain as to what he should do next, Jack held his breath in anticipation
+
 
                                     <div class="row justify-content-center py-2" id="new_chat_info">
                                         <div class="col-xl-7 py-2">

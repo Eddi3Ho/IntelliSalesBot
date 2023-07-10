@@ -10,10 +10,12 @@ class Chatbot extends CI_Controller
         $this->load->library('email');
         $this->load->model('user_model');
         $this->load->model('sales_model');
+        $this->load->model('chat_model');
+
 
         if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
-			redirect('users/login/verify_users/');
-		}
+            redirect('users/login/verify_users/');
+        }
     }
 
     public function index()
@@ -31,14 +33,29 @@ class Chatbot extends CI_Controller
 
     public function generate_response()
     {
-        
+
         // $prompt = 'Repeat "this is successful"';
-        // $text = generate_text($prompt);
 
-        // $data['response'] = $text;
-        
+        // Retrieve the data from the POST request
+        $prompt = $this->input->post('prompt');
+        $gpt_response = generate_text($prompt);
 
+
+        //Save user prompt and gpt response
+        $data =
+            [
+                'user_id' => $this->session->userdata('user_id'),
+            ];
+
+        $this->chat_model->insert_history($data);
+
+        // Send the response as JSON
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($gpt_response));
     }
+
     public function load_conversation_history()
-    {}
+    {
+    }
 }
