@@ -1,18 +1,20 @@
 <?php
 if (!function_exists('generate_text')) {
-    function generate_text($prompt) {
+    function generate_text($messages) {
         $ci =& get_instance();
         $ci->config->load('gpt');
         $api_key = $ci->config->item('gpt_api_key');
 
-        $url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+        $url = 'https://api.openai.com/v1/chat/completions';
+
         $headers = array(
             'Content-Type: application/json',
             'Authorization: Bearer ' . $api_key,
         );
         $data = array(
-            'prompt' => $prompt,
-            'max_tokens' => 100,
+            'messages' => $messages,
+            'max_tokens' => 1000,
+            'model' => 'gpt-3.5-turbo',
         );
 
         $ch = curl_init($url);
@@ -25,10 +27,9 @@ if (!function_exists('generate_text')) {
         curl_close($ch);
 
         $decoded_response = json_decode($response, true);
-        $generated_text = $decoded_response['choices'][0]['text'];
-        $generated_text = ltrim($generated_text, "\n");
-        $generated_text = preg_replace('/^(System|Assistant|system|assistant|User|user): /', '', $generated_text);
-        
+        $generated_text = $decoded_response['choices'][0]['message']['content'];
+        $generated_text = str_replace("\n", "<br>", $generated_text);
+
         return $generated_text;
     }
 }

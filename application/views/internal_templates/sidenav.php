@@ -90,7 +90,7 @@
 
                     <!-- Nav Item - Predictions -->
                     <li class="nav-item">
-                        <a class="nav-link <?php if ($selected == "document") echo 'active'; ?>" href="<?= base_url('bot/Chatbot/') ?>">
+                        <a class="nav-link <?php if ($selected == "document") echo 'active'; ?>" href="<?= base_url('bot/document/') ?>">
                             <i class="fas fa-file <?php if ($selected == "document") echo 'active'; ?>"></i>
                             <span>Document</span>
                         </a>

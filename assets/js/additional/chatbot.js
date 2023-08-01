@@ -64,18 +64,25 @@ function enter_prompt(text = "default value") {
                 //Close loading pop up
                 swal.close();
 
-                //change global variable so its NOT a new chat
-                var delay = 20; // Delay in milliseconds between each character
+                // //change global variable so its NOT a new chat
+                // var delay = 20; // Delay in milliseconds between each character
 
-                //append gpt response text
-                $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
-                    '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
-                    '        <div class="card-body response-card"></div>' +
-                    '    </div>' +
-                    '</div>');
+                // //append gpt response text
+                // $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
+                //     '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
+                //     '        <div class="card-body response-card"></div>' +
+                //     '    </div>' +
+                //     '</div>');
 
-                // Append text with the writing effect
-                appendTextWithDelay(response, delay);
+                // // Append text with the writing effect
+                // appendTextWithDelay({response}, delay);
+                $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">
+                                <div class="card-body response-card">${response}</div>
+                            </div>
+                        </div>
+                    `);
 
             },
             error: function (xhr, status, error) {
@@ -225,11 +232,14 @@ function load_history(con_id) {
 
                 } else {
 
-                    $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
-                        '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
-                        '        <div class="card-body response-card">' + chat.message + '</div>' +
-                        '    </div>' +
-                        '</div>');
+                    $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">
+                                <div class="card-body response-card">${chat.message}</div>
+                            </div>
+                        </div>
+                    `);
+                    
                 }
 
             });
