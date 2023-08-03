@@ -60,8 +60,8 @@ class Sales extends CI_Controller
 
 			$edit_link = $base_url . "sales/sales/load_edit_page/" . $r->sale_id;
 
-			$edit_opt = '<span class = "px-1"><a type="button" href = "' . $edit_link . '" class="btn icon-btn btn-lg btn-white waves-effect waves-light"><span style = "color:black;" class="fas fa-pencil-alt"></span></a></span>';
-			$view = '<span><button type="button" onclick="view_sale(' . $r->sale_id . ')" class="btn icon-btn btn-lg btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_sales"><span style = "color:black;" class="fas fa-eye"></span></button></span>';
+			$edit_opt = '<span class = "px-1"><a type="button" href = "' . $edit_link . '" class="btn icon-btn btn-lg btn-white waves-effect waves-light"><span style = "color:#3b75f2;" class="fas fa-pencil-alt"></span></a></span>';
+			$view = '<span><button type="button" onclick="view_sale(' . $r->sale_id . ')" class="btn icon-btn btn-lg btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_sales"><span style = "color:#3b75f2;" class="fas fa-eye"></span></button></span>';
 			$function = $view . $edit_opt;
 
 			$category_data = $this->sales_model->get_category_only($r->sale_id);

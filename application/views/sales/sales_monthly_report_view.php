@@ -3,23 +3,26 @@
 
 <style>
     .period {
-        background: #FF545D !important;
+        background: #3b75f2;
+        color: white;
     }
 
     .period:hover {
-        background-color: #e04a51 !important;
+        background: #2652b3;
+        color: white
     }
 
     .table-striped tbody tr:nth-of-type(odd) {
-        background: #E8BCBC;
+        background: white;
     }
 
     .table-striped tbody tr:nth-of-type(even) {
-        background: #F8DCDC;
+        background: #f2f2f2;
     }
 
     .table-striped thead tr:nth-of-type(odd) {
-        background: #C04C4C;
+        background: #292e32;
+        color: white;
     }
 </style>
 
@@ -63,11 +66,11 @@
                     <div class="row mb-4">
                         <!-- Month and year selection -->
                         <div class="col-xl-2">
-                            <div class="" style="background-color:#FFE699; border-radius:10px; width:10.0em; height:auto;">
+                            <div class="" style="background-color:#292e32; border-radius:10px; width:9.7em; height:auto;">
                                 <div class="px-3 py-auto "> <span style="color:white;">
                                         <form class="form-inline">
                                             <div class="form-group">
-                                                <label style="color:black; font-weight:500; " class="mr-2 py-3 " for="year">Year</label>
+                                                <label style="color:white; font-weight:500; " class="mr-3 py-3 " for="year">Year</label>
                                                 <select id="year" class="form-control form-select form-select-lg year">
                                                     <option value="<?= $year ?>" selected><?= $year ?></option>
                                                     <option value="2023">2023</option>
@@ -93,10 +96,10 @@
                                 <div class="btn-group" role="group" aria-label="page_chooser" ">
                                     <?php date_default_timezone_set("Asia/Kuala_Lumpur"); ?>
                                     <a style=" color:white; <?php if ($selected_period == 'weekly') {
-                                                                echo 'background:#e04a51 !important ';
+                                                                echo 'background:#2652b3; color:white';
                                                             } ?>" id="period2" type="button" href="<?php echo base_url('sales/sales_report/weekly_sales_report/' . date('Y-m-d') . '/40'); ?>" class="btn btn-lg period">Weekly</a>
                                     <a style="color:white; <?php if ($selected_period == 'monthly') {
-                                                                echo 'background:#e04a51 !important ';
+                                                                echo 'background:#2652b3; color:white';
                                                             } ?>" id="period3" type="button" class="btn btn-lg period">Monthly</a>
                                 </div>
                             </div>
@@ -169,11 +172,11 @@
                     </div>
 
                     <!-- Content Row (Start here)-->
-                    <div class="row">
-                        <div class="col-xl-12">
+                    <div class="row pb-5">
+                        <div class="col-xl-12 pb-5">
 
-                            <div class="card">
-                                <div class="card-header" style="background-color:#C04C4C; color:white;">
+                            <div class="card shadow">
+                                <div class="card-header" style="color:black;">
                                     <h3 class="pt-2" style="font-weight: 800;">
                                         <?php
                                         //Get full name of month based on number of the month
@@ -181,10 +184,10 @@
                                         $dateObj   = DateTime::createFromFormat('!m', $monthNum);
                                         $monthName = $dateObj->format('F'); 
                                         ?>
-                                        <center>Sales Report for <?= $monthName ?> <?= $year ?> </center>
+                                        <center>Sales Report: (<?= $monthName ?> <?= $year ?>) </center>
                                     </h3>
                                 </div>
-                                <div class="card-body" style="background-color: #F8DCDC; color:black;">
+                                <div class="card-body" style=" color:black;">
 
                                     <div class="table-responsive">
                                         <table id="table_monthly_sales_report" class="table table-striped">
@@ -217,7 +220,7 @@
                                             <tfoot style="color:white;">
                                                 <tr>
                                                     <td colspan="5"></td>
-                                                    <td style="background: #C04C4C;">
+                                                    <td style="background: #3b75f2;">
                                                         <center>Total: RM <?= $total_sales ?></center>
                                                     </td>
                                                 </tr>

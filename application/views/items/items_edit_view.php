@@ -61,15 +61,15 @@ label{
                     </div>
                     <div class = "col-xl-3">
                         <div class = "d-flex justify-content-end">
-                            <a type="button" href = "<?= base_url('items/Items'); ?>" class="btn" style="background-color: #FF545D; color: white;">Back<i class="fas fa-undo pl-1"></i></a>
+                            <a type="button" href = "<?= base_url('items/Items'); ?>" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">Back<i class="fas fa-undo pl-1"></i></a>
                         </div>
                     </div>
                 </div>
                 <!-- Content Row -->
-                <div class="row">
-                    <div class="col-xl-12">
+                <div class="row pb-5">
+                    <div class="col-xl-12 pb-5">
                         <!-- Card-->
-                        <div class="card ">
+                        <div class="card shadow">
                             <div class="card-body">
                             <form method="post" action=" <?=base_url('items/Items/submit_edited_item/'.$item_data->item_id)?>" enctype="multipart/form-data">
                             <?= form_open_multipart('') ?>
@@ -208,8 +208,8 @@ label{
                                     </div>
                                   
                                     <!-- Submit button -->
-                                    <div class ="pr-4">
-                                        <button  type="submit" class="btn" style="background-color: #FF545D; color: white; float:right;" >Submit<i class="fas fa-check pl-2"></i></button>
+                                    <div class ="pr-4 pb-5">
+                                        <button  type="submit" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold; float:right;" >Submit<i class="fas fa-check pl-2"></i></button>
                                     </div>
 
                                 </form>

@@ -78,7 +78,7 @@ function enter_prompt(text = "default value") {
                 // appendTextWithDelay({response}, delay);
                 $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">
+                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
                                 <div class="card-body response-card">${response}</div>
                             </div>
                         </div>
@@ -136,9 +136,9 @@ function open_new_chat() {
         <div class="col-md-4 text-center">
             <i class="fas fa-lightbulb pr-2" style="color:#ffcd0a; font-size: 2.0rem;"></i>
             <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Examples</div>
-            <button type="button" onclick="enter_prompt('What is the difference between Alzheimer’s disease and dementia?')" class="btn btn-outline-dark mb-2">What is the difference between Alzheimer’s disease and dementia?</button><br>
-            <button type="button" onclick="enter_prompt('What are the early signs of Alzheimer’s disease?')" class="btn btn-outline-dark mb-2">What are the early signs of Alzheimer’s disease?</button><br>
-            <button type="button" onclick="enter_prompt('What are the stages of Alzheimer’s disease?')" class="btn btn-outline-dark">What are the stages of Alzheimer’s disease?</button>
+            <button type="button" onclick="enter_prompt('Which month in the past 12 months has been the most profitable?')" class="btn btn-outline-dark mb-2">Which month in the past 12 months has been the most profitable?</button><br>
+            <button type="button" onclick="enter_prompt('Name the top 5 highest selling item for the past 5 months')" class="btn btn-outline-dark mb-2">Name the top 5 highest selling item for the past 5 months</button><br>
+            <button type="button" onclick="enter_prompt('Give me a sales report for this month?')" class="btn btn-outline-dark">Give me a sales report for this month?</button>
         </div>
         <div class="col-md-4 text-center">
             <i class="fas fa-bolt pr-2" style="color:#007AFF; font-size: 2.0rem;"></i>
@@ -234,7 +234,7 @@ function load_history(con_id) {
 
                     $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">
+                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
                                 <div class="card-body response-card">${chat.message}</div>
                             </div>
                         </div>
@@ -278,7 +278,7 @@ function load_conversation(con_id) {
                         $('#conversation_list').empty();
                         //append new chat button
                         $('#conversation_list').append('<div onclick="open_new_chat()" class="card shadow chatbubble mb-5" style=" color: black;">' +
-                            '<div class="card-body">' +
+                            '<div class="card-body" style = "font-weight:900;">' +
                             '+ &nbsp New chat' +
                             '</div>' +
                             '</div>');
@@ -288,7 +288,7 @@ function load_conversation(con_id) {
                         $.each(response, function (index, card) {
 
                             if (card.con_id == current_con_id) {
-                                $('#conversation_list').append('<div id="con' + card.con_id + '" class="card shadow convoclass chatbubble mt-2" style=" color: black; position: relative;">' +
+                                $('#conversation_list').append('<div id="con' + card.con_id + '" class="card shadow convoclass chatbubble mt-2" style=" color: black; position: relative; border: 2px solid #3b75f2;">' +
                                     '<div class="card-body convobody">' +
                                     '<i class="fas fa-comments pr-2"></i>' + card.con_name + '' +
                                     '<div class="buttons_icon" id = "buttonset' + card.con_id + '" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%);">' +

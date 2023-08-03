@@ -1,11 +1,11 @@
 <!-- Footer -->
-<footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
+<!-- <footer class="footer fixed-bottom">
+                <div class="container py-4">
+                    <div class="copyright text-center">
                         <span>Copyright &copy; People Health Pharmacy (PHP) Inc. 2021</span>
                     </div>
                 </div>
-</footer>
+</footer> -->
 <!-- End of Footer -->
 
 </div>

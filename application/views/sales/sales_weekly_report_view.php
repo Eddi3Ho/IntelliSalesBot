@@ -3,23 +3,26 @@
 
 <style>
     .period {
-        background: #FF545D !important;
+        background: #3b75f2;
+        color: white;
     }
 
     .period:hover {
-        background-color: #e04a51 !important;
+        background: #2652b3;
+        color: white
     }
 
     .table-striped tbody tr:nth-of-type(odd) {
-        background: #E8BCBC;
+        background: white;
     }
 
     .table-striped tbody tr:nth-of-type(even) {
-        background: #F8DCDC;
+        background: #f2f2f2;
     }
 
     .table-striped thead tr:nth-of-type(odd) {
-        background: #C04C4C;
+        background: #292e32;
+        color: white;
     }
 </style>
 
@@ -62,16 +65,16 @@
 
                     <div class="row mb-5">
                         <div class="col-xl-9">
-                            <div class="" style="background-color:#FFE699; border-radius:10px; width:39.0em; height:auto;">
+                            <div class="" style="background-color:#292e32; border-radius:10px; width:35.0em; height:auto;">
                                 <div class="px-3 py-2 "> <span style="color:white;">
                                         <form class="form-inline">
                                             <div class="form-group">
-                                                <label style="color:black;" class="mr-2 " for="start_date">Start Date</label>
+                                                <label style="color:white;" class="mr-2 " for="start_date">Start Date</label>
                                                 <!-- Date input -->
                                                 <?php date_default_timezone_set("Asia/Kuala_Lumpur"); ?>
                                                 <input type="date" class="form-control date" id="start_date" value="<?= $start_date ?>">
 
-                                                <label style="color:black;" class="mr-2 ml-5" for="end_date">End Date</label>
+                                                <label style="color:white;" class="mr-2 ml-5" for="end_date">End Date</label>
                                                 <!-- Date input -->
                                                 <?php date_default_timezone_set("Asia/Kuala_Lumpur"); ?>
                                                 <input type="date" class="form-control date" id="end_date" value="<?= $end_date ?>">
@@ -89,10 +92,10 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group" role="group" aria-label="page_chooser">
                                     <a style="color:white; <?php if ($selected_period == 'weekly') {
-                                                                echo 'background:#e04a51 !important ';
+                                                                echo 'background:#2652b3; color:white';
                                                             } ?>" id="period2" type="button" class="btn btn-lg period">Weekly</a>
                                     <a style="color:white; <?php if ($selected_period == 'monthly') {
-                                                                echo 'background:#e04a51 !important ';
+                                                                echo 'background:#2652b3; color:white';
                                                             } ?>" id="period3" type="button" href="<?php echo base_url('sales/sales_report/monthly_sales_report/' . date('m') . '/' . date('Y')); ?>" class="btn btn-lg period">Monthly</a>
                                 </div>
                             </div>
@@ -104,7 +107,7 @@
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end">
-                                <form method="post" action=" <?= base_url('sales/sales_report/export_weekly_report/'.$start_date.'/'.$end_date.'/'); ?>">
+                                <form method="post" action=" <?= base_url('sales/sales_report/export_weekly_report/' . $start_date . '/' . $end_date . '/'); ?>">
                                     <button type="submit" style="border-radius:10px; background-color:#1dd3b0; color:white; height:auto; width:auto;" class="btn btn-icon-split pr-1">
                                         <span class="icon text-white-600">
                                             <i class="fas fa-download p-1"></i>
@@ -117,16 +120,16 @@
                     </div>
 
                     <!-- Content Row (Start here)-->
-                    <div class="row">
-                        <div class="col-xl-12">
+                    <div class="row pb-5">
+                        <div class="col-xl-12 pb-5">
 
-                            <div class="card">
-                                <div class="card-header" style="background-color:#C04C4C; color:white;">
+                            <div class="card shadow">
+                                <div class="card-header" style="background-color:white; color:black;">
                                     <h3 class="pt-2" style="font-weight: 800;">
-                                        <center>Sales Report between <?= $start_date ?> and <?= $end_date ?></center>
+                                        <center>Sales Report (<?= $start_date ?>) - (<?= $end_date ?>)</center>
                                     </h3>
                                 </div>
-                                <div class="card-body" style="background-color: #F8DCDC; color:black;">
+                                <div class="card-body" style="background-color: white; color:black;">
                                     <div class="table-responsive">
                                         <table id="table_weekly_sales_report" class="table table-striped">
                                             <thead style="color:white;">
@@ -158,7 +161,7 @@
                                             <tfoot style="color:white;">
                                                 <tr>
                                                     <td colspan="5"></td>
-                                                    <td style="background: #C04C4C;">
+                                                    <td style="background: #3b75f2;">
                                                         <center>Total: RM <?= $total_sales ?></center>
                                                     </td>
                                                 </tr>

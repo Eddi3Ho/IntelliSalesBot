@@ -65,7 +65,7 @@ foreach ($subcategory as $s) {
     }, 5000); // <-- time in milliseconds
 </script>
 
-<body id="page-top" style="background:#FEF2F2;">
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -77,7 +77,7 @@ foreach ($subcategory as $s) {
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="background:#FEF2F2;">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -99,12 +99,12 @@ foreach ($subcategory as $s) {
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end">
-                                <a type="button" href="<?= base_url('sales/sales/'); ?>" style="background:#FF545D; color:white;" class="btn">Back<i class="fas fa-undo pl-1"></i></a>
+                                <a type="button" href="<?= base_url('sales/sales/'); ?>" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" class="btn bluebtn">Back<i class="fas fa-undo pl-2"></i></a>
                             </div>
                         </div>
                     </div>
                     <!-- Content Row (Start here)-->
-                    <div class="row">
+                    <div class="row pb-5">
                         <div class="col-xl-12">
                             <!-- Display no item message if it exist-->
                             <?= $this->session->userdata('no_item_message') ?>
@@ -119,7 +119,7 @@ foreach ($subcategory as $s) {
                                             <!-- Green box for data and person in charge -->
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <div class="mb-5" style="background-color:#1dd3b0; border-radius:10px; width:13.0em; height:auto;">
+                                                    <div class="mb-5" style="background-color:#292e32; border-radius:10px; width:13.0em; height:auto;">
                                                         <div class="px-1 py-auto mb-2">
                                                             <h5 class="py-1" style=" font-weight:600; ">
                                                                 <span style="color:white;">
@@ -132,7 +132,7 @@ foreach ($subcategory as $s) {
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex justify-content-end">
-                                                        <div class="mb-5" style="background-color:#1dd3b0; border-radius:10px; width:auto; height:auto;">
+                                                        <div class="mb-5" style="background-color:#292e32; border-radius:10px; width:auto; height:auto;">
                                                             <div class="px-3 py-auto ">
                                                                 <h5 class=" pt-1" style=" font-weight:600; ">
                                                                     <span style="color:white;">
@@ -251,7 +251,7 @@ foreach ($subcategory as $s) {
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" style="background:#FF545D; color:white;" class="btn mb-2">CONFIRM <span class="fas fa-check"></span></button>
+                                            <button type="submit" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:700" class="btn bluebtn mb-2">CONFIRM <span class="fas fa-check"></span></button>
                                         </div>
                                     </form>
 

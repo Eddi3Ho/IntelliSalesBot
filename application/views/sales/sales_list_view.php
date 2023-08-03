@@ -7,11 +7,12 @@
     }
 
     .table-striped tbody tr:nth-of-type(even) {
-        background: #E4C2C1;
+        background: #f2f2f2;
     }
 
     .table-striped thead tr:nth-of-type(odd) {
-        background: #EBE8E8;
+        background: #292e32;
+        color:white;
     }
 
     .table-striped {
@@ -80,7 +81,7 @@ foreach ($subcategory as $s) {
     }, 5000); // <-- time in milliseconds
 </script>
 
-<body id="page-top" style="background:#FEF2F2;">
+<body id="page-top" >
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -92,7 +93,7 @@ foreach ($subcategory as $s) {
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="background:#FEF2F2;">
+                <div class="container-fluid" ">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -111,15 +112,15 @@ foreach ($subcategory as $s) {
                         </div>
                         <div class="col-xl-3 ">
                             <div class="d-flex justify-content-end">
-                                <button type="button" style="background:#FF545D; color:white;" class="btn icon-btn  waves-effect waves-light" data-toggle="modal" data-target="#add_sales">Add Sale <span class="fas fa-plus"></span></button>
+                                <button type="button" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" class="btn icon-btn bluebtn waves-effect waves-light" data-toggle="modal" data-target="#add_sales">Add Sale <span class="fas fa-plus"></span></button>
                             </div>
                         </div>
                     </div>
                     <!-- Content Row (Start here)-->
-                    <div class="row">
-                        <div class="col-xl-12">
+                    <div class="row pb-5">
+                        <div class="col-xl-12 pb-5">
                             <!-- Card-->
-                            <div class="card " style="color:black;">
+                            <div class="card shadow" style="color:black;">
                                 <div class="card-body">
 
                                     <div class="table-responsive">
@@ -151,7 +152,7 @@ foreach ($subcategory as $s) {
                     <div class="modal fade" id="add_sales" tabindex="-1" role="dialog" aria-labelledby="add_salesLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color:#FF545D;">
+                                <div class="modal-header" style="background-color:#3b75f2;">
                                     <h5 class="modal-title" id="add_salesLabel" style="color:white;">Add a sale </h5>
                                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -161,9 +162,9 @@ foreach ($subcategory as $s) {
                                 <form method="post" action=" <?= base_url('sales/sales/add_sales'); ?>">
                                     <div class="modal-body">
                                         <!-- Green box for data and person in charge -->
-                                        <div class="row">
+                                        <div class="row py-3">
                                             <div class="col-6">
-                                                <div class="" style="background-color:#1dd3b0; border-radius:10px; width:13.0em; height:auto;">
+                                                <div class="" style="background-color:#292e32; border-radius:10px; width:13.0em; height:auto;">
                                                     <div class="px-1 py-auto mb-2">
                                                         <h5 class="py-1" style=" font-weight:600; ">
                                                             <span style="color:white;">
@@ -176,7 +177,7 @@ foreach ($subcategory as $s) {
                                             </div>
                                             <div class="col-6">
                                                 <div class="d-flex justify-content-end">
-                                                    <div class="mb-3" style="background-color:#1dd3b0; border-radius:10px; width:auto; height:auto;">
+                                                    <div class="mb-3" style="background-color:#292e32; border-radius:10px; width:auto; height:auto;">
                                                         <div class="px-3 py-auto ">
                                                             <h5 class=" pt-1" style=" font-weight:600; ">
                                                                 <span style="color:white;">
@@ -266,7 +267,7 @@ foreach ($subcategory as $s) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" style="background:#FF545D; color:white;" class="btn mb-2">CONFIRM <span class="fas fa-check"></span></button>
+                                        <button type="submit" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:700" class="btn bluebtn mb-2">CONFIRM <span class="fas fa-check"></span></button>
                                     </div>
                                 </form>
                                 <!-- End of add sale form -->
@@ -279,7 +280,7 @@ foreach ($subcategory as $s) {
                     <div class="modal fade" id="view_sales" tabindex="-1" role="dialog" aria-labelledby="view_salesLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color:#FF545D;">
+                                <div class="modal-header" style="background-color:#3b75f2;">
                                     <h5 class="modal-title" id="view_salesLabel" style="color:white;">View Sale Detail</h5>
                                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

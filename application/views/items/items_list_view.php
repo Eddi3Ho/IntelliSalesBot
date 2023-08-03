@@ -5,12 +5,13 @@
 }
 
 .table-striped tbody tr:nth-of-type(even) {
-    background: #E4C2C1;
-}
+        background: #f2f2f2;
+    }
 
-.table-striped thead tr:nth-of-type(odd) {
-    background: #EBE8E8;
-}
+    .table-striped thead tr:nth-of-type(odd) {
+        background: #292e32;
+        color:white;
+    }
 
 .table-striped {
     color: black;
@@ -97,10 +98,10 @@
                 <?php } ?>
                 
                 <!-- Content Row (Start here)-->
-                <div class="row">
-                    <div class="col-xl-12">
+                <div class="row pb-5">
+                    <div class="col-xl-12 pb-5">
                         <!-- Card-->
-                        <div class="card ">
+                        <div class="card shadow">
                         <!-- <=$this->session->flashdata('message')?>  -->
                             <div class="card-body">
                             
@@ -133,7 +134,7 @@
                 <div class="modal fade" id="view_item" tabindex="-1" role="dialog" aria-labelledby="view_itemLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-                        <div class="modal-header" style = "background-color:#e56b6f;">
+                        <div class="modal-header" style = "background-color:#3b75f2;">
                             <h5 class="modal-title" id="view_itemLabel" style ="color:white;">Item Information</h5>
                             <button style ="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -145,7 +146,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-dismiss="modal">Close</button>
                         </div>
                         </div>
                     </div>

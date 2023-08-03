@@ -10,23 +10,21 @@
     }
 
     .table-striped tbody tr:nth-of-type(even) {
-        background: #E4C2C1;
+        background: #f2f2f2;
     }
 
     .table-striped thead tr:nth-of-type(odd) {
-        background: #EBE8E8;
+        background: #292e32;
+        color:white;
     }
 
     .table-striped {
         color: black;
     }
 
-    .period{
-        background:#FF545D !important;
-    }
     .period:hover {
-        background-color: #e04a51 !important;
-    }
+        background-color: #2652b3 !important;
+    } 
 </style>
 
 <!-- Set base url to javascript variable-->
@@ -46,7 +44,7 @@
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid"">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -68,11 +66,11 @@
 
                     <div class="row mb-5">
                         <div class="col-xl-3">
-                            <div class="" style="background-color:#FFE699; border-radius:10px; width:17.0em; height:auto;">
+                            <div class="" style="background-color:#292e32; border-radius:10px; width:15.2rem; height:auto;">
                                 <div class="px-3 py-2 "> <span style="color:white;">
                                         <form class="form-inline">
                                             <div class="form-group">
-                                                <label style="color:black;" class="mr-2 " for="date">Date</label>
+                                                <label style="color:white;" class="mr-3" for="date">Date:</label>
                                                 <!-- Date input -->
                                                 <?php date_default_timezone_set("Asia/Kuala_Lumpur"); ?>
                                                 <input type="date" class="form-control" id="date" value="<?= $date ?>">
@@ -86,9 +84,9 @@
                             <!-- Button group for daily, weekly & monthly -->
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group" role="group" aria-label="page_chooser">
-                                    <a style="color:white; <?php if ($selected_period == 'daily') {echo 'background:#e04a51 !important ';} ?>" id = "period1" type="button" class="btn btn-lg period">Daily</a>
-                                    <a style="color:white; <?php if ($selected_period == 'weekly') {echo 'background:#e04a51 !important ';} ?>" id = "period2" type="button" href="<?php echo base_url('sales/sales/weekly_sales_list/' . date('Y-m-d').'/40'); ?>" class="btn btn-lg period">Weekly</a>
-                                    <a style="color:white; <?php if ($selected_period == 'monthly') {echo 'background:#e04a51 !important ';} ?>" id = "period3" type="button" href="<?php echo base_url('sales/sales/monthly_sales_list/' . date('m') . '/' . date('Y')); ?>" class="btn btn-lg period">Monthly</a>
+                                    <a style="<?php if ($selected_period == 'daily') {echo 'background:#2652b3; color:white';} else {echo 'background:#3b75f2; color:white';} ?>" id = "period1" type="button" class="btn btn-lg period">Daily</a>
+                                    <a style="<?php if ($selected_period == 'weekly') {echo 'background:#2652b3; color:white';} else {echo 'background:#3b75f2; color:white';} ?>" id = "period2" type="button" href="<?php echo base_url('sales/sales/weekly_sales_list/' . date('Y-m-d').'/40'); ?>" class="btn btn-lg period">Weekly</a>
+                                    <a style="<?php if ($selected_period == 'monthly') {echo 'background:#2652b3; color:white';} else {echo 'background:#3b75f2; color:white';} ?>" id = "period3" type="button" href="<?php echo base_url('sales/sales/monthly_sales_list/' . date('m') . '/' . date('Y')); ?>" class="btn btn-lg period">Monthly</a>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +99,7 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <!-- Card-->
-                                    <div class="card " style="color:black;">
+                                    <div class="card shadow" style="color:black;">
                                         <div class="card-body">
 
                                             <div class="table-responsive">
@@ -140,7 +138,7 @@
                                                                 <td>
                                                                     <ul><?= $list_html ?></ul>
                                                                 </td>
-                                                                <td><span><button type="button" onclick="view_sale(<?= $row->sale_id ?>)" class="btn icon-btn btn-lg btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_sales"><span style="color:black;" class="fas fa-eye"></span></button></span></td>
+                                                                <td><span><button type="button" onclick="view_sale(<?= $row->sale_id ?>)" class="btn icon-btn btn-lg btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_sales"><span style="color:#3b75f2;" class="fas fa-eye"></span></button></span></td>
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -158,7 +156,7 @@
                             <div class="modal fade" id="view_sales" tabindex="-1" role="dialog" aria-labelledby="view_salesLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header" style="background-color:#FF545D;">
+                                        <div class="modal-header" style="background-color:#3b75f2;">
                                             <h5 class="modal-title" id="view_salesLabel" style="color:white;">View Sale Detail</h5>
                                             <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>

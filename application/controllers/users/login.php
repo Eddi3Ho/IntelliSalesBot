@@ -57,6 +57,7 @@ class Login extends CI_Controller
                 <script src="'.$base_url.'login/vendor/tilt/tilt.jquery.min.js"></script>
                 <script src="'.$base_url.'login/js/main.js"></script>';	
     
+            $data['no_footer'] = 1;
             $this->load->view('internal_templates/header', $data);
             $this->load->view('users/login_view');
             $this->load->view('internal_templates/footer');

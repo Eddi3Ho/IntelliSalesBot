@@ -8,9 +8,18 @@
         font-weight: 600;
     }
 
-    .nav-link:hover,
+    .nav-link:hover{
+        color: #3b75f2 !important;
+    }
     .nav-link.active {
-        color: #4D252A !important;
+        color: white !important;
+        text-decoration: underline;
+    }
+
+    /* hover effect for all blue buttons */
+    .bluebtn:hover{
+        background: #3b75f2 !important;
+        color: white !important;
     }
 
     .dropdown-item {
@@ -53,12 +62,12 @@
 </style>
 
 <!-- Topbar -->
-<nav class="navbar sticky-top navbar-expand topbar" style="background-color: #e56b6f;">
+<nav class="navbar sticky-top navbar-expand topbar" style="background-color: #292e32;">
 
     <!-- Logo Image-->
     <!-- <nav class="navbar navbar-light bg-light">   -->
     <a class="navbar-brand py-0 ">
-        <img src="<?php echo base_url('assets/img/php_logo.png'); ?>" height="70" width="160" alt="">
+        <img src="<?php echo base_url('assets/img/text_only_logo.png'); ?>" height="70" width="160" alt="">
     </a>
     <!-- </nav> -->
 
@@ -116,7 +125,7 @@
 
         <li class="nav-item pl-1">
             <a class="nav-link" onclick="logout()" ?>
-                <button type="button" id="register_btn" class="btn" style="background-color: white; color: #e56b6f; font-size: 0.9em; border-radius:15px; font-weight: 800;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout</button>
+                <button type="button" id="register_btn" class="btn bluebtn" style="background-color: white; color: #3b75f2; font-size: 0.9em; border-radius:15px; font-weight: 800;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout</button>
             </a>
         </li>
 

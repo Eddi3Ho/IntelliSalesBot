@@ -8,7 +8,7 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
-            <div id="content" style="background-color: #fef2f2">
+            <div id="content" >
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="row mb-4">
@@ -22,10 +22,10 @@
                         <div class="col-xl-6 col-md-6">
                             <!-- Current Date & Time -->
                             <div class="align-baseline float-right">
-                                <div class="mt-4" style="background-color:#1dd3b0; border-radius:10px; width:13.0em; height:auto;">
+                                <div class="mt-4" style="background-color:white;  width:13.0em; height:auto;">
                                     <div class="px-1 py-auto mb-2">
-                                        <h5 class="py-1 mt-5" style="font-weight:600;">
-                                            <span style="color:white;">
+                                        <h5 class="py-1 mt-5" style="font-weight:600;  border: 2px solid #3b75f2; border-radius:10px;">
+                                            <span style="color:#3b75f2;">
                                                 <center>DATE: <?php date_default_timezone_set("Asia/Kuala_Lumpur"); echo date('Y-m-d'); ?></center>
                                             </span>
                                         </h5>
@@ -39,7 +39,7 @@
                         <!-- Card 1 - Total Sales -->
                         <div class="col-xl-4 col-md-6 mb-4">
                             <a href = "<?=base_url('sales/sales')?>" style = "text-decoration:none">
-                                <div class="card border-left-success shadow h-100 py-2" style="background-color: #c5e9d2 ">
+                                <div class="card border-left-success shadow h-100 py-2" >
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -59,7 +59,7 @@
                         <div class="col-xl-4 col-md-6 mb-4">
                         <a href = "" style = "text-decoration:none">
                             <a href="<?php echo base_url('items/Items/items_categories_log'); ?>" style="text-decoration:none">
-                                <div class="card border-left-primary shadow h-100 py-2" style="background-color: #bbdefb">
+                                <div class="card border-left-primary shadow h-100 py-2" >
                                     <div class="card-body" href="">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -80,16 +80,16 @@
                         <div class="col-xl-4 col-md-6 mb-4">
                         <a href = "" style = "text-decoration:none">
                             <a href="<?php echo base_url('items/Items/items_low_on_stock'); ?>" style="text-decoration:none">
-                            <div class="card border-left-danger shadow h-100 py-2" style="background-color: #ED495D">
+                            <div class="card border-left-danger shadow h-100 py-2">
                                 <div class="card-body" href="">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:white">Items Running Low on Stock</div>
-                                            <div id="items_low_on_stock" class="h5 mb-0 font-weight-bold counting_number"style="color:white">0</div>
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#ED495D">Items Running Low on Stock</div>
+                                            <div id="items_low_on_stock" class="h5 mb-0 font-weight-bold counting_number"style="color:#ED495D">0</div>
                                         </div>
                                         
                                         <div class="col-auto">
-                                            <i class="fas fa-cart-arrow-down fa-2x" style="color: #ffffff"></i>
+                                            <i class="fas fa-cart-arrow-down fa-2x" style="color: #ED495D"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -102,8 +102,8 @@
                     <div class="row mb-4">
                         <div class="col-xl-12 col-lg-12">
                             <div class="card h-100 shadow mb-4">
-                                <div class="card-header py-3" style="background-color: #e4c2c1">
-                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Items By Category</div>
+                                <div class="card-header py-3" style="background-color: #292e32; ">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: white">Items By Category</div>
                             </div>
                             
                             <div class="card-body">

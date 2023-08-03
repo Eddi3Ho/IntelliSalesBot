@@ -30,12 +30,12 @@
                         <div class="container-login100">
                             <div class="wrap-login100">
                                 <div class="login100-pic js-tilt" data-tilt>
-                                    <img src="<?= base_url('assets/img/logo-circle.png'); ?>" alt="IMG">
+                                    <img src="<?= base_url('assets/img/intellisalesbot_circle_logo.png');  ?>" width="320rem" height="320rem" alt="IMG">
                                 </div>
 
-                                <form class="user" method="post" action=" <?= base_url('users/login/verify_users'); ?>">
+                                <form class="user pb-5" method="post" action=" <?= base_url('users/login/verify_users'); ?>">
                                     <span class="login100-form-title">
-                                        PHP - SRePS
+                                        IntelliSalesBot
                                     </span>
                                     <!-- Display no item message if it exist-->
                                     <?= $this->session->userdata('message') ?>
@@ -58,12 +58,14 @@
                                         </span>
                                     </div>
 
-                                    <div class="container-login100-form-btn">
+                                    <div class="container-login100-form-btn pb-3">
                                         <button class="login100-form-btn">
                                             Login
                                         </button>
                                     </div>
-                                    <br><br><br><br><br><br><br>
+                                    <div class="container-login100-form-btn pb-5">
+                                        <p><a href=" <?= base_url('users/register'); ?>">Register an account</a></p>
+                                    </div>
                                 </form>
                             </div>
                         </div>

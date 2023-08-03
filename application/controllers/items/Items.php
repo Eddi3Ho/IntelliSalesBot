@@ -48,10 +48,10 @@ class Items extends CI_Controller
 
         foreach($items as $item) {
 
-            $view = '<span><button type="button" onclick="view_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_item"><span class="fas fa-eye" style="color: black"></span></button></span>';
+            $view = '<span><button type="button" onclick="view_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" data-toggle="modal" data-target="#view_item"><span class="fas fa-eye" style="color: #3b75f2"></span></button></span>';
             $edit_link = $base_url."items/Items/edit_item/".$item->item_id;
-            $edit_opt = '<span class="px-1"><a type="button" href="'.$edit_link.'"class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-pencil-alt" style="color: black"></span></a></span>';
-            $delete = '<span><button type="button" onclick="delete_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete" ><span class="fas fa-trash" style="color: black"></span></button></span>';
+            $edit_opt = '<span class="px-1"><a type="button" href="'.$edit_link.'"class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-pencil-alt" style="color: #3b75f2"></span></a></span>';
+            $delete = '<span><button type="button" onclick="delete_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete" ><span class="fas fa-trash" style="color: #3b75f2"></span></button></span>';
 			
             $function = $view.$edit_opt.$delete;
 
@@ -198,7 +198,7 @@ class Items extends CI_Controller
     function edit_item($item_id)
     {
         // check if the user is not IT
-		if ($this->session->userdata('user_role') != 'IT') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/');
 		}
 

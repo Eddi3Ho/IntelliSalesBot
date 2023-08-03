@@ -30,15 +30,15 @@
                         <div class="container-login100">
                             <div class="wrap-login100">
                                 <div class="login100-pic js-tilt" data-tilt>
-                                    <img src="<?= base_url('assets/img/logo-circle.png'); ?>" alt="IMG">
+                                    <img src="<?= base_url('assets/img/intellisalesbot_circle_logo.png');  ?>" width="320rem" height="320rem" alt="IMG">
                                 </div>
 
                                 <form class="user" method="post" action=" <?= base_url('users/login/verify_users'); ?>">
                                     <span class="login100-form-title">
-                                        PHP - SRePS
+                                        IntelliSalesBot
                                     </span>
-                                    
-                                                                        
+
+
                                     <div class="wrap-input100 validate-input" data-validate="Valid first name is required: ex@abc.xyz">
                                         <input class="input100" type="text" name="user_first_name" placeholder="First Name" value="" maxlength="255" required>
                                         <?= form_error('user_first_name', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -74,15 +74,15 @@
                                         </span>
                                     </div>
 
-                                    <div class="container-login100-form-btn">
+                                    <div class="container-login100-form-btn pb-4">
                                         <button class="login100-form-btn">
                                             Register
                                         </button>
                                     </div>
-                                    <div class="container-login100-form-btn">
+                                    <div class="container-login100-form-btn pb-5">
                                         <p><a href=" <?= base_url('users/login/verify_users'); ?>">Back to Login</a></p>
                                     </div>
-                                    <br><br><br><br><br><br><br>
+                                    <!-- <br><br><br><br><br><br><br> -->
                                 </form>
                             </div>
                         </div>

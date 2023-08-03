@@ -5,11 +5,12 @@
 }
 
 .table-striped tbody tr:nth-of-type(even) {
-    background: #E4C2C1;
+    background: #f2f2f2;
 }
 
 .table-striped thead tr:nth-of-type(odd) {
-    background: #EBE8E8;
+    background: #292e32;
+        color:white;
 }
 
 .table-striped {
@@ -42,7 +43,7 @@
             <div id="content">
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="<?php  if ($this->session->userdata('user_role') == 'Employee') echo 'background:#FEF2F2;'; ?>">
+                <div class="container-fluid" >
 
                  <!-- Page Heading -->
                  <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -76,10 +77,10 @@
                 <?php } ?>
 
                 <!-- Content Row (Start here)-->
-                <div class="row">
-                    <div class="col-xl-12">
+                <div class="row pb-5">
+                    <div class="col-xl-12 pb-5">
                         <!-- Card-->
-                        <div class="card ">
+                        <div class="card shadow">
                         <!-- <=$this->session->flashdata('message')?>  -->
                             <div class="card-body">
                             
