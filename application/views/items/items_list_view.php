@@ -66,7 +66,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <?php if (($this->session->userdata('user_role') == 'IT' )) { ?>
+                <?php if (($this->session->userdata('user_role') == 'Admin' )) { ?>
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-2">
                     <h1 class="h3 font-weight-bold" style="color: black">Items</h1>
@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class = "col-xl-12">
                         <div class = "d-flex justify-content-end mb-4">
-                        <a type="button" href = "<?= base_url('items/Items/add_item'); ?>" class="btn" style="background-color: #FF545D; color: white;">Add Item<i class="fas fa-plus pl-2"></i></a>
+                        <a type="button" href = "<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">Add Item<i class="fas fa-plus pl-2"></i></a>
                         </div>
                     </div>
                 </div>

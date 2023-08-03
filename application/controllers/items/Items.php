@@ -141,7 +141,7 @@ class Items extends CI_Controller
     function add_item()
     {
         // check if the user is not IT
-		if ($this->session->userdata('user_role') != 'IT') {
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/');
 		}
 
