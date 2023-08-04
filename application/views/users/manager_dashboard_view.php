@@ -127,8 +127,8 @@
                     <div class="row mb-4">
                         <div class="col-xl-12 col-lg-12">
                             <div class="card h-100 shadow mb-4">
-                                <div class="card-header py-3" style="background-color: #292e32; color:white;">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Total Sales In <?=date('Y')?></div>
+                                <div class="card-header py-3" style="background-color: white; color:black;">
+                                    <div class="font-weight-bold text-uppercase mb-1" style="font-size:0.8rem;">Total Sales In <?=date('Y')?></div>
                                 </div>
 
                                 <div class="card-body">
@@ -144,8 +144,8 @@
                     <div class="row mb-4">
                         <div class="col-xl-12 col-lg-12">
                             <div class="card h-100 shadow mb-4">
-                                <div class="card-header py-3" style="background-color: #292e32; color:white;">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Items By Category</div>
+                                <div class="card-header py-3" style="background-color: white; color:black;">
+                                    <div class="font-weight-bold text-uppercase mb-1" style="font-size:0.8rem;">Items By Category</div>
                                 </div>
 
                                 <div class="card-body">
