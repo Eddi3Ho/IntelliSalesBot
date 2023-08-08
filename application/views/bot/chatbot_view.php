@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- Content Row (Start here)-->
-                    <div class="row">
+                    <div class="row" style="padding-bottom: 200px;">
                         <div class="col-xl-12">
 
                             <div class="card shadow ">
