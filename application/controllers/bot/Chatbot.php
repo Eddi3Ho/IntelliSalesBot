@@ -101,11 +101,8 @@ class Chatbot extends CI_Controller
         //Set up conversation history
         // $conversation = array();
 
-        $conversation = array(
-            array('role' => 'system', 'content' => 'You uses "\n" when there is a line break'),
-            array('role' => 'system', 'content' => 'You are an AI sales analyst. Please provide insights on the following sales data')
-        );
         $sentence = "";
+        $row_counter = 0;
 
         $sales_data = $this->sales_model->select_all_sales();
         // Loop through the data and convert it into a sentence
@@ -126,7 +123,7 @@ class Chatbot extends CI_Controller
             // $last_item = end($item_sales_data);
 
             $grand_total_profit = 0;
-
+            
             // Nested loop for item details
             foreach ($item_sales_data as $item_sales_row) {
                 //item info
@@ -144,18 +141,29 @@ class Chatbot extends CI_Controller
                 $profit = $item_price - $item_cost_price;
                 $total_profit = $sale_item_total_price - ($item_cost_price * $sale_item_quantity);
                 $grand_total_profit += $total_profit;
+                $row_counter++;
 
                 // Combine item details with the main sentence
-                $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
+                // $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
                 // Add the sentence to the conversation array as a user role
+                $sentence .= "Row ".$row_counter. ": {".$formatted_date.", ".$sale_item_quantity.", ".$item_name.", ".$item_subcategory_name.", ".$item_price.", ".$profit."}";
                 
             }
 
             // $sentence .= ". The total sale was RM" . $sale_total_price . " generating a profit of RM" . $total_profit . ". ";
         }
-        $conversation[] = array(
-            'role' => 'user',
-            'content' => $sentence
+        // $conversation[] = array(
+        //     'role' => 'user',
+        //     'content' => $sentence
+        // );
+
+        $conversation = array(
+            array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
+            You are an AI sales analyst and is able to analyst and gain insight from the sales data provided and answer question related to the sales.
+            The sales data are separated by rows and each row are wrap with "{" and "}.
+            The format of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
+            The currency for all items are in riggit Malaysia (RM)\n
+            The following are the sales data:\n'),
         );
 
         // Get chat history if exist

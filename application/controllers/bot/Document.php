@@ -22,15 +22,49 @@ class Document extends CI_Controller
     {
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
-        $data['include_js'] = 'chatbot';
+        $data['include_js'] = 'document_chatbot';
 
-        
-        $conversation = array(
-            array('role' => 'system', 'content' => 'You uses "\n" when there is a line break'),
-            array('role' => 'system', 'content' => 'You are an AI sales analyst. Please provide insights on the following sales data')
-        );
+        //First check if there is any conversation
+        $has_conversation = $this->chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
 
-        
+        //if there is convseration         
+        if ($has_conversation) {
+            //1. Get the last inserted con_id
+            $latest_row = $this->chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
+            $data['latest_con_id'] = $latest_row->con_id;
+
+            //2. Get all existing conversation
+            $data['conversation_history_data'] = $this->chatbot_model->select_conversation_history($this->session->userdata('user_id'));
+
+            $data['new_chat'] = "no";
+        }
+        //if there is no convseration    
+        else {
+            $data['latest_con_id'] = 0;
+            $data['new_chat'] = "yes";
+        }
+
+        $this->load->view('internal_templates/header', $data);
+        $this->load->view('internal_templates/sidenav');
+        $this->load->view('internal_templates/topbar');
+        $this->load->view('bot/document_view');
+        $this->load->view('internal_templates/footer');
+    }
+
+    public function generate_response()
+    {
+
+        // Retrieve the data from the POST request
+        $prompt = $this->input->post('prompt');
+        //con_id can be 0 which means its new
+        $con_id = $this->input->post('con_id');
+
+        //Set up conversation history
+        // $conversation = array();
+
+        $sentence = "";
+        $row_counter = 0;
+
         $sales_data = $this->sales_model->select_all_sales();
         // Loop through the data and convert it into a sentence
         foreach ($sales_data as $sales_row) {
@@ -49,8 +83,8 @@ class Document extends CI_Controller
             //Get last iteration
             // $last_item = end($item_sales_data);
 
-            $total_profit = 0;
-
+            $grand_total_profit = 0;
+            
             // Nested loop for item details
             foreach ($item_sales_data as $item_sales_row) {
                 //item info
@@ -65,30 +99,189 @@ class Document extends CI_Controller
                 $sale_item_discount = $item_sales_row->sale_item_discount;
 
                 $cost_price = $item_cost_price * $sale_item_quantity;
-                $profit = $sale_item_total_price - ($item_cost_price * $sale_item_quantity);
-                $total_profit += $profit;
+                $profit = $item_price - $item_cost_price;
+                $total_profit = $sale_item_total_price - ($item_cost_price * $sale_item_quantity);
+                $grand_total_profit += $total_profit;
+                $row_counter++;
 
                 // Combine item details with the main sentence
-                $sentence = "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (" . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a profit of RM" . $profit . ". ";
+                // $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
                 // Add the sentence to the conversation array as a user role
-                echo $sentence;
-                $conversation[] = array(
-                    'role' => 'user',
-                    'content' => $sentence
-                );
+                $sentence .= "Row ".$row_counter. ": {".$formatted_date.", ".$sale_item_quantity.", ".$item_name.", ".$item_subcategory_name.", ".$item_price.", ".$profit."}";
+                
             }
 
             // $sentence .= ". The total sale was RM" . $sale_total_price . " generating a profit of RM" . $total_profit . ". ";
-
         }
-        // print_r($conversation);
+        // $conversation[] = array(
+        //     'role' => 'user',
+        //     'content' => $sentence
+        // );
 
-        $data['conversation'] = $conversation;
+        $conversation = array(
+            array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
+            You are an AI sales analyst and is able to analyst and gain insight from the sales data provided and answer question related to the sales.
+            The sales data are separated by rows and each row are wrap with "{" and "}.
+            The format of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
+            The currency for all items are in riggit Malaysia (RM)\n
+            The following are the sales data:\n'),
+        );
 
-        $this->load->view('internal_templates/header', $data);
-        $this->load->view('internal_templates/sidenav');
-        $this->load->view('internal_templates/topbar');
-        $this->load->view('bot/document_view');
-        $this->load->view('internal_templates/footer');
+        // Get chat history if exist
+        if ($this->input->post('new_chat') == "no") {
+            $chat_data = $this->chatbot_model->select_chat_history($con_id);
+
+            foreach ($chat_data as $chat_data_row) {
+
+                if ($chat_data_row->role == "ai") {
+                    $conversation[] = array(
+                        'role' => 'assistant',
+                        'content' => $chat_data_row->message
+                    );
+                } else {
+                    $conversation[] = array(
+                        'role' => 'user',
+                        'content' => $chat_data_row->message
+                    );
+                }
+            }
+        }
+
+        //Latest prompt
+        $conversation[] = array(
+            'role' => 'user',
+            'content' => $prompt
+        );
+
+        //======================= Need to change ========================
+        // $user_prompt = "";
+        // foreach ($conversation as $conversation) {
+        //     $user_prompt .= $conversation['role'] . ": " . $conversation['content'] . "\n";
+        // }
+
+        $gpt_response = generate_text($conversation);
+
+        // Create new table in conversation history and chat history if its new chat
+        if ($this->input->post('new_chat') == "yes") {
+
+            //Default uses first five word as the conversation name
+            $words = explode(" ", $gpt_response);
+            $first_five_words = array_slice($words, 0, 5);
+            $first_five_words = implode(" ", $first_five_words);
+
+            $con_data =
+                [
+                    'user_id' => $this->session->userdata('user_id'),
+                    'con_name' => $first_five_words,
+                ];
+            $con_id = $this->chatbot_model->insert_history($con_data);
+        }
+
+        //Create new chat regardless of whether its new chat or not
+        //One for user prompt
+        $chat_data =
+            [
+                'con_id' => $con_id,
+                'message' => $prompt,
+                'role' => 1,
+            ];
+
+        $this->chatbot_model->insert_chat($chat_data);
+        //one for gpt response
+        $chat_data =
+            [
+                'con_id' => $con_id,
+                'message' => $gpt_response,
+                'role' => 2,
+            ];
+
+        $response_chat_id = $this->chatbot_model->insert_chat($chat_data);
+
+        //Update latest_update datetime column
+        $this->chatbot_model->update_last_update($con_id);
+
+        //Update conversation_history no_of_message
+        $this->chatbot_model->increase_no_of_message($con_id);
+
+        //Get ai response message from databse
+        $chat_row_data = $this->chatbot_model->one_chat_row($response_chat_id);
+        $gpt_response = $chat_row_data->message;
+
+        // Send the response as JSON
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($gpt_response));
     }
+
+    public function load_conversation_history()
+    {
+        $con_id = $this->input->post('con_id');
+        $chat_data = $this->chatbot_model->select_chat_history($con_id);
+
+        // Send the response as JSON
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($chat_data));
+    }
+
+    public function load_convo_card()
+    {
+        $conversation_history_data = $this->chatbot_model->select_conversation_history($this->session->userdata('user_id'));
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($conversation_history_data));
+    }
+
+    public function check_has_conversation()
+    {
+        //check if there is any conversation
+        $has_conversation = $this->chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
+
+        if ($has_conversation) {
+            $check = "yes";
+        } else {
+            $check = "no";
+        }
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($check));
+    }
+
+    public function get_latest_con_id()
+    {
+        $latest_con_id = $this->chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($latest_con_id));
+    }
+
+    public function edit_conversation_name()
+    {
+        $con_id = $this->input->post('con_id');
+        $con_name = $this->input->post('con_name');
+
+
+        $this->chatbot_model->edit_conversation_name($con_id, $con_name);
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($con_id));
+    }
+
+    public function delete_conversation()
+    {
+        $con_id = $this->input->post('con_id');
+
+        //delete converation and delete chat
+        $this->chatbot_model->delete_conversation($con_id);
+        $this->chatbot_model->delete_chat($con_id);
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($con_id));
+    }
+
 }

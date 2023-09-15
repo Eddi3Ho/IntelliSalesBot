@@ -85,7 +85,7 @@
                     <li class="nav-item">
                         <a class="nav-link sidelink <?php if ($selected == "chatbot") echo 'active'; ?>" href="<?= base_url('bot/Chatbot/') ?>">
                             <i class="fas navfa fa-robot <?php if ($selected == "chatbot") echo 'active'; ?>"></i>
-                            <span>Chatbot</span>
+                            <span>Sales Chatbot</span>
                         </a>
                     </li>
 
@@ -93,7 +93,7 @@
                     <li class="nav-item">
                         <a class="nav-link sidelink <?php if ($selected == "document") echo 'active'; ?>" href="<?= base_url('bot/document/') ?>">
                             <i class="fas navfa fa-file <?php if ($selected == "document") echo 'active'; ?>"></i>
-                            <span>Document</span>
+                            <span>Document Chatbot</span>
                         </a>
                     </li>
 

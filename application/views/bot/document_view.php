@@ -62,7 +62,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 font-weight-bold" style="color: black">Upload document</h1>
+                        <h1 class="h3 font-weight-bold" style="color: black">Document Chatbot</h1>
                     </div>
 
                     <!-- Breadcrumn -->
@@ -72,21 +72,74 @@
                                 <li class="breadcrumb-item">
                                     <a href="<?php echo base_url(''); ?>"><i class="fas fa-tachometer-alt pr-2"></i>Dashboard</a>
                                 </li>
-                                <li class="breadcrumb-item active">Upload doument</li>
+                                <li class="breadcrumb-item active">Doument Chatbot</li>
                             </ol>
                         </div>
                     </div>
 
                     <!-- Content Row (Start here)-->
-                    <div class="row">
+                    <div class="row" style="padding-bottom: 200px;">
                         <div class="col-xl-12">
-                            <?php
-                            foreach ($conversation as $message) {
-                                echo $message['content'] . "<br>";
-                            }
-                            ?>
-                            
 
+                            <div class="card shadow ">
+                                <div class="card-body" style="min-height: 1000px;">
+
+                                    <div class="row ">
+                                        <div class="col-xl-2" style="border-right: black;" id="conversation_list">
+
+
+                                        </div>
+
+                                        <div class="col-xl-10 px-5" id="conversation_body">
+
+                                            <div class="row justify-content-center py-2 pt-5" id="new_chat_info" style="padding-left: 20%; padding-right:20%">
+                                                <div class="col-md-4 text-center">
+                                                    <i class="fas fa-lightbulb pr-2" style="color:#ffcd0a; font-size: 2.0rem;"></i>
+                                                    <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Examples</div>
+                                                    <button type="button" onclick="enter_prompt('Which month in the past 12 months has been the most profitable?')" class="btn btn-outline-dark mb-2">Which month in the past 12 months has been the most profitable?</button><br>
+                                                    <button type="button" onclick="enter_prompt('Name the top 5 highest selling item for the past 5 months')" class="btn btn-outline-dark mb-2">Name the top 5 highest selling item for the past 5 months</button><br>
+                                                    <button type="button" onclick="enter_prompt('Give me a sales report for this month?')" class="btn btn-outline-dark">Give me a sales report for this month?</button>
+                                                </div>
+                                                <div class="col-md-4 text-center">
+                                                    <i class="fas fa-bolt pr-2" style="color:#007AFF; font-size: 2.0rem;"></i>
+                                                    <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Capabilities</div>
+                                                    <button disabled type="button" class="btn btn-outline-dark mb-2">Remembers what user said earlier in the conversation</button><br>
+                                                    <button disabled type="button" class="btn btn-outline-dark mb-2">Allows user to provide follow-up corrections</button><br>
+                                                    <button disabled type="button" class="btn btn-outline-dark">Trained to decline inappropriate requests</button>
+                                                </div>
+                                                <div class="col-md-4 text-center">
+                                                    <i class="fas fa-exclamation pr-2" style="color:#FF0000; font-size: 2.0rem;"></i>
+                                                    <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Limitation</div>
+                                                    <button disabled type="button" class="btn btn-outline-dark mb-2">May occasionally generate incorrect information</button><br>
+                                                    <button disabled type="button" class="btn btn-outline-dark mb-2">May occasionally produce harmful instructions or biased content</button><br>
+                                                    <button disabled type="button" class="btn btn-outline-dark">Limited knowledge of world and events after 2021</button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12 d-flex justify-content-center">
+                            <div class="fixed-bottom-wrapper mb-5">
+
+                                <div class="card shadow" style="border-radius: 15px;">
+                                    <div class="card-body d-flex align-items-center" style="padding-top:10px; padding-bottom:10px;">
+                                        <span id="user_prompt" class="textarea" role="textbox" contenteditable></span>
+                                        <a onclick="enter_prompt()" class="btn btn-success ml-4 mt-auto" style="margin-right: -7px;"><i class="fas fa-paper-plane"></i></a>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 

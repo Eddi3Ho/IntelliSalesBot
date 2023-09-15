@@ -62,7 +62,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 font-weight-bold" style="color: black">Chatbot</h1>
+                        <h1 class="h3 font-weight-bold" style="color: black">Sales Chatbot</h1>
                     </div>
 
                     <!-- Breadcrumn -->
@@ -72,7 +72,7 @@
                                 <li class="breadcrumb-item">
                                     <a href="<?php echo base_url(''); ?>"><i class="fas fa-tachometer-alt pr-2"></i>Dashboard</a>
                                 </li>
-                                <li class="breadcrumb-item active">Chatbot</li>
+                                <li class="breadcrumb-item active">Sales Chatbot</li>
                             </ol>
                         </div>
                     </div>
