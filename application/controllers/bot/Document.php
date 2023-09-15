@@ -11,7 +11,7 @@ class Document extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('sales_model');
         $this->load->model('chatbot_model');
-
+        $this->load->helper('convert');
 
         if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
             redirect('users/login/verify_users/');
@@ -20,6 +20,8 @@ class Document extends CI_Controller
 
     public function index()
     {
+        convertFileToPdf('test');
+
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
         $data['include_js'] = 'document_chatbot';
