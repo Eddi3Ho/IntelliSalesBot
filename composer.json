@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"convertapi/convertapi-php": "^1.7"
+		"convertapi/convertapi-php": "^1.7",
+		"tecnickcom/tcpdf": "^6.6"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

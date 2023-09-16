@@ -25,3 +25,22 @@ function convertFileToPdf($file_name)
     $result->saveFiles($savePath);
     // $result->getFile()->save(base_url('assets/text_file'));
 }
+
+function convertGetThumbnail($file_name)
+{
+    $file_path = FCPATH . 'assets/files/'.$file_name.'.pdf';
+    $savePath = FCPATH . 'assets/thumbnail/';
+
+    ConvertApi::setApiSecret('vnBLdz401oQwK5Mr');
+    $result = ConvertApi::convert(
+        'png',
+        [
+            // 'File' => base_url('assets/files/'. $file_name . '.php' ),
+            'File' => $file_path,
+            'PageRange' => '1',
+        ],
+        'pdf'
+    );
+    // return $result->getFile()->getContents();
+    $result->saveFiles($savePath);
+}

@@ -51,7 +51,7 @@ function enter_prompt(text = "default value") {
 
 
         $.ajax({
-            url: base_url + "bot/chatbot/generate_response",
+            url: base_url + "bot/document/generate_response",
             type: 'POST',
             data: {
                 prompt: prompt,
@@ -105,7 +105,7 @@ function append_new_card() {
 
         //ajax to get latest added conversation history row id
         $.ajax({
-            url: base_url + "bot/chatbot/get_latest_con_id",
+            url: base_url + "bot/document/get_latest_con_id",
             method: "GET",
             dataType: "json",
             success: function (response) {
@@ -203,7 +203,7 @@ function load_history(con_id) {
     });
 
     $.ajax({
-        url: base_url + "bot/chatbot/load_conversation_history",
+        url: base_url + "bot/document/load_conversation_history",
         type: 'POST',
         data: {
             con_id: con_id,
@@ -261,7 +261,7 @@ function load_conversation(con_id) {
 
     //check if user has conversation
     $.ajax({
-        url: base_url + "bot/chatbot/check_has_conversation",
+        url: base_url + "bot/document/check_has_conversation",
         method: "GET",
         dataType: "json",
         success: function (response) {
@@ -269,7 +269,7 @@ function load_conversation(con_id) {
             if (response === "yes") {
 
                 $.ajax({
-                    url: base_url + "bot/chatbot/load_convo_card",
+                    url: base_url + "bot/document/load_convo_card",
                     type: 'GET',
                     dataType: "json",
                     success: function (response) {
@@ -358,7 +358,7 @@ function edit_con_name(con_id) {
         if (result.isConfirmed) {
 
             $.ajax({
-                url: base_url + "bot/chatbot/edit_conversation_name",
+                url: base_url + "bot/document/edit_conversation_name",
                 type: 'POST',
                 data: {
                     con_id: con_id,
@@ -401,14 +401,14 @@ function delete_conversation(con_id) {
         if (result.isConfirmed) {
 
             $.ajax({
-                url: base_url + "bot/chatbot/delete_conversation",
+                url: base_url + "bot/document/delete_conversation",
                 type: 'POST',
                 data: {
                     con_id: con_id
                 },
                 success: function (response) {
 
-                    window.location.href = base_url + "bot/chatbot";
+                    window.location.href = base_url + "bot/document";
 
                 },
                 error: function (xhr, status, error) {
@@ -423,4 +423,95 @@ function delete_conversation(con_id) {
 
         }
     })
+}
+function showPdfUploadDialog() {
+    Swal.fire({
+        title: 'Choose a PDF File',
+        input: 'file',
+        inputAttributes: {
+            accept: '.pdf',
+            'aria-label': 'Upload your PDF file'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Upload',
+        showLoaderOnConfirm: true,
+        preConfirm: (file) => {
+            return new Promise((resolve) => {
+                if (file) {
+                    // Get the selected file name without extension
+                    const selectedFileName = file.name.replace(/\.[^/.]+$/, "");
+
+                    // Check if the selected file name exists in the array
+                    if (existing_file_names.includes(selectedFileName)) {
+                        Swal.showValidationMessage('File with the same name already exist. Please upload a file with a different name');
+                        resolve();
+                    } else {
+                        // Continue with the file upload
+                        const formData = new FormData();
+                        formData.append('pdfFile', file);
+
+                        fetch(base_url + "bot/document/upload_file", {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('File upload failed');
+                            }
+                        })
+                        .then(data => {
+
+
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success'
+                            });
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: error.message,
+                                icon: 'error'
+                            });
+                        });
+                        resolve();
+                    }
+                } else {
+                    Swal.showValidationMessage('Please choose a PDF file.');
+                    resolve();
+                }
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    });
+}
+
+function append_new_file(){
+    var htmlToAppend = `
+        <div class="col-md-3 pb-4">
+            <div class="px-2">
+                <div class="custom-card">
+                    <!-- Use your unique class name here -->
+                    <div class="thumbnail">
+                        <button class="close-button" data-pdf-id="<?php echo $pdf_file->doc_id; ?>">
+                            <i class="fa fa-times-circle"></i>
+                        </button>
+                        <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
+                            <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
+                        </a>
+                    </div>
+                    <div class="caption" style="text-align: center;">
+                        <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
+                        <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Append the HTML to the specified container
+    $("#file_grid").append(htmlToAppend);
 }

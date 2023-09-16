@@ -124,4 +124,20 @@ class document_chatbot_model extends CI_Model
             return false; // No rows
         }
     }
+
+    //document table functions
+    function get_documents_detail()
+    {
+        return $this->db->get('document')->result();
+    }
+
+    function insert_document($data)
+    {
+        $this->db->insert('document', $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
 }

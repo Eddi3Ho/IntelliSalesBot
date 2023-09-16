@@ -12,6 +12,8 @@ class Document extends CI_Controller
         $this->load->model('sales_model');
         $this->load->model('document_chatbot_model');
         $this->load->helper('convert');
+        $this->load->helper('file');
+        $this->load->library('upload');
 
         if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
             redirect('users/login/verify_users/');
@@ -20,12 +22,15 @@ class Document extends CI_Controller
 
     public function index()
     {
-        // convertFileToPdf('test');
 
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
         $data['include_js'] = 'document_chatbot';
 
+        //File information
+        $data['pdf_files'] = $this->document_chatbot_model->get_documents_detail();
+        $data['pdf_files_name'] = $this->document_chatbot_model->get_documents_detail();
+        
         //First check if there is any conversation
         $has_conversation = $this->document_chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
 
@@ -52,6 +57,79 @@ class Document extends CI_Controller
         $this->load->view('bot/document_view');
         $this->load->view('internal_templates/footer');
     }
+
+    //=================== Document Management functions ===========================
+
+    public function upload_file()
+    {
+        // Specify the upload configuration
+        $config['upload_path'] =  FCPATH . 'assets/files/'; // Set your upload folder path
+        $config['allowed_types'] = 'pdf'; // Allow only PDF files
+        $config['max_size'] = 204008; // Maximum file size (in KB)
+
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('pdfFile')) {
+            // File upload successful
+            $uploadData = $this->upload->data();
+
+            $fullFileName = $uploadData['file_name'];
+            $file_name = pathinfo($fullFileName, PATHINFO_FILENAME);
+            // You can access the uploaded file's details using $uploadData
+            $fileFullPath = $config['upload_path'] . $uploadData['file_name'];
+
+            $file_contents = $this->convert_pdf_txt($file_name);
+
+            $doc_data =
+                [
+                    'doc_name' => $file_name,
+                    'extracted_text' => $file_contents,
+                ];
+
+            //insert documents
+            $inserted = $this->document_chatbot_model->insert_document($doc_data);
+
+            if ($inserted) {
+                $response = [
+                    'success' => true,
+                    'message' => 'File uploaded successfully.'
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'File uploaded, but document insertion failed.'
+                ];
+            }
+
+        } else {
+            // File upload failed
+            $error = $this->upload->display_errors();
+            echo $error; // Display error message
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    public function convert_pdf_txt($file_name)
+    {
+        //Convert pdf to txt file using api
+        convertFileToPdf($file_name);
+        //Get thumbnail(png image file) using api
+        convertGetThumbnail($file_name);
+
+        $file_path = FCPATH . 'assets/text_file/' . $file_name . '.txt';
+        $file_contents = read_file($file_path);
+
+        if ($file_contents !== FALSE) {
+            // You now have all the contents of the file in $file_contents as a single string
+            return $file_contents;
+        } else {
+            echo "Failed to read the file.";
+        }
+    }
+
+    //=================== Chatbot Functions ========================================
 
     public function generate_response()
     {
@@ -86,7 +164,7 @@ class Document extends CI_Controller
             // $last_item = end($item_sales_data);
 
             $grand_total_profit = 0;
-            
+
             // Nested loop for item details
             foreach ($item_sales_data as $item_sales_row) {
                 //item info
@@ -109,8 +187,7 @@ class Document extends CI_Controller
                 // Combine item details with the main sentence
                 // $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
                 // Add the sentence to the conversation array as a user role
-                $sentence .= "Row ".$row_counter. ": {".$formatted_date.", ".$sale_item_quantity.", ".$item_name.", ".$item_subcategory_name.", ".$item_price.", ".$profit."}";
-                
+                $sentence .= "Row " . $row_counter . ": {" . $formatted_date . ", " . $sale_item_quantity . ", " . $item_name . ", " . $item_subcategory_name . ", " . $item_price . ", " . $profit . "}";
             }
 
             // $sentence .= ". The total sale was RM" . $sale_total_price . " generating a profit of RM" . $total_profit . ". ";
@@ -286,5 +363,4 @@ class Document extends CI_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($con_id));
     }
-
 }

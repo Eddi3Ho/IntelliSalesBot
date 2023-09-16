@@ -38,12 +38,59 @@
         border-color: #5a5c68;
         opacity: 1;
     }
+
+    .thumbnail img {
+        width: 100%;
+        /* Adjust the image width as needed (e.g., 100% for full width) */
+        height: auto;
+        /* This ensures the aspect ratio is maintained */
+    }
+
+    .custom-card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        position: relative;
+        /* Ensure relative positioning for absolute elements */
+        padding-right: 1px;
+        padding-left: 1px;
+        padding-top: 3px;
+    }
+
+    /* Style the close button */
+    .close-button {
+        position: absolute;
+        top: -13px;
+        right: -15px;
+        background-color: transparent;
+        border: none;
+        font-size: 27px;
+        cursor: pointer;
+        color: #DC3545;
+        transition: color 0.3s ease;
+        /* Add a smooth transition for color changes */
+    }
+
+    .close-button:hover {
+        color: #8B0000;
+        /* Change to a darker color on hover */
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
     var new_chat = "<?= $new_chat ?>";
     var current_con_id = <?= $latest_con_id ?>;
+
+    var existing_file_names = []; // Initialize an empty JavaScript array
+
+    <?php foreach ($pdf_files as $pdf_file) : ?>
+        <?php
+        // Use json_encode to safely pass PHP data to JavaScript
+        $pdf_file_json = json_encode($pdf_file->doc_name);
+        ?>
+        existing_file_names.push(<?php echo $pdf_file_json; ?>); // Push each PHP value into the JavaScript array
+    <?php endforeach; ?>
+
 </script>
 
 <body id="page-top">
@@ -74,6 +121,11 @@
                                 </li>
                                 <li class="breadcrumb-item active">Doument Chatbot</li>
                             </ol>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="d-flex justify-content-end mb-4">
+                                <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-toggle="modal" data-target="#view_item">Upload Files<i class="fas fa-plus pl-2"></i></a>
+                            </div>
                         </div>
                     </div>
 
@@ -143,6 +195,60 @@
                         </div>
                     </div>
 
+                    <!-- File Management Modal -->
+                    <div class="modal fade" id="view_item" tabindex="-1" role="dialog" aria-labelledby="view_itemLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color:#3b75f2;">
+                                    <h5 class="modal-title" id="view_itemLabel" style="color:white;">File Management</h5>
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="file_body">
+                                        <div class="px-2 pb-2">
+                                            <div class="warning-bar p-2" style="background-color: #f8f3d6ff; color:#956e30ff; border: 2px solid #ded9bb;">
+                                                <i class="fa fa-exclamation-circle warning-icon pl-1"></i> Please refrain from uploading documents that contain similar content, as it may prevent the chatbot from giving you accurate answer.
+                                            </div>
+                                        </div>
+                                        <div class="row p-2 pb-4">
+                                            <div class="col-md-12  text-right">
+                                                <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">New File<i class="fas fa-plus pl-2"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="row" id = "file_grid">
+                                            <?php foreach ($pdf_files as $pdf_file) : ?>
+                                                <div class="col-md-3 pb-4">
+                                                    <div class="px-2">
+                                                        <div class="custom-card">
+                                                            <!-- Use your unique class name here -->
+                                                            <div class="thumbnail">
+                                                                <button class="close-button" data-pdf-id="<?php echo $pdf_file->doc_id; ?>">
+                                                                    <i class="fa fa-times-circle"></i>
+                                                                </button>
+                                                                <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
+                                                                    <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
+                                                                </a>
+                                                            </div>
+                                                            <div class="caption" style="text-align: center;">
+                                                                <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
+                                                                <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.Modal -->
 
 
                 </div>
