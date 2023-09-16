@@ -10,7 +10,7 @@ class Document extends CI_Controller
         $this->load->library('email');
         $this->load->model('user_model');
         $this->load->model('sales_model');
-        $this->load->model('chatbot_model');
+        $this->load->model('document_chatbot_model');
         $this->load->helper('convert');
 
         if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
@@ -20,23 +20,23 @@ class Document extends CI_Controller
 
     public function index()
     {
-        convertFileToPdf('test');
+        // convertFileToPdf('test');
 
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
         $data['include_js'] = 'document_chatbot';
 
         //First check if there is any conversation
-        $has_conversation = $this->chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
+        $has_conversation = $this->document_chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
 
         //if there is convseration         
         if ($has_conversation) {
             //1. Get the last inserted con_id
-            $latest_row = $this->chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
+            $latest_row = $this->document_chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
             $data['latest_con_id'] = $latest_row->con_id;
 
             //2. Get all existing conversation
-            $data['conversation_history_data'] = $this->chatbot_model->select_conversation_history($this->session->userdata('user_id'));
+            $data['conversation_history_data'] = $this->document_chatbot_model->select_conversation_history($this->session->userdata('user_id'));
 
             $data['new_chat'] = "no";
         }
@@ -131,7 +131,7 @@ class Document extends CI_Controller
 
         // Get chat history if exist
         if ($this->input->post('new_chat') == "no") {
-            $chat_data = $this->chatbot_model->select_chat_history($con_id);
+            $chat_data = $this->document_chatbot_model->select_chat_history($con_id);
 
             foreach ($chat_data as $chat_data_row) {
 
@@ -175,8 +175,9 @@ class Document extends CI_Controller
                 [
                     'user_id' => $this->session->userdata('user_id'),
                     'con_name' => $first_five_words,
+                    'chatbot_type' => 2
                 ];
-            $con_id = $this->chatbot_model->insert_history($con_data);
+            $con_id = $this->document_chatbot_model->insert_history($con_data);
         }
 
         //Create new chat regardless of whether its new chat or not
@@ -188,7 +189,7 @@ class Document extends CI_Controller
                 'role' => 1,
             ];
 
-        $this->chatbot_model->insert_chat($chat_data);
+        $this->document_chatbot_model->insert_chat($chat_data);
         //one for gpt response
         $chat_data =
             [
@@ -197,16 +198,16 @@ class Document extends CI_Controller
                 'role' => 2,
             ];
 
-        $response_chat_id = $this->chatbot_model->insert_chat($chat_data);
+        $response_chat_id = $this->document_chatbot_model->insert_chat($chat_data);
 
         //Update latest_update datetime column
-        $this->chatbot_model->update_last_update($con_id);
+        $this->document_chatbot_model->update_last_update($con_id);
 
         //Update conversation_history no_of_message
-        $this->chatbot_model->increase_no_of_message($con_id);
+        $this->document_chatbot_model->increase_no_of_message($con_id);
 
         //Get ai response message from databse
-        $chat_row_data = $this->chatbot_model->one_chat_row($response_chat_id);
+        $chat_row_data = $this->document_chatbot_model->one_chat_row($response_chat_id);
         $gpt_response = $chat_row_data->message;
 
         // Send the response as JSON
@@ -218,7 +219,7 @@ class Document extends CI_Controller
     public function load_conversation_history()
     {
         $con_id = $this->input->post('con_id');
-        $chat_data = $this->chatbot_model->select_chat_history($con_id);
+        $chat_data = $this->document_chatbot_model->select_chat_history($con_id);
 
         // Send the response as JSON
         $this->output
@@ -228,7 +229,7 @@ class Document extends CI_Controller
 
     public function load_convo_card()
     {
-        $conversation_history_data = $this->chatbot_model->select_conversation_history($this->session->userdata('user_id'));
+        $conversation_history_data = $this->document_chatbot_model->select_conversation_history($this->session->userdata('user_id'));
 
         $this->output
             ->set_content_type('application/json')
@@ -238,7 +239,7 @@ class Document extends CI_Controller
     public function check_has_conversation()
     {
         //check if there is any conversation
-        $has_conversation = $this->chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
+        $has_conversation = $this->document_chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
 
         if ($has_conversation) {
             $check = "yes";
@@ -253,7 +254,7 @@ class Document extends CI_Controller
 
     public function get_latest_con_id()
     {
-        $latest_con_id = $this->chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
+        $latest_con_id = $this->document_chatbot_model->get_latest_con_id($this->session->userdata('user_id'));
 
         $this->output
             ->set_content_type('application/json')
@@ -266,7 +267,7 @@ class Document extends CI_Controller
         $con_name = $this->input->post('con_name');
 
 
-        $this->chatbot_model->edit_conversation_name($con_id, $con_name);
+        $this->document_chatbot_model->edit_conversation_name($con_id, $con_name);
 
         $this->output
             ->set_content_type('application/json')
@@ -278,8 +279,8 @@ class Document extends CI_Controller
         $con_id = $this->input->post('con_id');
 
         //delete converation and delete chat
-        $this->chatbot_model->delete_conversation($con_id);
-        $this->chatbot_model->delete_chat($con_id);
+        $this->document_chatbot_model->delete_conversation($con_id);
+        $this->document_chatbot_model->delete_chat($con_id);
 
         $this->output
             ->set_content_type('application/json')

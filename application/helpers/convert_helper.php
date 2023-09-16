@@ -8,7 +8,7 @@ use \ConvertApi\ConvertApi;
 
 function convertFileToPdf($file_name)
 {
-    $file_path = FCPATH . 'assets/files/test.pdf';
+    $file_path = FCPATH . 'assets/files/'.$file_name.'.pdf';
     $savePath = FCPATH . 'assets/text_file/'; // Use FCPATH to specify the project's root directory
 
     ConvertApi::setApiSecret('vnBLdz401oQwK5Mr');

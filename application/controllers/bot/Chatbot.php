@@ -212,6 +212,7 @@ class Chatbot extends CI_Controller
                 [
                     'user_id' => $this->session->userdata('user_id'),
                     'con_name' => $first_five_words,
+                    'chatbot_type' => 1
                 ];
             $con_id = $this->chatbot_model->insert_history($con_data);
         }

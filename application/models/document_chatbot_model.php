@@ -1,6 +1,6 @@
 <?php
 
-class chatbot_model extends CI_Model
+class document_chatbot_model extends CI_Model
 {
     private $chatbot_type;
 
@@ -8,7 +8,7 @@ class chatbot_model extends CI_Model
     {
         parent::__construct();
         $this->load->database();
-        $this->chatbot_type = 1; // Assign the value within the constructor method
+        $this->chatbot_type = 2; // Assign the value within the constructor method
     }
 
     public function get_global_variable() {
