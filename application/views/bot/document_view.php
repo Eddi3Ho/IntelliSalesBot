@@ -56,24 +56,61 @@
         padding-top: 3px;
     }
 
-    /* Style the close button */
-    .close-button {
-        position: absolute;
-        top: -13px;
-        right: -15px;
-        background-color: transparent;
-        border: none;
-        font-size: 27px;
-        cursor: pointer;
-        color: #DC3545;
-        transition: color 0.3s ease;
-        /* Add a smooth transition for color changes */
-    }
+/* Initial state of the buttons */
+.custom-card .group_buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0); /* Start with a fully transparent background */
+    opacity: 0; /* Initially, set opacity to 0 to hide the buttons */
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Add smooth transitions */
+    border-radius: 10px; /* Match the border radius of the card */
+}
 
-    .close-button:hover {
-        color: #8B0000;
-        /* Change to a darker color on hover */
-    }
+/* Style for the top button */
+.custom-card .group_buttons .top-button {
+    order: 1; /* Place it at the top */
+    margin-bottom: 10px; /* Add spacing between the buttons */
+}
+
+/* Style for the bottom button */
+.custom-card .group_buttons .bottom-button {
+    order: 2; /* Place it at the bottom */
+}
+
+/* Hover state of the buttons */
+.custom-card:hover .group_buttons {
+    opacity: 1; /* Make the buttons visible with full opacity */
+    background-color: rgba(0, 0, 0, 0.7); /* Darken the background on hover */
+}
+
+/* Style for the "View" button */
+.unique-view-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Style for the "Delete" button */
+.unique-delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -223,11 +260,7 @@
                                                 <div class="col-md-3 pb-4" id="col<?= $pdf_file->doc_id ?>">
                                                     <div class="px-2">
                                                         <div class="custom-card">
-                                                            <!-- Use your unique class name here -->
                                                             <div class="thumbnail">
-                                                                <button class="close-button" onclick="delete_file(<?= $pdf_file->doc_id ?>)" id="button<?= $pdf_file->doc_id ?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name="<?= $pdf_file->doc_name ?>">
-                                                                    <i class="fa fa-times-circle"></i>
-                                                                </button>
                                                                 <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
                                                                     <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
                                                                 </a>
@@ -235,6 +268,10 @@
                                                             <div class="caption" style="text-align: center;">
                                                                 <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
                                                                 <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
+                                                                <div class="group_buttons">
+                                                                    <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank" class="button view-button unique-view-button">View</a>
+                                                                    <button class="delete-button unique-delete-button mt-2">Delete</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
