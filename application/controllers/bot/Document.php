@@ -30,7 +30,7 @@ class Document extends CI_Controller
         //File information
         $data['pdf_files'] = $this->document_chatbot_model->get_documents_detail();
         $data['pdf_files_name'] = $this->document_chatbot_model->get_documents_detail();
-        
+
         //First check if there is any conversation
         $has_conversation = $this->document_chatbot_model->check_if_user_has_conversation($this->session->userdata('user_id'));
 
@@ -87,12 +87,18 @@ class Document extends CI_Controller
                 ];
 
             //insert documents
-            $inserted = $this->document_chatbot_model->insert_document($doc_data);
+            $inserted_id = $this->document_chatbot_model->insert_document($doc_data);
 
-            if ($inserted) {
+            if ($inserted_id) {
+                $new_doc_data = $this->document_chatbot_model->select_one_doc($inserted_id);
+                $formated_date = date("F j, Y, g:i a", strtotime($new_doc_data->upload_date));
+
                 $response = [
                     'success' => true,
-                    'message' => 'File uploaded successfully.'
+                    'message' => 'File uploaded successfully.',
+                    'doc_id' => $new_doc_data->doc_id,
+                    'doc_name' => $new_doc_data->doc_name,
+                    'upload_date' => $formated_date
                 ];
             } else {
                 $response = [
@@ -100,7 +106,6 @@ class Document extends CI_Controller
                     'message' => 'File uploaded, but document insertion failed.'
                 ];
             }
-
         } else {
             // File upload failed
             $error = $this->upload->display_errors();
@@ -127,6 +132,21 @@ class Document extends CI_Controller
         } else {
             echo "Failed to read the file.";
         }
+    }
+
+    public function delete_document()
+    {
+        $doc_id = $this->input->post('doc_id');
+        $doc_name = $this->input->post('doc_name');
+
+        if ($this->document_chatbot_model->delete_doc($doc_id, $doc_name)) {
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 
     //=================== Chatbot Functions ========================================

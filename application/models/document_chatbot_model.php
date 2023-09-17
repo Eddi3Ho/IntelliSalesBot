@@ -140,4 +140,30 @@ class document_chatbot_model extends CI_Model
             return false;
         }
     }
+
+    function select_one_doc($doc_id)
+    {
+        $this->db->select('*');
+        $this->db->from('document');
+        $this->db->where('doc_id', $doc_id);
+        $query = $this->db->get()->row();
+        return $query;
+    }
+
+    function delete_doc($doc_id, $doc_name)
+    {
+            $pdf_path = FCPATH . 'assets/files/'.$doc_name.'.pdf';            
+            $thumbnail_path = FCPATH . 'assets/thumbnail/'.$doc_name.'.png';         
+            $txt_path = FCPATH . 'assets/text_file/'.$doc_name.'.txt';         
+
+            // Delete the file and its thumbnail
+            if (unlink($pdf_path) && unlink($thumbnail_path) && unlink($txt_path)) {
+                $this->db->where('doc_id', $doc_id)->delete('document');
+                return true;
+            }
+        
+        // Return false if the file was not deleted
+        return false;
+    }
+
 }

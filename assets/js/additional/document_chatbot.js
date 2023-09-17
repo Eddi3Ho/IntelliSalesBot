@@ -239,7 +239,7 @@ function load_history(con_id) {
                             </div>
                         </div>
                     `);
-                    
+
                 }
 
             });
@@ -454,29 +454,39 @@ function showPdfUploadDialog() {
                             method: 'POST',
                             body: formData
                         })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                throw new Error('File upload failed');
-                            }
-                        })
-                        .then(data => {
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    throw new Error('File upload failed');
+                                }
+                            })
+                            .then(data => {
 
 
-                            Swal.fire({
-                                title: 'Success!',
-                                text: data.message,
-                                icon: 'success'
+                                if (data.success) {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: data.message,
+                                        icon: 'success'
+                                    });
+                                    //Append uploaded file to UI
+                                    append_new_file(data.doc_id, data.doc_name, data.upload_date);
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: data.message,
+                                        icon: 'error'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: error.message,
+                                    icon: 'error'
+                                });
                             });
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: error.message,
-                                icon: 'error'
-                            });
-                        });
                         resolve();
                     }
                 } else {
@@ -489,29 +499,68 @@ function showPdfUploadDialog() {
     });
 }
 
-function append_new_file(){
-    var htmlToAppend = `
-        <div class="col-md-3 pb-4">
-            <div class="px-2">
-                <div class="custom-card">
-                    <!-- Use your unique class name here -->
-                    <div class="thumbnail">
-                        <button class="close-button" data-pdf-id="<?php echo $pdf_file->doc_id; ?>">
-                            <i class="fa fa-times-circle"></i>
-                        </button>
-                        <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
-                            <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
-                        </a>
-                    </div>
-                    <div class="caption" style="text-align: center;">
-                        <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
-                        <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+function append_new_file(doc_id, doc_name, upload_date) {
+
+    var htmlContent = '<div class="col-md-3 pb-4">' +
+        '<div class="px-2">' +
+        '<div class="custom-card">' +
+        '<div class="thumbnail">' +
+        '<button class="close-button" onclick="delete_file(' + doc_id + ')" id="button' + doc_id + '" data-id="' + doc_id + '" data-name="' + doc_name + '">' +
+        '<i class="fa fa-times-circle"></i>' +
+        '</button>' +
+        '<a href="' + base_url + 'assets/files/' + doc_name + '.pdf' + '" target="_blank">' +
+        '<img src="' + base_url + 'assets/thumbnail/' + doc_name + '.png' + '" alt="PDF Thumbnail" class="img-responsive">' +
+        '</a>' +
+        '</div>' +
+        '<div class="caption" style="text-align: center;">' +
+        '<h6 class="pt-1 px-1" style="font-weight: 700;">' + doc_name + '.pdf</h6>' +
+        '<p class="px-1" style="font-size: 0.7rem;">' + upload_date + '</p>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
 
     // Append the HTML to the specified container
-    $("#file_grid").append(htmlToAppend);
+    $("#file_grid").append(htmlContent);
+}
+
+function delete_file($button_id) {
+
+    var doc_id = $("#button" + $button_id).data("id");
+    var doc_name = $("#button" + $button_id).data("name");
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Are you sure you want to delete ' + doc_name + '.pdf? It will be permanently removed from the system.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            // User confirmed, proceed with deletion via AJAX
+            $.ajax({
+                url: base_url + "bot/document/delete_document",
+                type: 'POST',
+                data: { doc_id: doc_id, doc_name: doc_name },
+                success: function (response) {
+                    // Handle the response from the server
+                    $("#col"+doc_id).remove();
+
+                    if (response.success) {
+                        Swal.fire('Deleted!', doc_name +'.pdf has been deleted successfully', 'success');
+                        // Optionally, you can perform additional actions such as removing the deleted file entry from the UI
+                    } else {
+                        Swal.fire('Error', 'Failed to delete the file.', 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error', 'Failed to delete the file. Please try again.', 'error');
+                }
+            });
+        } 
+    });
+
+
 }

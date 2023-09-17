@@ -219,12 +219,12 @@
                                         </div>
                                         <div class="row" id = "file_grid">
                                             <?php foreach ($pdf_files as $pdf_file) : ?>
-                                                <div class="col-md-3 pb-4">
+                                                <div class="col-md-3 pb-4" id = "col<?=$pdf_file->doc_id?>">
                                                     <div class="px-2">
                                                         <div class="custom-card">
                                                             <!-- Use your unique class name here -->
                                                             <div class="thumbnail">
-                                                                <button class="close-button" data-pdf-id="<?php echo $pdf_file->doc_id; ?>">
+                                                                <button class="close-button" onclick="delete_file(<?=$pdf_file->doc_id?>)" id="button<?=$pdf_file->doc_id?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name = "<?=$pdf_file->doc_name?>">
                                                                     <i class="fa fa-times-circle"></i>
                                                                 </button>
                                                                 <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
