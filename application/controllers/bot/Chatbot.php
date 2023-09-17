@@ -20,6 +20,7 @@ class Chatbot extends CI_Controller
 
     public function index()
     {
+        
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'chatbot';
         $data['include_js'] = 'chatbot';
@@ -146,7 +147,7 @@ class Chatbot extends CI_Controller
                 // Combine item details with the main sentence
                 // $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
                 // Add the sentence to the conversation array as a user role
-                $sentence .= "Row ".$row_counter. ": {".$formatted_date.", ".$sale_item_quantity.", ".$item_name.", ".$item_subcategory_name.", ".$item_price.", ".$profit."}";
+                $sentence .= "Row ".$row_counter. ": {".$formatted_date.", ".$sale_item_quantity.", ".$item_name.", ".$item_subcategory_name.", ".$item_price.", ".$profit."}\n";
                 
             }
 
@@ -161,9 +162,9 @@ class Chatbot extends CI_Controller
             array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
             You are an AI sales analyst and is able to analyst and gain insight from the sales data provided and answer question related to the sales.
             The sales data are separated by rows and each row are wrap with "{" and "}.
-            The format of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
+            The column names of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
             The currency for all items are in riggit Malaysia (RM)\n
-            The following are the sales data:\n'),
+            The following are the sales data:\n'.$sentence),
         );
 
         // Get chat history if exist

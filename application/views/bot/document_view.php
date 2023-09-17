@@ -90,7 +90,6 @@
         ?>
         existing_file_names.push(<?php echo $pdf_file_json; ?>); // Push each PHP value into the JavaScript array
     <?php endforeach; ?>
-
 </script>
 
 <body id="page-top">
@@ -128,9 +127,11 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="warning-bar p-2" style="background-color: #f8f3d6ff; color:#956e30ff; border: 2px solid #ded9bb; width:100%;">
+                        <i class="fa fa-exclamation-circle warning-icon pl-1"></i> Please provide accurate information to get the best response from the chatbot such as giving examples or specifying the document you are looking for.
+                    </div>
                     <!-- Content Row (Start here)-->
-                    <div class="row" style="padding-bottom: 200px;">
+                    <div class="row pt-3" style="padding-bottom: 200px;">
                         <div class="col-xl-12">
 
                             <div class="card shadow ">
@@ -217,14 +218,14 @@
                                                 <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">New File<i class="fas fa-plus pl-2"></i></a>
                                             </div>
                                         </div>
-                                        <div class="row" id = "file_grid">
+                                        <div class="row" id="file_grid">
                                             <?php foreach ($pdf_files as $pdf_file) : ?>
-                                                <div class="col-md-3 pb-4" id = "col<?=$pdf_file->doc_id?>">
+                                                <div class="col-md-3 pb-4" id="col<?= $pdf_file->doc_id ?>">
                                                     <div class="px-2">
                                                         <div class="custom-card">
                                                             <!-- Use your unique class name here -->
                                                             <div class="thumbnail">
-                                                                <button class="close-button" onclick="delete_file(<?=$pdf_file->doc_id?>)" id="button<?=$pdf_file->doc_id?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name = "<?=$pdf_file->doc_name?>">
+                                                                <button class="close-button" onclick="delete_file(<?= $pdf_file->doc_id ?>)" id="button<?= $pdf_file->doc_id ?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name="<?= $pdf_file->doc_name ?>">
                                                                     <i class="fa fa-times-circle"></i>
                                                                 </button>
                                                                 <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">

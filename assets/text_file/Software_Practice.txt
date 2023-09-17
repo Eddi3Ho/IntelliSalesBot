@@ -1,0 +1,120 @@
+
+
+
+
+
+
+
+
+
+
+School of Computing and Creative Media
+Bachelor of Computer Science (Hons)/ Bachelor of Software Engineering (Hons)/ Bachelor of Information Systems (Hons) (Enterprise Information Systems)
+Group Assignment Brief
+January 2022 Semester
+
+
+
+XBCS2064 Integrative Consultancy Project XBAU3134N Software Engineering Practices and Principles
+Due Date: 4 August 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prepared by Chua Hiang Kiat School of Computing and Creative Media
+
+School of Computing and Creative Media UOWMKDU University College. Version: 23/12/2019
+
+Bachelor of Computer Science (Hons)/ Bachelor of Software Engineering (Hons)/ Bachelor of Information Systems (Hons) (Enterprise Information Systems)
+XBCS2064
+Integrative Consultancy Project
+May 2023 Semester
+
+Assignment Overview
+
+This is a module that addresses hands-on business and information technology driven projects with emphasis on project management skills, communication skills and problem solving skills. It also provides students an understanding of what goes on in the industry.
+
+Learning Outcomes
+Upon the completion of this assignment, the students will be able to:
+1.   Summarize complex business problems existing in the real world environment.
+2.   Apply project management skills, communication skills and problem solving skills to produce an effective solution for a real client.
+3.   Justify decisions in the holistic perspective on issues pertaining to the business organization and business activities in a timely and professional manner
+
+
+Instructions
+Module Title: Module Code: Module Lecturer:
+
+Integrative Consultancy Project XBCS2064
+Chua Hiang Kiat
+
+Presentation & Deliverables Hand-in:
+Important Dates
+
+Week 3 – Proposal Presentation
+Week 5 - Complete Flow chart, Database Design, Use Case, Requirements Analysis, Wireframe, etc
+Week 10 – Complete Prototype
+Week 11 – Final Presentation and Submission of full report
+Team members Name & ID
+
+
+
+
+
+
+1
+
+School of Computing and Creative Media UOWMKDU University College. Version: 23/12/2019
+
+This is a group assignment where you have to work in groups of 4. Your team would need to come up with a prototype of the information system of a Customer Service Chatbot and present it at the end of this semester.
+
+Current scenario – Artificial Intelligence has been one of the most significant technologies to have taken the world by storm in recent years. In the field of customer service, technology has been adopted to provide better and more efficient deliverables and among them is the first line of contact.
+
+Chatbots are used particularly in industries where customer service is crucial. The critical success factors for chatbots are in its availability to provide accurate information in the fastest time possible.
+
+Your team is required to analyze and design a Chatbot for the university. This will be presented in a form of a mobile app. This will involve a proposal and a research on how your Chatbot can be useful and effective.
+
+Project Report                  60%
+Presentation                   20%
+Weekly Progress Report and Peer Evaluation  20%
+
+
+Documentation Guide and Marks Breakdown
+1.0 Project Structure, Planning and Control (10%):
+•  Project Manager’s & team members’ responsibilities
+•  Project plans (e.g. Gantt charts) and re-scheduling
+•  Work Breakdown Structure
+2.0 Strategy and Plan (10%):
+•  Research – Why is your system relevant?
+•  Analysis (where applicable)
+3.0 Project Process(30%):
+•  Requirements analysis
+•  Final Requirements
+•  Diagrams (Flow Chart, ERD, Use Case, Wireframe, etc)
+•  Methodology/Approach/Methods/Principles used
+•  Test plan/test case (if applicable)
+
+4.0 Summaries (10%)
+•  Challenges and difficulties overcome and any outstanding issues/problems
+•  Group Dynamics
+•  Future developments
+
+
+
+
+2

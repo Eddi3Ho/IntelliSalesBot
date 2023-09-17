@@ -530,8 +530,8 @@ function delete_file($button_id) {
     var doc_name = $("#button" + $button_id).data("name");
 
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'Are you sure you want to delete ' + doc_name + '.pdf? It will be permanently removed from the system.',
+        title: 'Are you sure you want to delete ' + doc_name + '.pdf?',
+        text: 'It will be permanently removed from the system.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',

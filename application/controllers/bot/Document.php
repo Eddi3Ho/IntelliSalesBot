@@ -22,7 +22,22 @@ class Document extends CI_Controller
 
     public function index()
     {
+        // $sentence = "";
+        // $document_list = $this->document_chatbot_model->get_documents_detail();
 
+        // foreach ($document_list as $document_row) {
+        //     $sentence .= 'Document Name: '. $document_row->doc_name. ', Document Content: {{'. $document_row->extracted_text.'}}\n';
+        // }
+
+        // $conversation = array(
+        //     array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
+        //     You are a document analyst that is able to answer question according to the documents content that was extracted from pdf documents. 
+        //     The following are document contents, each document labelled with the documents name and the content for the document is wrap inside a "{{}}".\n
+        //     The documents are as followed:\n 
+        //     '.$sentence),
+        // );
+
+        // print_r($conversation);
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
         $data['include_js'] = 'document_chatbot';
@@ -163,67 +178,24 @@ class Document extends CI_Controller
         // $conversation = array();
 
         $sentence = "";
-        $row_counter = 0;
 
-        $sales_data = $this->sales_model->select_all_sales();
-        // Loop through the data and convert it into a sentence
-        foreach ($sales_data as $sales_row) {
-            $sale_id = $sales_row->sale_id;
-            $sale_total_price = $sales_row->sale_total_price;
-            $sale_discounted_price = $sales_row->sale_discounted_price;
-            $sale_date = $sales_row->sale_date;
-
-            $timestamp = strtotime($sale_date);
-            $formatted_date = date("F j, Y", $timestamp);
-
-            // $sentence = "On " . $formatted_date . ", a customer purchased ";
-
-            // Query the second table for sales item details
-            $item_sales_data = $this->sales_model->select_sales_item($sale_id);
-            //Get last iteration
-            // $last_item = end($item_sales_data);
-
-            $grand_total_profit = 0;
-
-            // Nested loop for item details
-            foreach ($item_sales_data as $item_sales_row) {
-                //item info
-                $item_name = $item_sales_row->item_name;
-                $item_subcategory_name = $item_sales_row->item_subcategory_name;
-                $item_price = $item_sales_row->item_price;
-                $item_cost_price = $item_sales_row->item_cost_price;
-
-                //individual sales info
-                $sale_item_quantity = $item_sales_row->sale_item_quantity;
-                $sale_item_total_price = $item_sales_row->sale_item_total_price;
-                $sale_item_discount = $item_sales_row->sale_item_discount;
-
-                $cost_price = $item_cost_price * $sale_item_quantity;
-                $profit = $item_price - $item_cost_price;
-                $total_profit = $sale_item_total_price - ($item_cost_price * $sale_item_quantity);
-                $grand_total_profit += $total_profit;
-                $row_counter++;
-
-                // Combine item details with the main sentence
-                // $sentence .= "On " . $formatted_date . ", " . $sale_item_quantity . " unit(s) of '" . $item_name . "' (category: " . $item_subcategory_name . ") were sold for RM" . $item_price . " each, generating a total sales revenue of RM" . $sale_item_total_price . " and a total profit of RM" . $profit . " per unit. ";
-                // Add the sentence to the conversation array as a user role
-                $sentence .= "Row " . $row_counter . ": {" . $formatted_date . ", " . $sale_item_quantity . ", " . $item_name . ", " . $item_subcategory_name . ", " . $item_price . ", " . $profit . "}";
-            }
-
-            // $sentence .= ". The total sale was RM" . $sale_total_price . " generating a profit of RM" . $total_profit . ". ";
-        }
         // $conversation[] = array(
         //     'role' => 'user',
         //     'content' => $sentence
         // );
 
+        $document_list = $this->document_chatbot_model->get_documents_detail();
+
+        foreach ($document_list as $document_row) {
+            $sentence .= 'Document Name: '. $document_row->doc_name. ', Document Content: {'. $document_row->extracted_text.'}\n ';
+        }
+
         $conversation = array(
             array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
-            You are an AI sales analyst and is able to analyst and gain insight from the sales data provided and answer question related to the sales.
-            The sales data are separated by rows and each row are wrap with "{" and "}.
-            The format of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
-            The currency for all items are in riggit Malaysia (RM)\n
-            The following are the sales data:\n'),
+            You are a document analyst that is able to answer question according to the documents content that was extracted from pdf documents. 
+            The following are document contents, each document labelled with the documents name and the content for the document is wrap inside a "{}".\n
+            The documents are as followed:\n 
+            '.$sentence),
         );
 
         // Get chat history if exist
