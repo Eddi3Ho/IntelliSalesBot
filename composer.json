@@ -13,7 +13,8 @@
 	"require": {
 		"php": ">=5.3.7",
 		"convertapi/convertapi-php": "^1.7",
-		"tecnickcom/tcpdf": "^6.6"
+		"tecnickcom/tcpdf": "^6.6",
+		"php-ai/php-ml": "^0.9.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
