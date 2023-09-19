@@ -112,7 +112,7 @@ foreach ($subcategory as $s) {
                         </div>
                         <div class="col-xl-3 ">
                             <div class="d-flex justify-content-end">
-                                <button type="button" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" class="btn icon-btn bluebtn waves-effect waves-light" data-toggle="modal" data-target="#add_sales">Add Sale <span class="fas fa-plus"></span></button>
+                                <button type="button"  class="btn icon-btn bluebtn waves-effect waves-light" data-toggle="modal" data-target="#add_sales">Add Sale <span class="fas fa-plus"></span></button>
                             </div>
                         </div>
                     </div>
@@ -267,7 +267,7 @@ foreach ($subcategory as $s) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:700" class="btn bluebtn mb-2">CONFIRM <span class="fas fa-check"></span></button>
+                                        <button type="submit" class="btn btn-success mb-2">CONFIRM <span class="fas fa-check"></span></button>
                                     </div>
                                 </form>
                                 <!-- End of add sale form -->

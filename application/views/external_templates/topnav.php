@@ -16,9 +16,31 @@
         text-decoration: underline;
     }
 
+    .bluebtn{
+        background-color: #3b75f2; 
+        color:white;
+        transition: background-color 0.3s ease;
+    }
     /* hover effect for all blue buttons */
-    .bluebtn:hover{
-        background: #3b75f2 !important;
+    .bluebtn:hover {
+        background-color: #3260c2 !important;
+        color:white !important;
+    }
+
+    .redbtn
+    {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .redbtn:hover {
+        background-color: #b02c39 !important;
         color: white !important;
     }
 

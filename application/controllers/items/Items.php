@@ -635,7 +635,7 @@ class Items extends CI_Controller
         foreach($items_in_category as $item) {
 
             $item_pic = '<img class="img_item" src="'.base_url("assets/img/items/").$item->item_pic.'" style="width: 150px; height: 150px; object-fit:contain;">';
-            $view = '<span><button type="button" onclick="view_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" style="color: black" data-toggle="modal" data-target="#view_item"><span class="fas fa-eye"></span></button></span>';
+            $view = '<span><button type="button" onclick="view_item('.$item->item_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" style="color: #3b75f2ff" data-toggle="modal" data-target="#view_item"><span class="fas fa-eye"></span></button></span>';
             $restock_level = '<div class="badge badge-dark text-wrap" style="font-size: 0.9rem">'.$item->item_restock_level.'</div>';
 
 			$data [] = [ 

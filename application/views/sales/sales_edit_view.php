@@ -99,7 +99,7 @@ foreach ($subcategory as $s) {
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end">
-                                <a type="button" href="<?= base_url('sales/sales/'); ?>" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" class="btn bluebtn">Back<i class="fas fa-undo pl-2"></i></a>
+                                <a type="button" href="<?= base_url('sales/sales/'); ?>"  class="btn bluebtn">Back<i class="fas fa-undo pl-2"></i></a>
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@ foreach ($subcategory as $s) {
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:700" class="btn bluebtn mb-2">CONFIRM <span class="fas fa-check"></span></button>
+                                            <button type="submit" class="btn btn-success mb-2">CONFIRM <span class="fas fa-check"></span></button>
                                         </div>
                                     </form>
 

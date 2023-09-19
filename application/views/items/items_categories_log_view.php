@@ -23,7 +23,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            <div id="content" class="flex-fill" style="background:#FEF2F2;">
+            <div id="content" class="flex-fill" style="background:white;">
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -57,7 +57,7 @@
                                     <div class="card-header py-3" style="background-color: #F6FFF8">
                                         <a href="<?= base_url('items/Items/items_in_category/'.$item_category->item_category_id); ?>" class="stretched-link"></a>
                                     </div>
-                                    <div class="card-body font-weight-bold text-center" style="color:black; background-color: <?php if ($x % 2 == 0) echo '#ffc4d6'; else echo '#fae1dd' ?>"><?= $item_category->item_category_name?></div>
+                                    <div class="card-body font-weight-bold text-center" style="color:white; background-color: <?php if ($x % 2 == 0) echo '#284d9e'; else echo '#3b75f2ff' ?>"><?= $item_category->item_category_name?></div>
                                 </div>
                             </div>
                             <?php $x++; ?>

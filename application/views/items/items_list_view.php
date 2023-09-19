@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-xl-3">
                                 <div class="d-flex justify-content-end mb-4">
-                                    <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">Add Item<i class="fas fa-plus pl-2"></i></a>
+                                    <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" >Add Item<i class="fas fa-plus pl-2"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                     <div class="modal fade" id="view_item" tabindex="-1" role="dialog" aria-labelledby="view_itemLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color:#3b75f2;">
+                                <div class="modal-header" style="background-color:#292e32ff;">
                                     <h5 class="modal-title" id="view_itemLabel" style="color:white;">Item Information</h5>
                                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn redbtn"  data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>

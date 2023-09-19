@@ -56,61 +56,80 @@
         padding-top: 3px;
     }
 
-/* Initial state of the buttons */
-.custom-card .group_buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0); /* Start with a fully transparent background */
-    opacity: 0; /* Initially, set opacity to 0 to hide the buttons */
-    transition: background-color 0.3s ease, opacity 0.3s ease; /* Add smooth transitions */
-    border-radius: 10px; /* Match the border radius of the card */
-}
+    /* Initial state of the buttons */
+    .custom-card .group_buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0);
+        /* Start with a fully transparent background */
+        opacity: 0;
+        /* Initially, set opacity to 0 to hide the buttons */
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        /* Add smooth transitions */
+        border-radius: 10px;
+        /* Match the border radius of the card */
+    }
 
-/* Style for the top button */
-.custom-card .group_buttons .top-button {
-    order: 1; /* Place it at the top */
-    margin-bottom: 10px; /* Add spacing between the buttons */
-}
+    /* Style for the top button */
+    .custom-card .group_buttons .top-button {
+        order: 1;
+        /* Place it at the top */
+        margin-bottom: 10px;
+        /* Add spacing between the buttons */
+    }
 
-/* Style for the bottom button */
-.custom-card .group_buttons .bottom-button {
-    order: 2; /* Place it at the bottom */
-}
+    /* Style for the bottom button */
+    .custom-card .group_buttons .bottom-button {
+        order: 2;
+        /* Place it at the bottom */
+    }
 
-/* Hover state of the buttons */
-.custom-card:hover .group_buttons {
-    opacity: 1; /* Make the buttons visible with full opacity */
-    background-color: rgba(0, 0, 0, 0.7); /* Darken the background on hover */
-}
+    /* Hover state of the buttons */
+    .custom-card:hover .group_buttons {
+        opacity: 1;
+        /* Make the buttons visible with full opacity */
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Darken the background on hover */
+    }
 
-/* Style for the "View" button */
-.unique-view-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 5px;
-    cursor: pointer;
-}
+    /* Style for the "View" button */
+    .unique-view-button {
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        cursor: pointer;
+        text-decoration: none !important;
+        width: 50%;
+        transition: background-color 0.3s ease;
+    }
 
-/* Style for the "Delete" button */
-.unique-delete-button {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 5px;
-    cursor: pointer;
-}
+    .unique-view-button:hover {
+        background-color: #3260c2 !important;
+    }
+
+    /* Style for the "Delete" button */
+    .unique-delete-button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        cursor: pointer;
+        width: 50%;
+        transition: background-color 0.3s ease;
+    }
+
+    .unique-delete-button:hover {
+        background-color: #b02c39 !important;
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -160,7 +179,7 @@
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end mb-4">
-                                <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-toggle="modal" data-target="#view_item">Upload Files<i class="fas fa-plus pl-2"></i></a>
+                                <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" data-toggle="modal" data-target="#view_item">Upload Files<i class="fas fa-plus pl-2"></i></a>
                             </div>
                         </div>
                     </div>
@@ -237,7 +256,7 @@
                     <div class="modal fade" id="view_item" tabindex="-1" role="dialog" aria-labelledby="view_itemLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color:#3b75f2;">
+                                <div class="modal-header" style="background-color:#292e32ff;">
                                     <h5 class="modal-title" id="view_itemLabel" style="color:white;">File Management</h5>
                                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -252,7 +271,7 @@
                                         </div>
                                         <div class="row p-2 pb-4">
                                             <div class="col-md-12  text-right">
-                                                <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold">New File<i class="fas fa-plus pl-2"></i></a>
+                                                <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="background-color: #3b75f2; color:white;">New File<i class="fas fa-plus pl-2"></i></a>
                                             </div>
                                         </div>
                                         <div class="row" id="file_grid">
@@ -261,16 +280,14 @@
                                                     <div class="px-2">
                                                         <div class="custom-card">
                                                             <div class="thumbnail">
-                                                                <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">
-                                                                    <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
-                                                                </a>
+                                                                <img src="<?php echo base_url('assets/thumbnail/' . $pdf_file->doc_name . '.png'); ?>" alt="PDF Thumbnail" class="img-responsive">
                                                             </div>
                                                             <div class="caption" style="text-align: center;">
                                                                 <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
                                                                 <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
                                                                 <div class="group_buttons">
-                                                                    <a href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank" class="button view-button unique-view-button">View</a>
-                                                                    <button class="delete-button unique-delete-button mt-2">Delete</button>
+                                                                    <a class="button view-button unique-view-button" style="background-color: #3b75f2; color:white;" href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">View</a>
+                                                                    <button class="delete-button unique-delete-button mt-2" onclick="delete_file(<?= $pdf_file->doc_id ?>)" id="button<?= $pdf_file->doc_id ?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name="<?= $pdf_file->doc_name ?>">Delete</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -281,7 +298,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn bluebtn" style="border: 3px solid #3b75f2; color:#3b75f2; font-weight:bold" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn redbtn" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
