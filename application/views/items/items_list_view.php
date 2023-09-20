@@ -78,6 +78,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="<?php echo base_url(''); ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                                     </li>
+                                    <li class="breadcrumb-item active">Inventory</li>
                                     <li class="breadcrumb-item active">All item</li>
                                 </ol>
                             </div>
@@ -122,7 +123,8 @@
                                                     <th>Category</th>
                                                     <th>Name</th>
                                                     <th>Quantity</th>
-                                                    <th>Price</th>
+                                                    <th>Selling Price</th>
+                                                    <th>Buying Price</th>
                                                     <th>Action</th>
                                                     <th>Last Updated</th>
                                                 </tr>

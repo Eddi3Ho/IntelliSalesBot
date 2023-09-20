@@ -17,86 +17,106 @@ $(document).ready(function () {
 
 function enter_prompt(text = "default value") {
 
-    //Check if user click on recommended prompt
-    if (text === "default value") {
-        var prompt = $('#user_prompt').text();
+    if (file_upload === 0) {
+        if (user_role === "Admin") {
+            Swal.fire({
+                icon: 'error',
+                title: 'No document found!',
+                text: 'There are no document found in the system. Please upload a new document.',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'No document found!',
+                text: 'There are no document found in the system. Contact your admin regarding this issue',
+                confirmButtonText: 'OK'
+            });
+        }
     }
     else {
-        var prompt = text;
-    }
+        //Check if user click on recommended prompt
+        if (text === "default value") {
+            var prompt = $('#user_prompt').text();
+        }
+        else {
+            var prompt = text;
+        }
 
-    if (prompt !== '') {
+        if (prompt !== '') {
 
-        //loading
-        Swal.fire({
-            title: 'The chatbot is responding...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
+            //loading
+            Swal.fire({
+                title: 'The chatbot is responding...',
+                html: 'Please wait...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
 
-        $('#new_chat_info').hide();
+            $('#new_chat_info').hide();
 
-        //append user prompt text
-        $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
-            '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
-            '        <div class="card-body">' +
-            '            ' + prompt + '' +
-            '        </div>' +
-            '    </div>' +
-            '</div>');
+            //append user prompt text
+            $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
+                '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
+                '        <div class="card-body">' +
+                '            ' + prompt + '' +
+                '        </div>' +
+                '    </div>' +
+                '</div>');
 
 
-        $.ajax({
-            url: base_url + "bot/document/generate_response",
-            type: 'POST',
-            data: {
-                prompt: prompt,
-                new_chat: new_chat,
-                con_id: current_con_id
-            },
-            dataType: "json",
-            success: function (response) {
+            $.ajax({
+                url: base_url + "bot/document/generate_response",
+                type: 'POST',
+                data: {
+                    prompt: prompt,
+                    new_chat: new_chat,
+                    con_id: current_con_id
+                },
+                dataType: "json",
+                success: function (response) {
 
-                //Close loading pop up
-                swal.close();
+                    //Close loading pop up
+                    swal.close();
 
-                // //change global variable so its NOT a new chat
-                // var delay = 20; // Delay in milliseconds between each character
+                    // //change global variable so its NOT a new chat
+                    // var delay = 20; // Delay in milliseconds between each character
 
-                // //append gpt response text
-                // $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
-                //     '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
-                //     '        <div class="card-body response-card"></div>' +
-                //     '    </div>' +
-                //     '</div>');
+                    // //append gpt response text
+                    // $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
+                    //     '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
+                    //     '        <div class="card-body response-card"></div>' +
+                    //     '    </div>' +
+                    //     '</div>');
 
-                // // Append text with the writing effect
-                // appendTextWithDelay({response}, delay);
-                $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
-                                <div class="card-body response-card">${response}</div>
-                            </div>
+                    // // Append text with the writing effect
+                    // appendTextWithDelay({response}, delay);
+                    $('#conversation_body').append(`
+                    <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                        <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
+                            <div class="card-body response-card">${response}</div>
                         </div>
-                    `);
+                    </div>
+                `);
 
-            },
-            error: function (xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'There was an error generating your response, please try again',
-                })
-            }
-        });
-        load_conversation(current_con_id);
-        append_new_card();
-        new_chat = "no";
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'There was an error generating your response, please try again',
+                    })
+                }
+            });
+            load_conversation(current_con_id);
+            append_new_card();
+            new_chat = "no";
 
+        }
     }
+
 }
 
 function append_new_card() {
@@ -546,10 +566,10 @@ function delete_file($button_id) {
                 data: { doc_id: doc_id, doc_name: doc_name },
                 success: function (response) {
                     // Handle the response from the server
-                    $("#col"+doc_id).remove();
+                    $("#col" + doc_id).remove();
 
                     if (response.success) {
-                        Swal.fire('Deleted!', doc_name +'.pdf has been deleted successfully', 'success');
+                        Swal.fire('Deleted!', doc_name + '.pdf has been deleted successfully', 'success');
                         // Optionally, you can perform additional actions such as removing the deleted file entry from the UI
                     } else {
                         Swal.fire('Error', 'Failed to delete the file.', 'error');
@@ -559,7 +579,7 @@ function delete_file($button_id) {
                     Swal.fire('Error', 'Failed to delete the file. Please try again.', 'error');
                 }
             });
-        } 
+        }
     });
 
 

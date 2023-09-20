@@ -63,6 +63,7 @@ class Items extends CI_Controller
 				$item->item_name,
                 $item->item_quantity,
                 "RM$item->item_price",
+                "RM$item->item_cost_price",
                 $function,
                 $item->item_updated_date
             ];
@@ -119,8 +120,12 @@ class Items extends CI_Controller
                     <td>'.$item_details->item_expiry_date.'</td>
                 </tr>
                 <tr>
-                    <th scope="row">Price Per Unit</th>
+                    <th scope="row">Selling Price Per Unit</th>
                     <td>RM'.$item_details->item_price.'</td>
+                </tr>
+                <tr>
+                    <th scope="row">Buying Price Per Unit</th>
+                    <td>RM'.$item_details->item_cost_price.'</td>
                 </tr>
                 <tr>
                     <th scope="row">Quantity At Hand</th>
@@ -183,6 +188,7 @@ class Items extends CI_Controller
             'item_expiry_date'=>htmlspecialchars($this->input->post('item_expiry_date')),
             'item_description'=>htmlspecialchars($this->input->post('item_description')),
             'item_price'=>htmlspecialchars($this->input->post('item_price')),
+            'item_cost_price'=>htmlspecialchars($this->input->post('item_cost_price')),
 			'item_quantity'=>htmlspecialchars($this->input->post('item_quantity')),
 			'item_restock_level'=>htmlspecialchars($this->input->post('item_restock_level'))
 		];
@@ -240,6 +246,7 @@ class Items extends CI_Controller
             'item_expiry_date'=>htmlspecialchars($this->input->post('item_expiry_date')),
             'item_description'=>htmlspecialchars($this->input->post('item_description')),
             'item_price'=>htmlspecialchars($this->input->post('item_price')),
+            'item_cost_price'=>htmlspecialchars($this->input->post('item_cost_price')),
 			'item_quantity'=>htmlspecialchars($this->input->post('item_quantity')),
             'item_restock_level'=>htmlspecialchars($this->input->post('item_restock_level')),
             'item_updated_date'=>date('y-m-d') // current date
@@ -280,8 +287,8 @@ class Items extends CI_Controller
 
     // --------------------- ITEM CATEGORIES --------------------------// 
     function items_categories(){
-        // check if the user is not IT
-		if ($this->session->userdata('user_role') != 'IT') {
+		// check if the user is not Admin
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/');
 		}
 
@@ -311,9 +318,9 @@ class Items extends CI_Controller
         foreach($item_categories as $item_category) {
             $item_subcategories_page_link = $base_url."items/Items/items_subcategories/".$item_category->item_category_id;
 
-            $view = '<span><a type="button" href="'.$item_subcategories_page_link.'" class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-eye" style="color: black"></span></a></span>';
-            $edit_opt = '<span class="px-1"><button type="button" onclick="edit_item_category('.$item_category->item_category_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light edit_item_category" style="color: black" data-toggle="modal" data-id="'.$item_category->item_category_id.'" data-target="#edit_item_category"><span class="fas fa-pencil-alt"></span></button></span>';
-            $delete = '<span><button type="button" onclick="delete_item_category('.$item_category->item_category_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete" ><span class="fas fa-trash" style="color: black"></span></button></span>';
+            $view = '<span><a type="button" href="'.$item_subcategories_page_link.'" class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-eye" style="color: #3b75f2ff"></span></a></span>';
+            $edit_opt = '<span class="px-1"><button type="button" onclick="edit_item_category('.$item_category->item_category_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light edit_item_category" style="color: #3b75f2ff" data-toggle="modal" data-id="'.$item_category->item_category_id.'" data-target="#edit_item_category"><span class="fas fa-pencil-alt"></span></button></span>';
+            $delete = '<span><button type="button" onclick="delete_item_category('.$item_category->item_category_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete" ><span class="fas fa-trash" style="color: #3b75f2ff"></span></button></span>';
 			$function = $view.$edit_opt.$delete;
 
 			$data [] = [ 
@@ -367,7 +374,7 @@ class Items extends CI_Controller
                     <div class="modal-footer">
                     
                     <button type="button" class="btn btn-secondary float-right ml-2" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn float-right" style="background-color: #FF545D; color: white;" >Submit<i class="fas fa-check pl-2"></i></button>
+                    <button type="submit" class="btn btn-success float-right" " >Submit<i class="fas fa-check pl-2"></i></button>
 
                     </div>
                     
@@ -401,8 +408,8 @@ class Items extends CI_Controller
 
     // --------------------- ITEM SUBCATEGORIES --------------------------// 
     function items_subcategories($item_category_id){
-        // check if the user is not IT
-		if ($this->session->userdata('user_role') != 'IT') {
+        // check if the user is not Admin
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/');
 		}
         
@@ -436,9 +443,9 @@ class Items extends CI_Controller
 
             $item_page_link = $base_url."items/Items/items_in_subcategory/".$item_subcategory->item_subcategory_id;
 
-            $view = '<span><a type="button" href="'.$item_page_link.'"class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-eye" style="color: black"></span></a></span>';
-            $edit_opt = '<span class="px-1"><button type="button" onclick="edit_item_subcategory('.$item_subcategory->item_subcategory_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" data-toggle="modal" data-id="'.$item_subcategory->item_subcategory_id.'" data-target="#edit_item_subcategory"><span class="fas fa-pencil-alt" style="color: black"></span></button></span>';
-            $delete = '<span><button type="button" onclick="delete_item_subcategory('.$item_subcategory->item_subcategory_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete"><span class="fas fa-trash" style="color: black"></span></button></span>';
+            $view = '<span><a type="button" href="'.$item_page_link.'"class="btn icon-btn btn-xs btn-white waves-effect waves-light"><span class="fas fa-eye" style="color: #3b75f2ff"></span></a></span>';
+            $edit_opt = '<span class="px-1"><button type="button" onclick="edit_item_subcategory('.$item_subcategory->item_subcategory_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light" data-toggle="modal" data-id="'.$item_subcategory->item_subcategory_id.'" data-target="#edit_item_subcategory"><span class="fas fa-pencil-alt" style="color: #3b75f2ff"></span></button></span>';
+            $delete = '<span><button type="button" onclick="delete_item_subcategory('.$item_subcategory->item_subcategory_id.')" class="btn icon-btn btn-xs btn-white waves-effect waves-light delete"><span class="fas fa-trash" style="color: #3b75f2ff"></span></button></span>';
 			$function = $view.$edit_opt.$delete;
 
 			$data [] = [ 
@@ -495,7 +502,7 @@ class Items extends CI_Controller
         </div>
         <div class="modal-footer">      
             <button type="button" class="btn btn-secondary float-right ml-2" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn float-right" style="background-color: #FF545D; color: white;" >Submit<i class="fas fa-check pl-2"></i></button>
+            <button type="submit" class="btn btn-success float-right">Submit<i class="fas fa-check pl-2"></i></button>
         </div>
                     
         </tr>
@@ -531,8 +538,8 @@ class Items extends CI_Controller
 
     // --------------------- ITEMS IN A SPECIFIC SUBCATEGORY (IT ADMIN) --------------------------// 
     function items_in_subcategory($item_subcategory_id){
-        // check if the user is not IT
-		if ($this->session->userdata('user_role') != 'IT') {
+        // check if the user is not Admin
+		if ($this->session->userdata('user_role') != 'Admin') {
 			redirect('items/Items/');
 		}
 
@@ -726,37 +733,4 @@ class Items extends CI_Controller
 		echo json_encode($output);
 		exit();
     }
-
-    // -------------------REFERENCE (TO BE DELETED LATER)----------------------------
-    
-    // public function index()
-    // {
-    //     $data['title'] = "iJEES | R&D Projects";
-    //     $data['include_js'] = 'rd_projects_list';
-    //     $data['include_css'] = 'projects';
-    //     // Get RDs that are approved and their details
-    //     $data['rds'] = $this->rd_projects_model->approved_rdps();
-
-    //     // Check if session is established. Get User ID from session.
-    //     $user_id = $this->session->userdata('user_id');
-    //     $data['user_role'] = $this->session->userdata('user_role');
-    //     if ($data['user_role'] == 'Education Partner') {
-    //         // From the User ID, get Education Partner ID  
-    //         $ep_details = $this->user_ep_model->ep_details($user_id);
-    //         $data['ep_id'] = $ep_details['ep_id'];
-
-    //         $this->load->view('internal/templates/header', $data);
-    //         $this->load->view('internal/templates/sidenav');
-    //         $this->load->view('internal/templates/topbar');
-    //         $this->load->view('external/rd_projects_view');
-    //         $this->load->view('internal/templates/footer');
-    //     } else {
-    //         $data['ep_id'] = '';
-    //         // var_dump($eps);
-    //         // die;
-    //         $this->load->view('external/templates/header', $data);
-    //         $this->load->view('external/rd_projects_view', $data);
-    //         $this->load->view('external/templates/footer', $data);
-    //     }
-    // }
 }

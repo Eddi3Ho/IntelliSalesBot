@@ -1,20 +1,21 @@
 
 <style>
-.table-striped tbody tr:nth-of-type(odd) {
-    background: white;
-}
+    .table-striped tbody tr:nth-of-type(odd) {
+        background: white;
+    }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background: #E4C2C1;
-}
+    .table-striped tbody tr:nth-of-type(even) {
+        background: #f2f2f2;
+    }
 
-.table-striped thead tr:nth-of-type(odd) {
-    background: #EBE8E8;
-}
+    .table-striped thead tr:nth-of-type(odd) {
+        background: #292e32;
+        color:white;
+    }
 
-.table-striped {
-    color: black;
-}
+    .table-striped {
+        color: black;
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -83,7 +84,7 @@ $('#edit_item_category').on('show.bs.modal', function(e) {
                 <div class="row" >
                     <div class = "col-xl-12">
                         <div class = "d-flex justify-content-end mb-4">
-                        <button type="button" class="btn" style="background-color: #FF545D; color: white;" data-toggle="modal" data-target="#add_item_category">Add Item Category<i class="fas fa-plus pl-2"></i></button>
+                        <button type="button" class="btn bluebtn"  data-toggle="modal" data-target="#add_item_category">Add Item Category<i class="fas fa-plus pl-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -154,7 +155,7 @@ $('#edit_item_category').on('show.bs.modal', function(e) {
                 <div class="modal fade" id="edit_item_category" tabindex="-1" role="dialog" aria-labelledby="edit_item_categoryLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
-                        <div class="modal-header" style = "background-color:#e56b6f;">
+                        <div class="modal-header" style = "background-color:#3b75f2ff;">
                             <h5 class="modal-title" id="edit_item_categoryLabel" style ="color:white;">Edit Item Category</h5>
                             <button style ="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>

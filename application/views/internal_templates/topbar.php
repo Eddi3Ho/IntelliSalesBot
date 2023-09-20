@@ -16,10 +16,6 @@
         max-height: 15.0em;
         overflow-y: auto;
     }
-
-    .greenbtn{
-
-    }
     
     .bluebtn{
         background-color: #3b75f2; 

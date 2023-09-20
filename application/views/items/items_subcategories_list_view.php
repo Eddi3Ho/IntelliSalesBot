@@ -1,20 +1,21 @@
 
 <style>
-.table-striped tbody tr:nth-of-type(odd) {
-    background: white;
-}
+    .table-striped tbody tr:nth-of-type(odd) {
+        background: white;
+    }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background: #E4C2C1;
-}
+    .table-striped tbody tr:nth-of-type(even) {
+        background: #f2f2f2;
+    }
 
-.table-striped thead tr:nth-of-type(odd) {
-    background: #EBE8E8;
-}
+    .table-striped thead tr:nth-of-type(odd) {
+        background: #292e32;
+        color:white;
+    }
 
-.table-striped {
-    color: black;
-}
+    .table-striped {
+        color: black;
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -61,7 +62,7 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 font-weight-bold" style="color: black"><?= $item_category_data->item_category_name ?></h1>
                    
-                            <a type="button" href="<?= base_url('items/Items/items_categories');?>" class="btn" style="background-color: #B6666F; color: white;">Back<i class="fas fa-undo pl-1"></i></a>
+                            <a type="button" href="<?= base_url('items/Items/items_categories');?>" class="btn bluebtn" >Back<i class="fas fa-undo pl-1"></i></a>
                         
                 </div>
 
@@ -72,12 +73,12 @@
                             <li class="breadcrumb-item">
                                 <a href="<?= base_url('items/Items/items_categories');?>"><i class="fas fa-tags mr-2"></i>Item Categories</a>
                             </li>
-                            <li class="breadcrumb-item active"><?= $item_category_data->item_category_name ?></li>
+                            <li class="breadcrumb-item active">Subcategory: <?= $item_category_data->item_category_name ?></li>
                         </ol>
                     </div>
                     <div class = "col-xl-4">
                         <div class = "d-flex justify-content-end">
-                            <button type="button" class="btn" style="background-color: #FF545D; color: white;" data-toggle="modal" data-target="#add_item_subcategory">Add Item Subcategory<i class="fas fa-plus pl-2"></i></button>
+                            <button type="button" class="btn bluebtn" data-toggle="modal" data-target="#add_item_subcategory">Add Item Subcategory<i class="fas fa-plus pl-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -115,7 +116,7 @@
                 <div class="modal fade" id="add_item_subcategory" tabindex="-1" role="dialog" aria-labelledby="add_item_subcategoryLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
-                        <div class="modal-header" style = "background-color:#e56b6f;">
+                        <div class="modal-header" style = "background-color:#3b75f2ff;">
                             <h5 class="modal-title" id="add_item_subcategoryLabel" style ="color:white;">Add Item Subcategory</h5>
                             <button style ="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -133,7 +134,7 @@
                                 </div>
 
                             <div class="modal-footer">
-                                <button  type="submit" class="btn" style="background-color: #FF545D; color: white; float:right;" >Submit<i class="fas fa-check pl-2"></i></button>
+                                <button  type="submit" class="btn btn-success" style="float:right;" >Submit<i class="fas fa-check pl-2"></i></button>
                                 <button type="button" class="btn btn-secondary float-right ml-2" data-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -148,7 +149,7 @@
                 <div class="modal fade" id="edit_item_subcategory" tabindex="-1" role="dialog" aria-labelledby="edit_item_subcategoryLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
-                        <div class="modal-header" style = "background-color:#e56b6f;">
+                        <div class="modal-header" style = "background-color:#3b75f2ff;">
                             <h5 class="modal-title" id="edit_item_subcategoryLabel" style ="color:white;">Edit Item Subcategory</h5>
                             <button style ="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>

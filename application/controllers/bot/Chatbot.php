@@ -11,7 +11,6 @@ class Chatbot extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('sales_model');
         $this->load->model('chatbot_model');
-        $this->load->helper('ml');
 
         if (!$this->session->userdata('user_id') || !$this->session->userdata('user_role')) {
             redirect('users/login/verify_users/');
@@ -20,17 +19,6 @@ class Chatbot extends CI_Controller
 
     public function index()
     {
-        // Load the CSV dataset
-        $csvFile = FCPATH . 'assets/files/dataset.csv';
-        $groupedData  = groupItemDescription($csvFile);
-
-        // Display the CSV data for testing
-        echo '<pre>';
-        print_r($groupedData);
-        echo '</pre>';
-        
-        die;
-        
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'chatbot';
         $data['include_js'] = 'chatbot';

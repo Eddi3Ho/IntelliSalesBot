@@ -1,20 +1,21 @@
 
 <style>
-.table-striped tbody tr:nth-of-type(odd) {
-    background: white;
-}
+    .table-striped tbody tr:nth-of-type(odd) {
+        background: white;
+    }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background: #E4C2C1;
-}
+    .table-striped tbody tr:nth-of-type(even) {
+        background: #f2f2f2;
+    }
 
-.table-striped thead tr:nth-of-type(odd) {
-    background: #EBE8E8;
-}
+    .table-striped thead tr:nth-of-type(odd) {
+        background: #292e32;
+        color:white;
+    }
 
-.table-striped {
-    color: black;
-}
+    .table-striped {
+        color: black;
+    }
 </style>
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
@@ -70,14 +71,14 @@
                                 <a href="<?= base_url('items/Items/items_categories');?>"><i class="fas fa-tags mr-2"></i>Item Categories</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="<?= base_url('items/Items/items_subcategories/'.$item_subcategory_data->item_category_id);?>"><?=$item_subcategory_data->item_category_name?></a>
+                                <a href="<?= base_url('items/Items/items_subcategories/'.$item_subcategory_data->item_category_id);?>">Subcategory: <?=$item_subcategory_data->item_category_name?></a>
                             </li>
                             <li class="breadcrumb-item active"><?= $item_subcategory_data->item_subcategory_name ?></li>
                         </ol>
                     </div>
                     <div class = "col-xl-4">
                         <div class = "d-flex justify-content-end">
-                            <a type="button" href="<?= base_url('items/Items/items_subcategories/'.$item_subcategory_data->item_category_id);?>" class="btn" style="background-color: #B6666F; color: white;">Back<i class="fas fa-undo pl-1"></i></a>
+                            <a type="button" href="<?= base_url('items/Items/items_subcategories/'.$item_subcategory_data->item_category_id);?>" class="btn bluebtn">Back<i class="fas fa-undo pl-1"></i></a>
                         </div>
                     </div>
                 </div>

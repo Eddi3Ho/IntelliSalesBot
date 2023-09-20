@@ -131,6 +131,16 @@
         background-color: #b02c39 !important;
     }
 </style>
+
+<?php
+// Check if the $pdf_files array is empty
+if (empty($pdf_files)) {
+    $file_upload = 0;
+} else {
+    $file_upload = 1;
+}
+?>
+
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
@@ -146,6 +156,10 @@
         ?>
         existing_file_names.push(<?php echo $pdf_file_json; ?>); // Push each PHP value into the JavaScript array
     <?php endforeach; ?>
+
+    var file_upload = <?php echo $file_upload; ?>;
+    var user_role = "<?=$this->session->userdata('user_role')?>";
+
 </script>
 
 <body id="page-top">

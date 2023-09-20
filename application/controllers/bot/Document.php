@@ -22,22 +22,6 @@ class Document extends CI_Controller
 
     public function index()
     {
-        // $sentence = "";
-        // $document_list = $this->document_chatbot_model->get_documents_detail();
-
-        // foreach ($document_list as $document_row) {
-        //     $sentence .= 'Document Name: '. $document_row->doc_name. ', Document Content: {{'. $document_row->extracted_text.'}}\n';
-        // }
-
-        // $conversation = array(
-        //     array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
-        //     You are a document analyst that is able to answer question according to the documents content that was extracted from pdf documents. 
-        //     The following are document contents, each document labelled with the documents name and the content for the document is wrap inside a "{{}}".\n
-        //     The documents are as followed:\n 
-        //     '.$sentence),
-        // );
-
-        // print_r($conversation);
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'document';
         $data['include_js'] = 'document_chatbot';
