@@ -64,26 +64,28 @@ function enter_prompt(text = "default value") {
                 //Close loading pop up
                 swal.close();
 
-                // //change global variable so its NOT a new chat
-                // var delay = 20; // Delay in milliseconds between each character
+                var xaxis = response.xaxis;
+                var yaxis = response.yaxis;
+                var return_chat_id = response.cchat_id;
+                var type_of_graph = response.type_graph;
 
-                // //append gpt response text
-                // $('#conversation_body').append('<div class="row py-2 ml-5 my-1 mr-2 justify-content-end">' +
-                //     '    <div class="card chatbubble ml-4" style="background-color: #007aff; color: white;">' +
-                //     '        <div class="card-body response-card"></div>' +
-                //     '    </div>' +
-                //     '</div>');
 
-                // // Append text with the writing effect
-                // appendTextWithDelay({response}, delay);
                 $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
-                                <div class="card-body response-card">${response}</div>
+                            <div class="card chatbubble ml-4" style="background-color: white; color: white;">
+                                <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
                             </div>
                         </div>
                     `);
+                //new graph
 
+                //Bar Graph
+                if (type_of_graph === 1) {
+                    new_bar_graph(xaxis, yaxis, 'canvas' + return_con_id, response.title, response.label);
+                }else{
+                    //line graph
+                }
+                
             },
             error: function (xhr, status, error) {
                 Swal.fire({
@@ -239,7 +241,7 @@ function load_history(con_id) {
                             </div>
                         </div>
                     `);
-                    
+
                 }
 
             });
@@ -424,3 +426,38 @@ function delete_conversation(con_id) {
         }
     })
 }
+
+function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, label) {
+
+    var canvas = document.getElementById(canvas_id);
+
+    // Create the line chart
+    var barChart = new Chart(canvas, {
+        type: 'bar', // Change the chart type to 'bar'
+        data: {
+            labels: itemSubcategories, // X-axis labels
+            datasets: [{
+                label: label, // Label for the dataset
+                data: itemQuantities, // Y-axis data
+                backgroundColor: 'rgba(59, 117, 242, 0.2)', // Bar fill color
+                borderColor: 'rgba(59, 117, 242, 1)', // Bar border color
+                borderWidth: 1, // Bar border width
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // Start y-axis at 0
+                }
+            },
+            title: {
+                display: true,
+                text: title, // Replace with your desired chart title
+                fontSize: 16, // Adjust the font size if needed
+            }
+
+        }
+    });
+
+}
+

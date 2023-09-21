@@ -158,15 +158,14 @@ class Chatbot extends CI_Controller
         //     'content' => $sentence
         // );
 
+        $sentence = $this->sales_reports();
+
         $conversation = array(
             array('role' => 'system', 'content' => 'You uses "\n" when there is a line break. 
-            You are an AI sales analyst and is able to analyst and gain insight from the sales data provided and answer question related to the sales.
-            The sales data are separated by rows and each row are wrap with "{" and "}.
-            The column names of each row is as such: {sold_date, unit_sold, item_name, item_category, price_per_unit, profit_per_unit}. Each column name is separated by a comma. 
+            You are an AI sales analyst that is able to understand the monthly sales report provided and answer question related to the sales.
             The currency for all items are in riggit Malaysia (RM)\n
-            The following are the sales data:\n'.$sentence),
+            The monthly sales report are as followed:\n'.$sentence),
         );
-
         // Get chat history if exist
         if ($this->input->post('new_chat') == "no") {
             $chat_data = $this->chatbot_model->select_chat_history($con_id);

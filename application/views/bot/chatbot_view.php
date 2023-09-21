@@ -39,6 +39,9 @@
         opacity: 1;
     }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- Set base url to javascript variable-->
 <script type="text/javascript">
     var base_url = "<?php echo base_url(); ?>";
@@ -76,7 +79,7 @@
                             </ol>
                         </div>
                     </div>
-
+                    
                     <!-- Content Row (Start here)-->
                     <div class="row" style="padding-bottom: 200px;">
                         <div class="col-xl-12">
@@ -116,8 +119,7 @@
                                                 </div>
                                             </div>
 
-
-
+                                            
                                         </div>
 
                                     </div>
@@ -127,6 +129,9 @@
 
                         </div>
                     </div>
+
+
+
 
                     <div class="row">
                         <div class="col-xl-12 d-flex justify-content-center">
