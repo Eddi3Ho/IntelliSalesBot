@@ -62,36 +62,79 @@ function enter_prompt(text = "default value") {
             success: function (response) {
 
                 //Close loading pop up
-                swal.close();
 
-                var xaxis = response.xaxis;
-                var yaxis = response.yaxis;
-                var return_chat_id = response.cchat_id;
-                var type_of_graph = response.type_graph;
+                var type_of_visualization = response.type_graph;
+                var return_chat_id = response.chat_id;
 
+                //new graph
 
-                $('#conversation_body').append(`
+                console.log(return_chat_id);
+                //Bar Graph
+                if (type_of_visualization === 1) {
+
+                    $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
+                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
                             </div>
                         </div>
                     `);
-                //new graph
 
-                //Bar Graph
-                if (type_of_graph === 1) {
-                    new_bar_graph(xaxis, yaxis, 'canvas' + return_con_id, response.title, response.label);
-                }else{
+                    var xaxis = response.xaxis;
+                    var yaxis = response.yaxis;
+                    new_bar_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                } else if (type_of_visualization === 2) {
                     //line graph
+                    $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                            </div>
+                        </div>
+                    `);
+
+                    var xaxis = response.xaxis;
+                    var yaxis = response.yaxis;
+                    new_line_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                } else if (type_of_visualization === 3) {
+
+                    //If there are data found
+                    if (response.exist_data === 1) {
+                        $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                                <div class="card-body response-card">`+ response.table_data + `</div>
+                            </div>
+                        </div>
+                    `);
+                    } else {
+                        $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: black;">
+                                <div class="card-body response-card">No data found</div>
+                            </div>
+                        </div>
+                    `);
+                    }
+
                 }
-                
+
+                $('#user_prompt').text("");
+                swal.close();
+
+
             },
             error: function (xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'There was an error generating your response, please try again',
-                })
+                $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
+                                <div class="card-body response-card">I do not understand your question. Please try again or refer to the user guide for more information on how to structure your question</div>
+                            </div>
+                        </div>
+                    `);
+                swal.close();
             }
         });
         load_conversation(current_con_id);
@@ -427,7 +470,7 @@ function delete_conversation(con_id) {
     })
 }
 
-function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, label) {
+function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, label, time_frame) {
 
     var canvas = document.getElementById(canvas_id);
 
@@ -446,8 +489,35 @@ function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, labe
         },
         options: {
             scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Categories',
+                        color: '#911',
+                        font: {
+                            family: 'Comic Sans MS',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
                 y: {
-                    beginAtZero: true // Start y-axis at 0
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Unit Sold',
+                        color: '#191',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
                 }
             },
             title: {
@@ -459,5 +529,66 @@ function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, labe
         }
     });
 
+}
+
+function new_line_graph(item_name, item_sales, canvas_id, title, label, time_frame) {
+
+    var canvas = document.getElementById(canvas_id);
+
+    var lineChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: item_name, // X-axis labels
+            datasets: [{
+                label: label, // Label for the dataset
+                data: item_sales, // Y-axis data
+                backgroundColor: 'rgba(59, 117, 242, 0.2)', // Fill color
+                borderColor: 'rgba(59, 117, 242, 1)', // Line color
+                borderWidth: 3, // Line width
+                fill: false,
+                tension: 0,
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Item Name',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Sales Generated',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+            },
+            title: {
+                display: true,
+                text: title, // Replace with your desired chart title
+                fontSize: 16, // Adjust the font size if needed
+            },
+
+        }
+    });
 }
 

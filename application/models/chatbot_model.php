@@ -126,7 +126,7 @@ class chatbot_model extends CI_Model
     }
 
     //==================== Sales Report Functions =============================
-    function select_weekly_sales_report($start_date, $end_date, $limit)
+    function select_weekly_sales_report($start_date, $end_date, $limit, $type, $focus)
     {
         $this->db->select('sales_item.item_id, items.item_name, items_subcategory.item_subcategory_name, SUM(sales_item.sale_item_quantity) AS item_total_quantity, SUM(sales_item.sale_item_total_price) AS item_total_sale');
         $this->db->from('sales_item');
@@ -135,15 +135,23 @@ class chatbot_model extends CI_Model
         $this->db->join('items_subcategory', 'items_subcategory.item_subcategory_id = items.item_subcategory_id');
         $this->db->where('sales.sale_date >=', $start_date);
         $this->db->where('sales.sale_date <=', $end_date);
-        $this->db->group_by("sales_item.item_id");
-        $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
+        if($type == 'item'){
+            $this->db->group_by("sales_item.item_id");
+        }elseif($type == 'category'){
+            $this->db->group_by("items_subcategory.item_subcategory_id");
+        }
+        if($focus == 'unit'){
+            $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
+        }elseif($focus == 'price'){
+            $this->db->order_by('SUM(sales_item.sale_item_total_price)', 'DESC');
+        }
         $this->db->limit($limit);
 
         $query = $this->db->get()->result();
         return $query;
     }    
 
-    function select_monthly_sales_report($month, $year, $limit)
+    function select_monthly_sales_report($month, $year, $limit, $type, $focus)
     {
         $start_date = $year . "-" . $month . "-01";
         $d = new DateTime($start_date);
@@ -157,11 +165,21 @@ class chatbot_model extends CI_Model
         $this->db->where('sales.sale_date >=', $start_date);
         $this->db->where('sales.sale_date <=', $end_date);
         $this->db->group_by("sales_item.item_id");
-        $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
+        if($type == 'item'){
+            $this->db->group_by("sales_item.item_id");
+        }elseif($type == 'category'){
+            $this->db->group_by("items_subcategory.item_subcategory_id");
+        }
+        if($focus == 'unit'){
+            $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
+        }elseif($focus == 'price'){
+            $this->db->order_by('SUM(sales_item.sale_item_total_price)', 'DESC');
+        }
         $this->db->limit($limit);
 
         $query = $this->db->get()->result();
         return $query;
     }  
+
 
 }

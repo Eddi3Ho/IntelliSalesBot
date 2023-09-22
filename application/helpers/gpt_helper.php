@@ -35,12 +35,12 @@ if (!function_exists('generate_text')) {
 }
 
 if (!function_exists('generate_function')) {
-    function generate_function($messages) {
+    function generate_function($messages, $available_item) {
 
         $functions = [
             [
                 "name" => "get_top_selling_category_dates",
-                "description" => "Get the top selling category between two dates",
+                "description" => "Get the top selling category in terms of unit sold between two dates",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
@@ -62,7 +62,7 @@ if (!function_exists('generate_function')) {
             ],
             [
                 "name" => "get_top_selling_category_monthly",
-                "description" => "Get the top selling category for a specific month and year",
+                "description" => "Get the top selling category in terms of unit sold for a specific month and year",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
@@ -80,6 +80,116 @@ if (!function_exists('generate_function')) {
                         ],
                     ],
                     "required" => ["month", "year", "limit"],
+                ],
+            ],
+            [
+                "name" => "get_top_earning_item_dates",
+                "description" => "Get the top earning item or product in terms of sales generated between two dates",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "start_date" => [
+                            "type" => "string",
+                            "description" => "The start date of when the data should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "end_date" => [
+                            "type" => "string",
+                            "description" => "The end date of when the category should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "limit" => [
+                            "type" => "integer",
+                            "description" => "The value that decides the number of top selling category eg: top 10, top 20. Default is 10",
+                        ],
+                    ],
+                    "required" => ["start_date", "end_date", "limit"],
+                ],
+            ],
+            [
+                "name" => "get_top_earning_items_monthly",
+                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "month" => [
+                            "type" => "integer",
+                            "description" => "The month for which data is quried for in number between 1 to 12",
+                        ],
+                        "year" => [
+                            "type" => "string",
+                            "description" => "The year that serves as a parameter to query the best selling category, only accepts from year 2018 to the current year",
+                        ],
+                        "limit" => [
+                            "type" => "integer",
+                            "description" => "The value that decides the number of top selling category eg: top 10, top 20. Default is 10",
+                        ],
+                    ],
+                    "required" => ["month", "year", "limit"],
+                ],
+            ],
+            [
+                "name" => "sales_earning_table_dates",
+                "description" => "Get the top earning item or product in terms of sales generated between two dates specifically in table format",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "start_date" => [
+                            "type" => "string",
+                            "description" => "The start date of when the data should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "end_date" => [
+                            "type" => "string",
+                            "description" => "The end date of when the category should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "limit" => [
+                            "type" => "integer",
+                            "description" => "The value that decides the number of top selling category eg: top 10, top 20. Default is 10",
+                        ],
+                    ],
+                    "required" => ["start_date", "end_date", "limit"],
+                ],
+            ],
+            [
+                "name" => "sales_earning_table_monthly",
+                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year, and specifically in table format",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "month" => [
+                            "type" => "integer",
+                            "description" => "The month for which data is quried for in number between 1 to 12",
+                        ],
+                        "year" => [
+                            "type" => "string",
+                            "description" => "The year that serves as a parameter to query the best selling category, only accepts from year 2018 to the current year",
+                        ],
+                        "limit" => [
+                            "type" => "integer",
+                            "description" => "The value that decides the number of top selling category eg: top 10, top 20. Default is 10",
+                        ],
+                    ],
+                    "required" => ["month", "year", "limit"],
+                ],
+            ],
+            [
+                "name" => "compare_items_sales_dates",
+                "description" => "Compare sales generated by one or more than one item between between two dates",
+                "parameters" => [
+                    "type" => "object",
+                    "properties" => [
+                        "start_date" => [
+                            "type" => "string",
+                            "description" => "The start date of when the data should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "end_date" => [
+                            "type" => "string",
+                            "description" => "The end date of when the category should be queried and it is in MySQL datetime format, e.g. '2023-09-21 10:00:00'",
+                        ],
+                        "item" => [
+                            "type" => "string",
+                            "description" => "An array of item name. Item name will be given from the prompt and you are expected to look for the item id from the list provided. The following is the list of the available item name: {".$available_item."}.",
+                        ],
+                    ],
+                    "required" => ["start_date", "end_date", "item"],
                 ],
             ],
         ];

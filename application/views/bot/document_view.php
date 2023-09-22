@@ -300,7 +300,7 @@ if (empty($pdf_files)) {
                                                                 <h6 class="pt-1 px-1" style="font-weight: 700;"><?php echo $pdf_file->doc_name; ?>.pdf</h6>
                                                                 <p class="px-1" style="font-size: 0.7rem;"><?php echo date("F j, Y, g:i a", strtotime($pdf_file->upload_date)); ?></p>
                                                                 <div class="group_buttons">
-                                                                    <a class="button view-button unique-view-button" style="background-color: #3b75f2; color:white;" href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">View</a>
+                                                                    <a class="button view-button unique-view-button" style="background-color: #3b75f2; color:white;" href="<?php echo base_url('assets/files/' . $pdf_file->doc_name . '.pdf'); ?>" target="_blank">Open</a>
                                                                     <button class="delete-button unique-delete-button mt-2" onclick="delete_file(<?= $pdf_file->doc_id ?>)" id="button<?= $pdf_file->doc_id ?>" data-id="<?php echo $pdf_file->doc_id; ?>" data-name="<?= $pdf_file->doc_name ?>">Delete</button>
                                                                 </div>
                                                             </div>

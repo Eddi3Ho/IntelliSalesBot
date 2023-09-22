@@ -80,6 +80,8 @@ function enter_prompt(text = "default value") {
                 success: function (response) {
 
                     //Close loading pop up
+                    $('#user_prompt').text("");
+
                     swal.close();
 
                     // //change global variable so its NOT a new chat
@@ -454,59 +456,65 @@ function showPdfUploadDialog() {
         },
         showCancelButton: true,
         confirmButtonText: 'Upload',
-        showLoaderOnConfirm: true,
+        showLoaderOnConfirm: true, // Show loader on confirm button click
         preConfirm: (file) => {
             return new Promise((resolve) => {
                 if (file) {
                     // Get the selected file name without extension
                     const selectedFileName = file.name.replace(/\.[^/.]+$/, "");
-
+    
                     // Check if the selected file name exists in the array
                     if (existing_file_names.includes(selectedFileName)) {
-                        Swal.showValidationMessage('File with the same name already exist. Please upload a file with a different name');
+                        Swal.showValidationMessage('File with the same name already exists. Please upload a file with a different name');
                         resolve();
                     } else {
+                        // Display a loading spinner    
                         // Continue with the file upload
                         const formData = new FormData();
                         formData.append('pdfFile', file);
-
+    
                         fetch(base_url + "bot/document/upload_file", {
                             method: 'POST',
                             body: formData
                         })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                } else {
-                                    throw new Error('File upload failed');
-                                }
-                            })
-                            .then(data => {
-
-
-                                if (data.success) {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: data.message,
-                                        icon: 'success'
-                                    });
-                                    //Append uploaded file to UI
-                                    append_new_file(data.doc_id, data.doc_name, data.upload_date);
-                                } else {
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: data.message,
-                                        icon: 'error'
-                                    });
-                                }
-                            })
-                            .catch(error => {
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('File upload failed');
+                            }
+                        })
+                        .then(data => {
+    
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.message,
+                                    icon: 'success'
+                                });
+                                // Append uploaded file to UI
+                                append_new_file(data.doc_id, data.doc_name, data.upload_date);
+                            } else {
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: error.message,
+                                    text: data.message,
                                     icon: 'error'
                                 });
+                            }
+                        })
+                        .catch(error => {
+                            // Close the loading spinner
+                            Swal.close();
+    
+                            Swal.fire({
+                                title: 'Error!',
+                                text: error.message,
+                                icon: 'error'
                             });
+                        });
+    
+                        // Resolve the promise after initiating the AJAX request
+                        // The loading spinner will remain open until the promise is resolved
                         resolve();
                     }
                 } else {
@@ -521,27 +529,25 @@ function showPdfUploadDialog() {
 
 function append_new_file(doc_id, doc_name, upload_date) {
 
-    var htmlContent = '<div class="col-md-3 pb-4">' +
-        '<div class="px-2">' +
-        '<div class="custom-card">' +
-        '<div class="thumbnail">' +
-        '<button class="close-button" onclick="delete_file(' + doc_id + ')" id="button' + doc_id + '" data-id="' + doc_id + '" data-name="' + doc_name + '">' +
-        '<i class="fa fa-times-circle"></i>' +
-        '</button>' +
-        '<a href="' + base_url + 'assets/files/' + doc_name + '.pdf' + '" target="_blank">' +
-        '<img src="' + base_url + 'assets/thumbnail/' + doc_name + '.png' + '" alt="PDF Thumbnail" class="img-responsive">' +
-        '</a>' +
-        '</div>' +
-        '<div class="caption" style="text-align: center;">' +
-        '<h6 class="pt-1 px-1" style="font-weight: 700;">' + doc_name + '.pdf</h6>' +
-        '<p class="px-1" style="font-size: 0.7rem;">' + upload_date + '</p>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
-
-    // Append the HTML to the specified container
-    $("#file_grid").append(htmlContent);
+    $("#file_grid").append(`
+        <div class="col-md-3 pb-4" id="col` + doc_id + `">
+            <div class="px-2">
+                <div class="custom-card">
+                    <div class="thumbnail">
+                        <img src="` + base_url + 'assets/thumbnail/' + doc_name + '.png' + `" alt="PDF Thumbnail" class="img-responsive">
+                    </div>
+                    <div class="caption" style="text-align: center;">
+                        <h6 class="pt-1 px-1" style="font-weight: 700;">`+ doc_name +`.pdf</h6>
+                        <p class="px-1" style="font-size: 0.7rem;">`+ upload_date +`</p>
+                        <div class="group_buttons">
+                            <a class="button view-button unique-view-button" style="background-color: #3b75f2; color:white;" href="`+ base_url + 'assets/files/' + doc_name + '.pdf' +`" target="_blank">Open</a>
+                            <button class="delete-button unique-delete-button mt-2" onclick="delete_file(` + doc_id + `)" id="button` + doc_id + `" data-id="` + doc_id + `" data-name="`+ doc_name +`">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
 }
 
 function delete_file($button_id) {
