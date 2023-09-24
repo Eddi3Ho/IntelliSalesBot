@@ -20,10 +20,11 @@ class Chatbot extends CI_Controller
         }
     }
 
-    public function index()
+    public function testing()
     {
+
         // Retrieve the data from the POST request
-        $prompt = 'compare the sales between Actimax, Appeton Multivitamin and Flo Sinus from 1 July 2023 to 30 July 2023 ';
+        $prompt = 'compare the unit sold between Blackmores Proceive Care, Acetan 100mg Tablet and Diabetmin 500mg Tablet from october 2022 to may 2023.';
         //con_id can be 0 which means its new
         $con_id = 75;
 
@@ -35,57 +36,74 @@ class Chatbot extends CI_Controller
 
         $item_date = $this->items_model->select_all_items();
         $items_combine = '';
-        foreach($item_date as $item_date){
-        $items_combine .= $item_date->item_name.', ';
+        foreach ($item_date as $item_date) {
+            $items_combine .= '"' . $item_date->item_id . ' = ' . $item_date->item_name . '", ';
         }
 
         $gpt_response = generate_function($conversation, $items_combine);
         $function_name = $gpt_response['name'];
+        $arguments = json_decode($gpt_response["arguments"], true);
 
+        $item_array = $arguments["item_id"];
+        $sales_unit_decision = $arguments["sales_or_unit"];
 
-        if (method_exists($this, $function_name)) {
+        $startDate = strtotime($arguments['start_month_year']);
+        $endDate = strtotime($arguments['end_month_year']);
 
-            // Create new table in conversation history and chat history if its new chat
-            if ($this->input->post('new_chat') == "yes") {
+        $months_range = array();
 
-                //Default uses first five word as the conversation name
-                $words = explode(" ", $prompt);
-                $first_five_words = array_slice($words, 0, 5);
-                $first_five_words = implode(" ", $first_five_words);
+        while ($startDate <= $endDate) {
+            $monthNumber = date('m', $startDate); // Get the month number
+            $year = date('Y', $startDate); // Get the year
+            $monthName = date('F', $startDate); // Get the full month name
 
-                $con_data =
-                    [
-                        'user_id' => $this->session->userdata('user_id'),
-                        'con_name' => $first_five_words,
-                        'chatbot_type' => 1
-                    ];
-                $con_id = $this->chatbot_model->insert_history($con_data);
-            }
+            // Add month and year to the array as a subarray
+            $months_range[] = array(
+                'year' => $year,
+                'month' => $monthNumber
+            );
 
-            //Update latest_update datetime column
-            $this->chatbot_model->update_last_update($con_id);
-
-            //Update conversation_history no_of_message
-            $this->chatbot_model->increase_no_of_message($con_id);
-
-            //Create new chat regardless of whether its new chat or not
-            //One for user prompt
-            $chat_data =
-                [
-                    'con_id' => $con_id,
-                    'message' => $prompt,
-                    'role' => 1,
-                ];
-
-            $chat_id = $this->chatbot_model->insert_chat($chat_data);
-
-
-            //Choosing functions to call
-            $arguments = json_decode($gpt_response["arguments"], true);
-            $response = call_user_func_array([$this, $function_name], array($arguments, $chat_id));
+            $startDate = strtotime("+1 month", $startDate); // Move to the next month
         }
-        //         $results = $this->chatbot_model->select_monthly_sales_report(7, 2023, 10, "item", "price");
 
+        //array dataset for line graph
+        $dataset = array();
+        
+
+        foreach ($item_array as $item_id) {
+            $item_data = array();
+            foreach ($months_range as $period) {
+                $item_monthly_data = $this->chatbot_model->total_unit_sales_per_item($period['month'], $period['year'], $item_id);
+
+                //If item has made at least one sales, else sales is 0
+                if ($item_monthly_data == false) {
+                    $item_data[] = 0;
+                } else {
+                    $item_data[] = $item_monthly_data->item_total_sale;
+                }
+                $item_name = $this->chatbot_model->get_item_name($item_id);
+
+                
+            }
+            $dataset[] = array(
+                'label' => $item_name,
+                'data' => $item_data,
+                'borderWidth' => 3,
+                'fill' => false,
+            ); 
+        }
+        print_r($dataset);
+
+
+        // print_r($item_date);
+
+        // Output the array of months
+        die;
+    }
+
+    public function index()
+    {
+        // $this->testing();
         $data['title'] = 'IntelliSalesBot | Chatbot';
         $data['selected'] = 'chatbot';
         $data['include_js'] = 'chatbot';
@@ -133,8 +151,8 @@ class Chatbot extends CI_Controller
 
         $item_date = $this->items_model->select_all_items();
         $items_combine = '';
-        foreach($item_date as $item_date){
-            $items_combine .= $item_date->item_name.', ';
+        foreach ($item_date as $item_date) {
+            $items_combine .= '"' . $item_date->item_id . ' = ' . $item_date->item_name . '", ';
         }
 
         $gpt_response = generate_function($conversation, $items_combine);
@@ -170,7 +188,7 @@ class Chatbot extends CI_Controller
             //One for user prompt
             $chat_data =
                 [
-                    'con_id' => $con_id,
+                    'con_id' => 75,
                     'message' => $prompt,
                     'role' => 1,
                 ];
@@ -180,6 +198,7 @@ class Chatbot extends CI_Controller
 
             //Choosing functions to call
             $arguments = json_decode($gpt_response["arguments"], true);
+            //calls function given by gpt and pass the parameters given by gpt
             $response = call_user_func_array([$this, $function_name], array($arguments, $chat_id));
 
             //one for gpt response
@@ -430,7 +449,7 @@ class Chatbot extends CI_Controller
                 '<table class="table data-table" >
                 <thead>
                     <tr>
-                        <th colspan="5" style ="font-size:1.5rem;" class="text-center">Top ' . count($results) . ' best earning items in terms of sales from ' . $new_start_date . ' to ' . $new_end_date. '</th>
+                        <th colspan="5" style ="font-size:1.5rem;" class="text-center">Top ' . count($results) . ' best earning items in terms of sales from ' . $new_start_date . ' to ' . $new_end_date . '</th>
                     </tr>   
                 </thead>
                 <thead>
@@ -559,37 +578,84 @@ class Chatbot extends CI_Controller
         return $response;
     }
 
-    public function compare_items_sales_dates($arguments, $chat_id)
+    public function compare_items_sales_unit_dates($arguments, $chat_id)
     {
-        $item_array = $arguments["item"];
-        print_r($item_array);die;
-        $results = $this->chatbot_model->select_weekly_sales_report($arguments["start_date"], $arguments["end_date"], $arguments["limit"], "item", "price");
+        $item_array = $arguments["item_id"];
+        $sales_unit_decision = $arguments["sales_or_unit"];
 
-        $item_name = [];
-        $item_total_sale = [];
-        $limit = 0;
-        // Loop through the results and extract the desired columns
-        foreach ($results as $row) {
-            $item_name[] = $row->item_subcategory_name;
-            $item_total_sale[] = $row->item_total_sale;
-            $limit++;
+        $startDate = strtotime($arguments['start_month_year']);
+        $endDate = strtotime($arguments['end_month_year']);
+
+        $months_range = array();
+        //array of months for the label in the line graph
+        $months_labels = array();
+
+        while ($startDate <= $endDate) {
+            $monthNumber = date('m', $startDate); // Get the month number
+            $year = date('Y', $startDate); // Get the year
+            $monthName = date('F', $startDate); // Get the full month name
+
+            // Add month and year to the array as a subarray
+            $months_range[] = array(
+                'year' => $year,
+                'month' => $monthNumber
+            );
+            $months_labels[] = $monthName;
+
+
+            $startDate = strtotime("+1 month", $startDate); // Move to the next month
         }
-        $new_start_date = (new DateTime($arguments["start_date"]))->format('d F Y');
-        $new_end_date = (new DateTime($arguments["end_date"]))->format('d F Y');
+
+        //array dataset for line graph
+        $dataset = array();
+        //Title for graph
+        $title = "Sales made by ";
+
+        foreach ($item_array as $item_id) {
+
+            foreach ($months_range as $period) {
+                $item_data = array();
+
+                $item_monthly_data = $this->chatbot_model->total_unit_sales_per_item($period['month'], $period['year'], $item_id);
+
+                //If item has made at least one sales, else sales is 0
+                if ($item_monthly_data == false) {
+                    $item_data[] = 0;
+                } else {
+                    $item_data[] = $item_monthly_data->item_total_sale;
+                }
+            }
+            $item_name = $this->chatbot_model->get_item_name($item_id);
+            $title .= $item_name->item_name . ", ";
+
+            $dataset[] = array(
+                'label' => $item_name->item_name,
+                'data' => $item_data,
+                'borderWidth' => 3,
+                'fill' => false,
+            );
+        }
+
+        //complete title
+        $title .= "from " . $arguments['start_month_year'] . " to " . $arguments['end_month_year'];
 
         // Prepare the JSON response with the extracted data
         $response = [
             'success' => true,
-            'xaxis' => $item_name,
-            'yaxis' => $item_total_sale,
-            'limit' => $limit,
+            'dataset' => $dataset,
             'chat_id' => $chat_id,
-            'title' => 'Top ' . $limit . ' best earning items in terms of sales from ' . $new_start_date . ' to ' . $new_end_date,
-            'label' => 'Total Sales Earned',
-            'time_frame' => 'date',
-            'type_graph' => 2
+            'title' => $title,
+            'label' => $months_labels,
+            'type_graph' => 4
         ];
 
         return $response;
+    }
+
+    public function get_dataset()
+    {
+        // $this->output
+        //     ->set_content_type('application/json')
+        //     ->set_output(json_encode($con_id));
     }
 }

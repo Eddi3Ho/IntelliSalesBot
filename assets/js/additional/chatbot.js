@@ -119,6 +119,17 @@ function enter_prompt(text = "default value") {
                     `);
                     }
 
+                } else if(type_of_visualization === 4){
+                //line graph
+                    $('#conversation_body').append(`
+                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                            </div>
+                        </div>
+                    `);
+                    new_multi_line_graph('canvas' + return_chat_id, response.title, response.dataset, response.label);
+
                 }
 
                 $('#user_prompt').text("");
@@ -548,6 +559,60 @@ function new_line_graph(item_name, item_sales, canvas_id, title, label, time_fra
                 fill: false,
                 tension: 0,
             }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Item Name',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Sales Generated',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+            },
+            title: {
+                display: true,
+                text: title, // Replace with your desired chart title
+                fontSize: 16, // Adjust the font size if needed
+            },
+
+        }
+    });
+}
+
+function new_multi_line_graph(canvas_id, title, dataset, month_label) {
+
+    console.log(dataset);
+    var canvas = document.getElementById(canvas_id);
+
+    var lineChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: month_label, // X-axis labels
+            datasets: dataset 
         },
         options: {
             scales: {

@@ -169,14 +169,10 @@ class Sales extends CI_Controller
 		foreach ($sale_item_data as $r) {
 			$counter++;
 			//implement background color for even number row
-			if ($counter % 2 == 0) {
-				$style = 'style = "background:#E4C2C1;"';
-			} else {
-				$style = '';
-			}
+
 			$item_pic = '<img class="view_img_item" src="'.base_url("assets/img/items/").$r->item_pic.'" style="width: 60px; height: 60px; object-fit:contain;">';
 
-			$sale_row_html .= '<tr ' . $style . '>
+			$sale_row_html .= '<tr>
 								<td>' . $counter . '</td>
 								<td>' . $item_pic . '</td>
 								<td>' . $r->item_subcategory_name . '</td>

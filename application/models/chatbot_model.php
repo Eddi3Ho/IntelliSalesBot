@@ -11,7 +11,8 @@ class chatbot_model extends CI_Model
         $this->chatbot_type = 1; // Assign the value within the constructor method
     }
 
-    public function get_global_variable() {
+    public function get_global_variable()
+    {
         return $this->chatbot_type;
     }
 
@@ -69,7 +70,7 @@ class chatbot_model extends CI_Model
         $this->db->from('conversation_history');
         $this->db->where('user_id', $user_id);
         $this->db->where('chatbot_type', $this->get_global_variable()); //addedd
-        $this->db->order_by('last_update', 'DESC');        
+        $this->db->order_by('last_update', 'DESC');
         $query = $this->db->get()->result();
         return $query;
     }
@@ -84,8 +85,9 @@ class chatbot_model extends CI_Model
         return $query;
     }
 
-    function update_last_update($con_id) {
-        $currentDateTime = date('Y-m-d H:i:s'); 
+    function update_last_update($con_id)
+    {
+        $currentDateTime = date('Y-m-d H:i:s');
         $this->db->set('last_update', $currentDateTime);
         $this->db->where('con_id', $con_id);
         $this->db->update('conversation_history');
@@ -101,7 +103,7 @@ class chatbot_model extends CI_Model
     {
         $this->db->where('user_id', $user_id);
         $this->db->where('chatbot_type', $this->get_global_variable()); //addedd
-        $this->db->order_by('last_update', 'DESC');        
+        $this->db->order_by('last_update', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get('conversation_history');
 
@@ -135,21 +137,21 @@ class chatbot_model extends CI_Model
         $this->db->join('items_subcategory', 'items_subcategory.item_subcategory_id = items.item_subcategory_id');
         $this->db->where('sales.sale_date >=', $start_date);
         $this->db->where('sales.sale_date <=', $end_date);
-        if($type == 'item'){
+        if ($type == 'item') {
             $this->db->group_by("sales_item.item_id");
-        }elseif($type == 'category'){
+        } elseif ($type == 'category') {
             $this->db->group_by("items_subcategory.item_subcategory_id");
         }
-        if($focus == 'unit'){
+        if ($focus == 'unit') {
             $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
-        }elseif($focus == 'price'){
+        } elseif ($focus == 'price') {
             $this->db->order_by('SUM(sales_item.sale_item_total_price)', 'DESC');
         }
         $this->db->limit($limit);
 
         $query = $this->db->get()->result();
         return $query;
-    }    
+    }
 
     function select_monthly_sales_report($month, $year, $limit, $type, $focus)
     {
@@ -165,21 +167,53 @@ class chatbot_model extends CI_Model
         $this->db->where('sales.sale_date >=', $start_date);
         $this->db->where('sales.sale_date <=', $end_date);
         $this->db->group_by("sales_item.item_id");
-        if($type == 'item'){
+        if ($type == 'item') {
             $this->db->group_by("sales_item.item_id");
-        }elseif($type == 'category'){
+        } elseif ($type == 'category') {
             $this->db->group_by("items_subcategory.item_subcategory_id");
         }
-        if($focus == 'unit'){
+        if ($focus == 'unit') {
             $this->db->order_by('SUM(sales_item.sale_item_quantity)', 'DESC');
-        }elseif($focus == 'price'){
+        } elseif ($focus == 'price') {
             $this->db->order_by('SUM(sales_item.sale_item_total_price)', 'DESC');
         }
         $this->db->limit($limit);
 
         $query = $this->db->get()->result();
         return $query;
-    }  
+    }
+
+    function total_unit_sales_per_item($month, $year, $item_id)
+    {
+        $start_date = $year . "-" . $month . "-01";
+        $d = new DateTime($start_date);
+        $end_date = $d->format('Y-m-t');
+
+        $this->db->select('sales_item.item_id, items.item_name, SUM(sales_item.sale_item_quantity) AS item_total_quantity, SUM(sales_item.sale_item_total_price) AS item_total_sale');
+        $this->db->from('sales_item');
+        $this->db->join('sales', 'sales.sale_id = sales_item.sale_id');
+        $this->db->join('items', 'items.item_id = sales_item.item_id');
+        $this->db->where('sales_item.item_id', $item_id);
+        $this->db->where('sales.sale_date >=', $start_date);
+        $this->db->where('sales.sale_date <=', $end_date);
+        $this->db->group_by("sales_item.item_id");
 
 
+        $query = $this->db->get();
+
+        // Check if there are any rows returned
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            // No rows found, return false or handle the case accordingly
+            return false;
+        }
+    }
+
+    function get_item_name($item_id)
+    {
+        $this->db->select('item_name');
+        $this->db->where('item_id', $item_id);
+        return $this->db->get('items')->row();
+    }
 }
