@@ -264,7 +264,7 @@ function load_history(con_id) {
             con_id: con_id,
         },
         dataType: "json",
-        success: function (response) {
+        success:async function (response) {
 
             //set new con_id
             current_con_id = con_id;
@@ -272,122 +272,12 @@ function load_history(con_id) {
             $('#conversation_body').empty();
 
             //append chat history
-            $.each(response, function (index, chat) {
+            // Process chats sequentially using async/await
+            for (const chat of response) {
+                await doSomething(chat);
+            }
 
-                if (chat.role == 1) {
-
-                    $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
-                        '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
-                        '        <div class="card-body">' +
-                        '            ' + chat.message + '' +
-                        '        </div>' +
-                        '    </div>' +
-                        '</div>');
-
-                } else if (chat.role == 2) {
-
-                    $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
-                                <div class="card-body response-card">${chat.message}</div>
-                            </div>
-                        </div>
-                    `);
-
-                } else {
-                    //get serialize dataset and load visualization
-                    $.ajax({
-                        url: base_url + "bot/chatbot/serialize_message",
-                        type: 'POST',
-                        data: {
-                            chat_id: chat.chat_id,
-                        },
-                        success: function (response) {
-                            var type_of_visualization = response.type_graph;
-                            var return_chat_id = response.chat_id;
-
-                            //new graph
-
-                            //Bar Graph
-                            if (type_of_visualization === 1) {
-
-                                $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
-                            </div>
-                        </div>
-                    `);
-
-                                var xaxis = response.xaxis;
-                                var yaxis = response.yaxis;
-                                new_bar_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
-
-                            } else if (type_of_visualization === 2) {
-                                //line graph
-                                $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
-                            </div>
-                        </div>
-                    `);
-
-                                var xaxis = response.xaxis;
-                                var yaxis = response.yaxis;
-                                new_line_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
-
-                            } else if (type_of_visualization === 3) {
-
-                                //If there are data found
-                                if (response.exist_data === 1) {
-                                    $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card">`+ response.table_data + `</div>
-                            </div>
-                        </div>
-                    `);
-                                } else {
-                                    $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: black;">
-                                <div class="card-body response-card">No data found</div>
-                            </div>
-                        </div>
-                    `);
-                                }
-
-                            } else if (type_of_visualization === 4) {
-                                //line graph
-                                $('#conversation_body').append(`
-                        <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                            <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
-                            </div>
-                        </div>
-                    `);
-                                new_multi_line_graph('canvas' + return_chat_id, response.title, response.dataset, response.label);
-
-                            }
-
-
-                        },
-                        error: function (xhr, status, error) {
-                            // Handle errors, if any
-                            $('#conversation_body').append(`
-                            <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                                <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
-                                    <div class="card-body response-card">There is an error loading this table or graph</div>
-                                </div>
-                            </div>
-                        `);
-
-                        }
-                    });
-                }
-
-            });
+                
             //Close loading pop up
             load_conversation(con_id);
             swal.close();
@@ -401,6 +291,127 @@ function load_history(con_id) {
         }
     });
 }
+
+async function doSomething(chat) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        
+        if (chat.role == 1) {
+
+            $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
+                '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
+                '        <div class="card-body">' +
+                '            ' + chat.message + '' +
+                '        </div>' +
+                '    </div>' +
+                '</div>');
+
+        } else if (chat.role == 2) {
+
+            $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
+                        <div class="card-body response-card">${chat.message}</div>
+                    </div>
+                </div>
+            `);
+
+        } else {
+            //get serialize dataset and load visualization
+            $.ajax({
+                url: base_url + "bot/chatbot/serialize_message",
+                type: 'POST',
+                data: {
+                    chat_id: chat.chat_id,
+                },
+                success: function (response) {
+                    var type_of_visualization = response.type_graph;
+                    var return_chat_id = response.chat_id;
+
+                    //new graph
+
+                    //Bar Graph
+                    if (type_of_visualization === 1) {
+
+                        $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                    </div>
+                </div>
+            `);
+
+                        var xaxis = response.xaxis;
+                        var yaxis = response.yaxis;
+                        new_bar_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                    } else if (type_of_visualization === 2) {
+                        //line graph
+                        $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                    </div>
+                </div>
+            `);
+
+                        var xaxis = response.xaxis;
+                        var yaxis = response.yaxis;
+                        new_line_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                    } else if (type_of_visualization === 3) {
+
+                        //If there are data found
+                        if (response.exist_data === 1) {
+                            $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card">`+ response.table_data + `</div>
+                    </div>
+                </div>
+            `);
+                        } else {
+                            $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: black;">
+                        <div class="card-body response-card">No data found</div>
+                    </div>
+                </div>
+            `);
+                        }
+
+                    } else if (type_of_visualization === 4) {
+                        //line graph
+                        $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                    </div>
+                </div>
+            `);
+                        new_multi_line_graph('canvas' + return_chat_id, response.title, response.dataset, response.label);
+
+                    }
+
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors, if any
+                    $('#conversation_body').append(`
+                    <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                        <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
+                            <div class="card-body response-card">There is an error loading this table or graph</div>
+                        </div>
+                    </div>
+                `);
+
+                }
+            });
+        }
+        resolve();
+      }, 1000);
+    });
+  }
 
 function load_conversation(con_id) {
 
