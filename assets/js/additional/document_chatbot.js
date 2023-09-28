@@ -158,9 +158,9 @@ function open_new_chat() {
         <div class="col-md-4 text-center">
             <i class="fas fa-lightbulb pr-2" style="color:#ffcd0a; font-size: 2.0rem;"></i>
             <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Examples</div>
-            <button type="button" onclick="enter_prompt('Which month in the past 12 months has been the most profitable?')" class="btn btn-outline-dark mb-2">Which month in the past 12 months has been the most profitable?</button><br>
-            <button type="button" onclick="enter_prompt('Name the top 5 highest selling item for the past 5 months')" class="btn btn-outline-dark mb-2">Name the top 5 highest selling item for the past 5 months</button><br>
-            <button type="button" onclick="enter_prompt('Give me a sales report for this month?')" class="btn btn-outline-dark">Give me a sales report for this month?</button>
+            <button type="button" onclick="enter_prompt('What is the company is policy on time off and vacation days?')" class="btn btn-outline-dark mb-2">What is the company's policy on time off and vacation days?</button><br>
+            <button type="button" onclick="enter_prompt('What is the company is code of conduct and expectations for behavior?')" class="btn btn-outline-dark mb-2">What is the company's code of conduct and expectations for behavior?</button><br>
+            <button type="button" onclick="enter_prompt('What are the benefits and compensation policies?')" class="btn btn-outline-dark">What are the benefits and compensation policies?</button>
         </div>
         <div class="col-md-4 text-center">
             <i class="fas fa-bolt pr-2" style="color:#007AFF; font-size: 2.0rem;"></i>

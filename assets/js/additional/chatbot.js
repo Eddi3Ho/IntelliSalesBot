@@ -12,10 +12,183 @@ $(document).ready(function () {
 
     }
 
+    //Sample line chart in user guide
+    var canvas = document.getElementById('line_chart_sample');
+
+    var lineChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: ["Aspirin", "Bandages", "Cough Syrup", "Antibiotics", "Painkillers", "Vitamins"], // X-axis labels
+            datasets: [{
+                label: "Total Sales Earned", // Label for the dataset
+                data: [100, 82, 64, 50, 40, 33], // Y-axis data
+                backgroundColor: 'rgba(59, 117, 242, 0.2)', // Fill color
+                borderColor: 'rgba(59, 117, 242, 1)', // Line color
+                borderWidth: 3, // Line width
+                fill: false,
+                tension: 0,
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Item Name',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Sales Generated',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+            },
+            title: {
+                display: true,
+                text: 'Top 6 best earning item in terms of sales for July 2023',
+                fontSize: 16, // Adjust the font size if needed
+            },
+
+        }
+    });
+
+    //Sample bar chart in user guide
+    var canvas = document.getElementById('bar_chart_sample');
+
+    // Create the bar chart
+    var barChart = new Chart(canvas, {
+        type: 'bar', // Change the chart type to 'bar'
+        data: {
+            labels: ["Aspirin", "Bandages", "Cough Syrup", "Antibiotics", "Painkillers", "Vitamins"], // X-axis labels
+            datasets: [{
+                label: "Total Unit Sold", // Label for the dataset
+                data: [100, 82, 64, 50, 40, 33], // Y-axis data
+                backgroundColor: 'rgba(59, 117, 242, 0.2)', // Bar fill color
+                borderColor: 'rgba(59, 117, 242, 1)', // Bar border color
+                borderWidth: 1, // Bar border width
+            }]
+        },
+        options: {
+
+            y: {
+                beginAtZero: true,
+            },
+            title: {
+                display: true,
+                text: 'Top 6 best-selling category in terms of sales for July 2023', // Replace with your desired chart title
+                fontSize: 16, // Adjust the font size if needed
+            }
+
+        }
+    });
+
+    //Sample multi line chart in user guide
+    var canvas = document.getElementById('multi_line_chart_sample');
+
+    var lineChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May"], // X-axis labels
+            datasets: [
+                {
+                    label: "Aspirin", // Label for the dataset
+                    data: [82, 100, 64, 33, 40], // Y-axis data
+                    backgroundColor: 'rgba(59, 117, 242, 0.2)', // Fill color
+                    borderColor: 'rgba(59, 117, 242, 1)', // Line color
+                    borderWidth: 3, // Line width
+                    fill: false,
+                    tension: 0,
+                },
+                {
+                    label: "Bandages", // Label for the dataset
+                    data: [54, 160, 87, 90, 190], // Y-axis data
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Fill color
+                    borderColor: 'rgba(255, 99, 132, 1)', // Line color
+                    borderWidth: 3, // Line width
+                    fill: false,
+                    tension: 0,
+                },
+                {
+                    label: "Cough Syrup", // Label for the dataset
+                    data: [150, 100, 56, 100, 96], // Y-axis data
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+                    borderColor: 'rgba(75, 192, 192, 1)', // Line color
+                    borderWidth: 3, // Line width
+                    fill: false,
+                    tension: 0,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Item Name',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Sales Generated',
+                        color: '#3b75f2',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+            },
+            title: {
+                display: true,
+                text: 'Sales made by Aspirin, Bandages, Cough Syrup from January 2023 to May 2023',
+                fontSize: 16, // Adjust the font size if needed
+            },
+        }
+    });
+
 });
 
 
 function enter_prompt(text = "default value") {
+
+    //check if user guide is open
+    if ($('#view_item').hasClass('show')) {
+        // Close the modal
+        $('#view_item').modal('hide');
+    }
 
     //Check if user click on recommended prompt
     if (text === "default value") {
@@ -74,7 +247,7 @@ function enter_prompt(text = "default value") {
                     $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                             <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                                <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
                             </div>
                         </div>
                     `);
@@ -88,7 +261,7 @@ function enter_prompt(text = "default value") {
                     $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                             <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                                <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
                             </div>
                         </div>
                     `);
@@ -123,7 +296,7 @@ function enter_prompt(text = "default value") {
                     $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                             <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                                <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                                <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
                             </div>
                         </div>
                     `);
@@ -191,9 +364,9 @@ function open_new_chat() {
         <div class="col-md-4 text-center">
             <i class="fas fa-lightbulb pr-2" style="color:#ffcd0a; font-size: 2.0rem;"></i>
             <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Examples</div>
-            <button type="button" onclick="enter_prompt('Which month in the past 12 months has been the most profitable?')" class="btn btn-outline-dark mb-2">Which month in the past 12 months has been the most profitable?</button><br>
-            <button type="button" onclick="enter_prompt('Name the top 5 highest selling item for the past 5 months')" class="btn btn-outline-dark mb-2">Name the top 5 highest selling item for the past 5 months</button><br>
-            <button type="button" onclick="enter_prompt('Give me a sales report for this month?')" class="btn btn-outline-dark">Give me a sales report for this month?</button>
+            <button type="button" onclick="enter_prompt('Can you give me the top 10 best-selling categories from January 2023 to February 2023?')" class="btn btn-outline-dark mb-2">Can you give me the top 10 best-selling categories from January 2023 to February 2023?</button><br>
+            <button type="button" onclick="enter_prompt('Can you give me the top 5 best-earning items from January 2023 to February 2023 in graph format?')" class="btn btn-outline-dark mb-2">Can you give me the top 5 best-earning items from January 2023 to February 2023 in graph format?</button><br>
+            <button type="button" onclick="enter_prompt('Compare the sales generated by Adezio and Diabetmin from November 2022 to July 2023')" class="btn btn-outline-dark">Compare the sales generated by Adezio and Diabetmin from November 2022 to July 2023</button>
         </div>
         <div class="col-md-4 text-center">
             <i class="fas fa-bolt pr-2" style="color:#007AFF; font-size: 2.0rem;"></i>
@@ -264,11 +437,11 @@ function load_history(con_id) {
             con_id: con_id,
         },
         dataType: "json",
-        success:async function (response) {
+        success: async function (response) {
 
             //set new con_id
             current_con_id = con_id;
-
+            load_conversation(con_id);
             $('#conversation_body').empty();
 
             //append chat history
@@ -277,9 +450,9 @@ function load_history(con_id) {
                 await doSomething(chat);
             }
 
-                
+
             //Close loading pop up
-            load_conversation(con_id);
+            
             swal.close();
 
         },
@@ -294,21 +467,21 @@ function load_history(con_id) {
 
 async function doSomething(chat) {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        
-        if (chat.role == 1) {
+        setTimeout(() => {
 
-            $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
-                '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
-                '        <div class="card-body">' +
-                '            ' + chat.message + '' +
-                '        </div>' +
-                '    </div>' +
-                '</div>');
+            if (chat.role == 1) {
 
-        } else if (chat.role == 2) {
+                $('#conversation_body').append('<div class="row py-2 mr-5 my-1 ml-2">' +
+                    '    <div class="card chatbubble mr-4" style="background-color: #eaeaea; color: black; ">' +
+                    '        <div class="card-body">' +
+                    '            ' + chat.message + '' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>');
 
-            $('#conversation_body').append(`
+            } else if (chat.role == 2) {
+
+                $('#conversation_body').append(`
                 <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                     <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
                         <div class="card-body response-card">${chat.message}</div>
@@ -316,88 +489,88 @@ async function doSomething(chat) {
                 </div>
             `);
 
-        } else {
-            //get serialize dataset and load visualization
-            $.ajax({
-                url: base_url + "bot/chatbot/serialize_message",
-                type: 'POST',
-                data: {
-                    chat_id: chat.chat_id,
-                },
-                success: function (response) {
-                    var type_of_visualization = response.type_graph;
-                    var return_chat_id = response.chat_id;
+            } else {
+                //get serialize dataset and load visualization
+                $.ajax({
+                    url: base_url + "bot/chatbot/serialize_message",
+                    type: 'POST',
+                    data: {
+                        chat_id: chat.chat_id,
+                    },
+                    success: function (response) {
+                        var type_of_visualization = response.type_graph;
+                        var return_chat_id = response.chat_id;
 
-                    //new graph
+                        //new graph
 
-                    //Bar Graph
-                    if (type_of_visualization === 1) {
+                        //Bar Graph
+                        if (type_of_visualization === 1) {
 
-                        $('#conversation_body').append(`
-                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
-                    </div>
-                </div>
-            `);
-
-                        var xaxis = response.xaxis;
-                        var yaxis = response.yaxis;
-                        new_bar_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
-
-                    } else if (type_of_visualization === 2) {
-                        //line graph
-                        $('#conversation_body').append(`
-                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
-                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
-                    </div>
-                </div>
-            `);
-
-                        var xaxis = response.xaxis;
-                        var yaxis = response.yaxis;
-                        new_line_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
-
-                    } else if (type_of_visualization === 3) {
-
-                        //If there are data found
-                        if (response.exist_data === 1) {
                             $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
+                    </div>
+                </div>
+            `);
+
+                            var xaxis = response.xaxis;
+                            var yaxis = response.yaxis;
+                            new_bar_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                        } else if (type_of_visualization === 2) {
+                            //line graph
+                            $('#conversation_body').append(`
+                <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
+                    <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
+                        <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
+                    </div>
+                </div>
+            `);
+
+                            var xaxis = response.xaxis;
+                            var yaxis = response.yaxis;
+                            new_line_graph(xaxis, yaxis, 'canvas' + return_chat_id, response.title, response.label, response.time_frame);
+
+                        } else if (type_of_visualization === 3) {
+
+                            //If there are data found
+                            if (response.exist_data === 1) {
+                                $('#conversation_body').append(`
                 <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                     <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
                         <div class="card-body response-card">`+ response.table_data + `</div>
                     </div>
                 </div>
             `);
-                        } else {
-                            $('#conversation_body').append(`
+                            } else {
+                                $('#conversation_body').append(`
                 <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                     <div class="card shadow chatbubble ml-4" style="background-color: white; color: black;">
                         <div class="card-body response-card">No data found</div>
                     </div>
                 </div>
             `);
-                        }
+                            }
 
-                    } else if (type_of_visualization === 4) {
-                        //line graph
-                        $('#conversation_body').append(`
+                        } else if (type_of_visualization === 4) {
+                            //line graph
+                            $('#conversation_body').append(`
                 <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                     <div class="card shadow chatbubble ml-4" style="background-color: white; color: white;">
-                        <div class="card-body response-card"><canvas width="1500" id="canvas`+ return_chat_id + `"></canvas></div>
+                        <div class="card-body response-card"><canvas width="1000" id="canvas`+ return_chat_id + `"></canvas></div>
                     </div>
                 </div>
             `);
-                        new_multi_line_graph('canvas' + return_chat_id, response.title, response.dataset, response.label);
+                            new_multi_line_graph('canvas' + return_chat_id, response.title, response.dataset, response.label);
 
-                    }
+                        }
 
 
-                },
-                error: function (xhr, status, error) {
-                    // Handle errors, if any
-                    $('#conversation_body').append(`
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors, if any
+                        $('#conversation_body').append(`
                     <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                         <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
                             <div class="card-body response-card">There is an error loading this table or graph</div>
@@ -405,13 +578,13 @@ async function doSomething(chat) {
                     </div>
                 `);
 
-                }
-            });
-        }
-        resolve();
-      }, 1000);
+                    }
+                });
+            }
+            resolve();
+        }, 100);
     });
-  }
+}
 
 function load_conversation(con_id) {
 
@@ -599,37 +772,9 @@ function new_bar_graph(itemSubcategories, itemQuantities, canvas_id, title, labe
             }]
         },
         options: {
-            scales: {
-                x: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Categories',
-                        color: '#911',
-                        font: {
-                            family: 'Comic Sans MS',
-                            size: 20,
-                            weight: 'bold',
-                            lineHeight: 1.2,
-                        },
-                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
-                    }
-                },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Unit Sold',
-                        color: '#191',
-                        font: {
-                            family: 'Times',
-                            size: 20,
-                            style: 'normal',
-                            lineHeight: 1.2
-                        },
-                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
-                    }
-                }
+
+            y: {
+                beginAtZero: true,
             },
             title: {
                 display: true,
@@ -705,8 +850,6 @@ function new_line_graph(item_name, item_sales, canvas_id, title, label, time_fra
 
 function new_multi_line_graph(canvas_id, title, dataset, month_label) {
 
-    console.log(dataset);
-
     var canvas = document.getElementById(canvas_id);
 
     var lineChart = new Chart(canvas, {
@@ -716,37 +859,35 @@ function new_multi_line_graph(canvas_id, title, dataset, month_label) {
             datasets: dataset
         },
         options: {
-            scales: {
-                x: {
+            x: {
+                display: true,
+                title: {
                     display: true,
-                    title: {
-                        display: true,
-                        text: 'Item Name',
-                        color: '#3b75f2',
-                        font: {
-                            family: 'Times',
-                            size: 20,
-                            weight: 'bold',
-                            lineHeight: 1.2,
-                        },
-                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
-                    }
-                },
-                y: {
+                    text: 'Item Name',
+                    color: '#3b75f2',
+                    font: {
+                        family: 'Times',
+                        size: 20,
+                        weight: 'bold',
+                        lineHeight: 1.2,
+                    },
+                    padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                }
+            },
+            y: {
+                display: true,
+                title: {
                     display: true,
-                    title: {
-                        display: true,
-                        text: 'Sales Generated',
-                        color: '#3b75f2',
-                        font: {
-                            family: 'Times',
-                            size: 20,
-                            style: 'normal',
-                            lineHeight: 1.2
-                        },
-                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
-                    }
-                },
+                    text: 'Sales Generated',
+                    color: '#3b75f2',
+                    font: {
+                        family: 'Times',
+                        size: 20,
+                        style: 'normal',
+                        lineHeight: 1.2
+                    },
+                    padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                }
             },
             title: {
                 display: true,

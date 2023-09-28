@@ -158,8 +158,7 @@ if (empty($pdf_files)) {
     <?php endforeach; ?>
 
     var file_upload = <?php echo $file_upload; ?>;
-    var user_role = "<?=$this->session->userdata('user_role')?>";
-
+    var user_role = "<?= $this->session->userdata('user_role') ?>";
 </script>
 
 <body id="page-top">
@@ -176,24 +175,17 @@ if (empty($pdf_files)) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 font-weight-bold" style="color: black">Document Chatbot</h1>
-                    </div>
-
-                    <!-- Breadcrumn -->
+                    <!-- Title -->
                     <div class="row">
-                        <div class="breadcrumb-wrapper col-xl-9">
-                            <ol class="breadcrumb" style="background-color:rgba(0, 0, 0, 0);">
-                                <li class="breadcrumb-item">
-                                    <a href="<?php echo base_url(''); ?>"><i class="fas fa-tachometer-alt pr-2"></i>Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active">Doument Chatbot</li>
-                            </ol>
+                        <div class="col-xl-9">
+                            <!-- Page Heading -->
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 class="h3 font-weight-bold" style="color: black">Document Chatbot</h1>
+                            </div>
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end mb-4">
-                                <a type="button" href="<?= base_url('items/Items/add_item'); ?>" class="btn bluebtn" data-toggle="modal" data-target="#view_item">Upload Files<i class="fas fa-plus pl-2"></i></a>
+                                <a type="button" class="btn bluebtn" data-toggle="modal" data-target="#view_item">Upload Files<i class="fas fa-plus pl-2"></i></a>
                             </div>
                         </div>
                     </div>
@@ -201,27 +193,27 @@ if (empty($pdf_files)) {
                         <i class="fa fa-exclamation-circle warning-icon pl-1"></i> Please provide accurate information to get the best response from the chatbot such as giving examples or specifying the document you are looking for.
                     </div>
                     <!-- Content Row (Start here)-->
-                    <div class="row pt-3" style="padding-bottom: 200px;">
+                    <div class="row pt-3">
                         <div class="col-xl-12">
 
                             <div class="card shadow ">
-                                <div class="card-body" style="min-height: 1000px;">
+                                <div class="card-body" style="min-height: 73vh">
 
                                     <div class="row ">
-                                        <div class="col-xl-2" style="border-right: black;" id="conversation_list">
+                                        <div class="col-xl-2" style="border-right: black;" id="conversation_list" style="max-height: 72vh; overflow-y: auto;">
 
 
                                         </div>
 
-                                        <div class="col-xl-10 px-5" id="conversation_body">
+                                        <div class="col-xl-10 px-5 pb-5 " id="conversation_body" style="max-height: 72vh; overflow-y: auto;">
 
                                             <div class="row justify-content-center py-2 pt-5" id="new_chat_info" style="padding-left: 20%; padding-right:20%">
                                                 <div class="col-md-4 text-center">
                                                     <i class="fas fa-lightbulb pr-2" style="color:#ffcd0a; font-size: 2.0rem;"></i>
                                                     <div class="pb-2" style="font-weight:bold; font-size: 1.2rem;">Examples</div>
-                                                    <button type="button" onclick="enter_prompt('Which month in the past 12 months has been the most profitable?')" class="btn btn-outline-dark mb-2">Which month in the past 12 months has been the most profitable?</button><br>
-                                                    <button type="button" onclick="enter_prompt('Name the top 5 highest selling item for the past 5 months')" class="btn btn-outline-dark mb-2">Name the top 5 highest selling item for the past 5 months</button><br>
-                                                    <button type="button" onclick="enter_prompt('Give me a sales report for this month?')" class="btn btn-outline-dark">Give me a sales report for this month?</button>
+                                                    <button type="button" onclick="enter_prompt('What is the company is policy on time off and vacation days?')" class="btn btn-outline-dark mb-2">What is the company's policy on time off and vacation days?</button><br>
+                                                    <button type="button" onclick="enter_prompt('What is the company is code of conduct and expectations for behavior?')" class="btn btn-outline-dark mb-2">What is the company's code of conduct and expectations for behavior?</button><br>
+                                                    <button type="button" onclick="enter_prompt('What are the benefits and compensation policies?')" class="btn btn-outline-dark">What are the benefits and compensation policies?</button>
                                                 </div>
                                                 <div class="col-md-4 text-center">
                                                     <i class="fas fa-bolt pr-2" style="color:#007AFF; font-size: 2.0rem;"></i>

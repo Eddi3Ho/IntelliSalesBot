@@ -125,6 +125,9 @@ class Chatbot extends CI_Controller
             $data['latest_con_id'] = 0;
             $data['new_chat'] = "yes";
         }
+        $current_month = date('m'); 
+        $current_year = date('Y'); 
+        $data['sales_report_data'] = $this->sales_report_model->select_monthly_sales_report($current_month, $current_year);
 
         $this->load->view('internal_templates/header', $data);
         $this->load->view('internal_templates/sidenav');

@@ -84,7 +84,7 @@ if (!function_exists('generate_function')) {
             ],
             [
                 "name" => "get_top_earning_item_dates",
-                "description" => "Get the top earning item or product in terms of sales generated between two dates",
+                "description" => "Get the top earning item or product in terms of sales generated between two dates specifically in graph format. Only triggers this if user specifically wanted graph format",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
@@ -106,7 +106,7 @@ if (!function_exists('generate_function')) {
             ],
             [
                 "name" => "get_top_earning_items_monthly",
-                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year",
+                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year specifically in graph format. Only triggers this if user specifically wanted graph format",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
@@ -128,7 +128,7 @@ if (!function_exists('generate_function')) {
             ],
             [
                 "name" => "sales_earning_table_dates",
-                "description" => "Get the top earning item or product in terms of sales generated between two dates specifically in table format",
+                "description" => "Get the top earning item or product in terms of sales generated between two dates specifically in table format. Only triggers this if user specifically wanted table format",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
@@ -150,7 +150,7 @@ if (!function_exists('generate_function')) {
             ],
             [
                 "name" => "sales_earning_table_monthly",
-                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year, and specifically in table format",
+                "description" => "Get the top earning item or product in terms of sales generated for a specific month and year, and specifically in table format. Only triggers this if user specifically wanted table format",
                 "parameters" => [
                     "type" => "object",
                     "properties" => [
