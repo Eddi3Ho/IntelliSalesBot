@@ -112,6 +112,10 @@
             <a class="nav-link <?php if ($selected == 'stock') echo 'active'; ?>" href="<?= base_url('items/Items/items_low_on_stock'); ?>">Items Running Low on Stock</a>
         </li>
 
+        <li class="nav-item px-2">
+            <a class="nav-link <?php if ($selected == 'document') echo 'active'; ?>" href="<?= base_url('bot/document/'); ?>">Chatbot</a>
+        </li>
+
         <?php
         //get notification data
         $notifcation_data = $this->items_model->select_all_sorted_items_low_on_stock();

@@ -50,11 +50,19 @@ class Document extends CI_Controller
             $data['new_chat'] = "yes";
         }
 
-        $this->load->view('internal_templates/header', $data);
-        $this->load->view('internal_templates/sidenav');
-        $this->load->view('internal_templates/topbar');
-        $this->load->view('bot/document_view');
-        $this->load->view('internal_templates/footer');
+        if ($this->session->userdata('user_role') == "Admin") {
+            $this->load->view('internal_templates/header', $data);
+            $this->load->view('internal_templates/sidenav');
+            $this->load->view('internal_templates/topbar');
+            $this->load->view('bot/document_view');
+            $this->load->view('internal_templates/footer');
+        }elseif($this->session->userdata('user_role') == "Employee"){
+            $this->load->view('internal_templates/header', $data);
+			$this->load->view('external_templates/topnav');
+            $this->load->view('bot/document_view');
+			$this->load->view('internal_templates/footer');
+        }
+
     }
 
     //=================== Document Management functions ===========================
@@ -171,7 +179,7 @@ class Document extends CI_Controller
         $document_list = $this->document_chatbot_model->get_documents_detail();
 
         foreach ($document_list as $document_row) {
-            $sentence .= 'Document Name: '. $document_row->doc_name. ', Document Content: {'. $document_row->extracted_text.'}\n ';
+            $sentence .= 'Document Name: ' . $document_row->doc_name . ', Document Content: {' . $document_row->extracted_text . '}\n ';
         }
 
         $conversation = array(
@@ -179,7 +187,7 @@ class Document extends CI_Controller
             You are a document analyst that is able to answer question according to the documents content that was extracted from pdf documents. 
             The following are document contents, each document labelled with the documents name and the content for the document is wrap inside a "{}".\n
             The documents are as followed:\n 
-            '.$sentence),
+            ' . $sentence),
         );
 
         // Get chat history if exist
