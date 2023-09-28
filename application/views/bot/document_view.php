@@ -205,7 +205,7 @@ if (empty($pdf_files)) {
         
                                         </div>
 
-                                        <div class="col-xl-10 px-5 pb-5 " id="conversation_body" style="max-height: 72vh; overflow-y: auto;">
+                                        <div class="col-xl-10 px-5" id="conversation_body" style="max-height: 72vh; overflow-y: auto; padding-bottom: 200px;">
 
                                             <div class="row justify-content-center py-2 pt-5" id="new_chat_info" style="padding-left: 20%; padding-right:20%">
                                                 <div class="col-md-4 text-center">
