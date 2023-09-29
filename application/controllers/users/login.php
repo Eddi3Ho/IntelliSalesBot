@@ -17,13 +17,7 @@ class Login extends CI_Controller
          //Dont allow user to access login page
          if ($this->session->userdata('has_login') ){  
 
-            // check user role is  IT
-            if($this->session->userdata('user_role') =="IT")
-            {
-                redirect('items/Items');
-            }
-            // check user role is  Manager
-            else if ($this->session->userdata('user_role')=="Admin")
+            if ($this->session->userdata('user_role')=="Admin")
             {
                 redirect('users/Dashboard/Manager');
             }
@@ -79,7 +73,7 @@ class Login extends CI_Controller
         if($users)
         {
             // verify the password
-            if($user_password==$users['user_password'])
+            if(password_verify($user_password, $users['user_password']))
             {
                 
                 $data=

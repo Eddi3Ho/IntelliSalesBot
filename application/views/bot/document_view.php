@@ -176,7 +176,9 @@ if (empty($pdf_files)) {
                 <div class="container-fluid">
 
                     <!-- Title -->
-                    <div class="row <?php if ($this->session->userdata('user_role') == "Employee") {echo "pt-5";}?>">
+                    <div class="row <?php if ($this->session->userdata('user_role') == "Employee") {
+                                        echo "pt-5";
+                                    } ?>">
                         <div class="col-xl-9">
                             <!-- Page Heading -->
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -185,7 +187,11 @@ if (empty($pdf_files)) {
                         </div>
                         <div class="col-xl-3">
                             <div class="d-flex justify-content-end mb-4">
-                                <a type="button" class="btn bluebtn" data-toggle="modal" data-target="#view_item"><?php if ($this->session->userdata('user_role') == "Admin") {echo 'Upload File <i class="fas fa-plus pl-2"></i>';}else{echo "View Files";}?></a>
+                                <a type="button" class="btn bluebtn" data-toggle="modal" data-target="#view_item"><?php if ($this->session->userdata('user_role') == "Admin") {
+                                                                                                                        echo 'Upload File <i class="fas fa-plus pl-2"></i>';
+                                                                                                                    } else {
+                                                                                                                        echo 'View Files <i class="fas fa-file pl-2"></i>';
+                                                                                                                    } ?></a>
                             </div>
                         </div>
                     </div>
@@ -202,7 +208,7 @@ if (empty($pdf_files)) {
                                     <div class="row ">
                                         <div class="col-xl-2" style="border-right: black;" id="conversation_list" style="max-height: 72vh; overflow-y: auto;">
 
-        
+
                                         </div>
 
                                         <div class="col-xl-10 px-5" id="conversation_body" style="max-height: 72vh; overflow-y: auto; padding-bottom: 200px;">
@@ -270,16 +276,18 @@ if (empty($pdf_files)) {
                                 </div>
                                 <div class="modal-body">
                                     <div id="file_body">
-                                        <div class="px-2 pb-2">
-                                            <div class="warning-bar p-2" style="background-color: #f8f3d6ff; color:#956e30ff; border: 2px solid #ded9bb;">
-                                                <i class="fa fa-exclamation-circle warning-icon pl-1"></i> Please refrain from uploading documents that contain similar content, as it may prevent the chatbot from giving you accurate answer.
+                                        <?php if ($this->session->userdata('user_role') == "Admin") { ?>
+                                            <div class="px-2 pb-2">
+                                                <div class="warning-bar p-2" style="background-color: #f8f3d6ff; color:#956e30ff; border: 2px solid #ded9bb;">
+                                                    <i class="fa fa-exclamation-circle warning-icon pl-1"></i> Please refrain from uploading documents that contain similar content, as it may prevent the chatbot from giving you accurate answer.
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
                                         <div class="row p-2 pb-4">
-                                        <?php if ($this->session->userdata('user_role') == "Admin") {?>
-                                            <div class="col-md-12  text-right">
-                                                <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="background-color: #3b75f2; color:white;">New File<i class="fas fa-plus pl-2"></i></a>
-                                            </div>
+                                            <?php if ($this->session->userdata('user_role') == "Admin") { ?>
+                                                <div class="col-md-12  text-right">
+                                                    <a type="button" onclick="showPdfUploadDialog()" class="btn bluebtn" style="background-color: #3b75f2; color:white;">New File<i class="fas fa-plus pl-2"></i></a>
+                                                </div>
                                             <?php } ?>
                                         </div>
                                         <div class="row" id="file_grid">

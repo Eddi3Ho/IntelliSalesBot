@@ -33,15 +33,15 @@
                                     <img src="<?= base_url('assets/img/intellisalesbot_circle_logo.png');  ?>" width="320rem" height="320rem" alt="IMG">
                                 </div>
 
-                                <form class="user" method="post" action=" <?= base_url('users/login/verify_users'); ?>">
+                                <form class="user" method="post" action=" <?= base_url('users/register'); ?>">
                                     <span class="login100-form-title">
                                         IntelliSalesBot
                                     </span>
 
 
                                     <div class="wrap-input100 validate-input" data-validate="Valid first name is required: ex@abc.xyz">
-                                        <input class="input100" type="text" name="user_first_name" placeholder="First Name" value="" maxlength="255" required>
-                                        <?= form_error('user_first_name', '<small class="text-danger pl-3">', '</small>'); ?>
+                                        <input class="input100" type="text" name="user_fname" placeholder="First Name" value="" maxlength="255" required>
+                                        <?= form_error('user_fname', '<small class="text-danger pl-3">', '</small>'); ?>
                                         <span class="focus-input100"></span>
                                         <span class="symbol-input100">
                                             <i class="fa fa-address-card" aria-hidden="true"></i>
@@ -49,8 +49,8 @@
                                     </div>
 
                                     <div class="wrap-input100 validate-input" data-validate="Valid last name is required: ex@abc.xyz">
-                                        <input class="input100" type="text" name="user_last_name" placeholder="Last Name" value="" maxlength="255" required>
-                                        <?= form_error('user_last_name', '<small class="text-danger pl-3">', '</small>'); ?>
+                                        <input class="input100" type="text" name="user_lname" placeholder="Last Name" value="" maxlength="255" required>
+                                        <?= form_error('user_lname', '<small class="text-danger pl-3">', '</small>'); ?>
                                         <span class="focus-input100"></span>
                                         <span class="symbol-input100">
                                             <i class="fa fa-address-card " aria-hidden="true"></i>
@@ -68,6 +68,15 @@
 
                                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                                         <input class="input100" type="password" name="user_password" placeholder="Password" maxlength="255" required>
+                                        <?= form_error('user_password', '<small class="text-danger pl-3">', '</small>'); ?>
+                                        <span class="focus-input100"></span>
+                                        <span class="symbol-input100">
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                        <input class="input100" type="password" name="confirm_password" placeholder="Confirm Password" maxlength="255" required>
                                         <span class="focus-input100"></span>
                                         <span class="symbol-input100">
                                             <i class="fa fa-lock" aria-hidden="true"></i>
