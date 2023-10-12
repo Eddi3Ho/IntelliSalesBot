@@ -803,8 +803,8 @@ function new_line_graph(item_name, item_sales, canvas_id, title, label, time_fra
                 backgroundColor: 'rgba(59, 117, 242, 0.2)', // Fill color
                 borderColor: 'rgba(59, 117, 242, 1)', // Line color
                 borderWidth: 3, // Line width
-                fill: false,
-                tension: 0,
+                fill: true,
+                tension: 0.4,
             }]
         },
         options: {

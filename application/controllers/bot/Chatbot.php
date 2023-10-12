@@ -717,7 +717,7 @@ class Chatbot extends CI_Controller
                 'borderColor' => $borderColors[$index],
                 'borderWidth' => 3,
                 'tension' => 0,
-                'fill' => false,
+                'fill' => true,
             );
 
             $index++;
