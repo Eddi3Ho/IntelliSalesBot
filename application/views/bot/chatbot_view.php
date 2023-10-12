@@ -176,7 +176,7 @@
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div style="width: 100%;">
-                                                    <canvas id="line_chart_sample"></canvas>
+                                                    <canvas id="bar_chart_sample"></canvas>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +197,7 @@
                                         </div>
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                             <div class="card-body">
-                                                <canvas id="bar_chart_sample"></canvas>
+                                                <canvas id="line_chart_sample"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -234,26 +234,76 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php
-                                                        $counter = 0; // Initialize a counter variable
-
-                                                        foreach ($sales_report_data as $row) {
-                                                            if ($counter >= 10) {
-                                                                break; // Exit the loop after 10 iterations
-                                                            }
-                                                        ?>
-                                                            <tr>
-                                                                <td><?= $counter+1 ?></td>
-                                                                <td><?= $row->item_name ?></td>
-                                                                <td><?= $row->item_subcategory_name ?></td>
-                                                                <td><?= $row->item_total_quantity ?></td>
-                                                                <td><?= $row->item_total_sale ?></td>
-                                                            </tr>
-                                                        <?php
-                                                            $counter++; // Increment the counter variable
-                                                        }
-                                                        ?>
-
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Appeton Multivitamin Lysine With Prebiotics Tablet</td>
+                                                            <td>Health Supplements</td>
+                                                            <td>4</td>
+                                                            <td>200.4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>Amaryl 3mg Tablet</td>
+                                                            <td>Chronic & Long-Term Illness</td>
+                                                            <td>3</td>
+                                                            <td>174</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">3</th>
+                                                            <td>Alpecin Caffeine Hybrid Shampoo</td>
+                                                            <td>Hair Care</td>
+                                                            <td>3</td>
+                                                            <td>108</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">4</th>
+                                                            <td>Blackmores Proceive Care</td>
+                                                            <td>Pregnancy</td>
+                                                            <td>1</td>
+                                                            <td>94.5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">5</th>
+                                                            <td>Flo Sinus Nasal Care Starter Kit</td>
+                                                            <td>Ear & Nasal Care</td>
+                                                            <td>2</td>
+                                                            <td>86.04</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">6</th>
+                                                            <td>Appeton A-Z Kid's Vitamin C Tablet</td>
+                                                            <td>Children Wellness</td>
+                                                            <td>2</td>
+                                                            <td>57</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">7</th>
+                                                            <td>Agrilife Organic Extra Virgin Coconut Oil</td>
+                                                            <td>Health Food</td>
+                                                            <td>2</td>
+                                                            <td>55.4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">8</th>
+                                                            <td>Acetan 100mg Tablet</td>
+                                                            <td>Chronic & Long-Term Illness</td>
+                                                            <td>2</td>
+                                                            <td>55</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">9</th>
+                                                            <td>Clearblue Digital Pregnancy Test</td>
+                                                            <td>Pregnancy</td>
+                                                            <td>1</td>
+                                                            <td>49.6</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">10</th>
+                                                            <td>Appeton Essentials Folic Acid Tablet</td>
+                                                            <td>Pregnancy</td>
+                                                            <td>1</td>
+                                                            <td>43.4</td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
 
@@ -271,7 +321,7 @@
                                             </ul>
                                             <p><strong>Sample Question:</strong></p>
                                             <button class="btn btn-outline-secondary mb-2" onclick="enter_prompt('Compare the sales generated by Adezio, Agrilife and Diabetmin from January 2023 to July 2023')">Compare the sales generated by Adezio, Agrilife and Diabetmin from January 2023 to July 2023</button>
-                                            <button class="btn btn-outline-secondary" onclick="enter_prompt('Compare the sales generated by Adezio and Diabetmin from November 2022 to July 2023')">Compare the sales generated by Adezio and Diabetmin from November 2022 to July 2023</button>
+                                            <button class="btn btn-outline-secondary" onclick="enter_prompt('Compare the unit sold by Adezio and Diabetmin from November 2022 to July 2023')">Compare the unit sold by Adezio and Diabetmin from November 2022 to July 2023</button>
                                         </div>
                                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                             <div class="card-body">

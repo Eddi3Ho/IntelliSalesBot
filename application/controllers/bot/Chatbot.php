@@ -125,8 +125,8 @@ class Chatbot extends CI_Controller
             $data['latest_con_id'] = 0;
             $data['new_chat'] = "yes";
         }
-        $current_month = date('m'); 
-        $current_year = date('Y'); 
+        $current_month = date('m');
+        $current_year = date('Y');
         $data['sales_report_data'] = $this->sales_report_model->select_monthly_sales_report($current_month, $current_year);
 
         $this->load->view('internal_templates/header', $data);
@@ -194,22 +194,45 @@ class Chatbot extends CI_Controller
         $chat_id = $this->chatbot_model->insert_chat($chat_data);
 
         if (method_exists($this, $function_name)) {
-            
+
             //Choosing functions to call
             $arguments = json_decode($gpt_response["arguments"], true);
             //calls function given by gpt and pass the parameters given by gpt
             $response = call_user_func_array([$this, $function_name], array($arguments, $chat_id));
 
-            //Serialize array for visualization data and then save it
-            $serialized_response = serialize($response);
+            #check if there are item missing 
+            $has_null = 0;
 
-            $chat_data =
-                [
-                    'con_id' => $con_id,
-                    'message' => $serialized_response,
-                    'role' => 3,
-                ];
-            $this->chatbot_model->insert_chat($chat_data);
+            if ($response['type_graph'] == 4) {
+                foreach ($response['dataset'] as $data) {
+                    if ($data['label'] === null) {
+                        $has_null = 1;
+                    }
+                }
+            }
+
+            if ($has_null) {
+                $chat_data =
+                    [
+                        'con_id' => $con_id,
+                        'message' => "One or more of the item you requested cannot be found from the inventory",
+                        'role' => 2,
+                    ];
+
+                $this->chatbot_model->insert_chat($chat_data);
+            } else {
+                //Serialize array for visualization data and then save it
+                $serialized_response = serialize($response);
+
+                $chat_data =
+                    [
+                        'con_id' => $con_id,
+                        'message' => $serialized_response,
+                        'role' => 3,
+                    ];
+                $this->chatbot_model->insert_chat($chat_data);
+            }
+
 
             $this->output
                 ->set_content_type('application/json')
@@ -257,7 +280,7 @@ class Chatbot extends CI_Controller
     public function serialize_message()
     {
         $chat_id = $this->input->post('chat_id');
-        
+
         $test_data = $this->chatbot_model->one_chat_row($chat_id);
         $unserialize = unserialize($test_data->message);
 

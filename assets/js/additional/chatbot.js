@@ -236,6 +236,7 @@ function enter_prompt(text = "default value") {
 
                 //Close loading pop up
 
+                console.log(response.message);
                 var type_of_visualization = response.type_graph;
                 var return_chat_id = response.chat_id;
 
@@ -310,6 +311,7 @@ function enter_prompt(text = "default value") {
 
             },
             error: function (xhr, status, error) {
+                console.log("test");
                 $('#conversation_body').append(`
                         <div class="row py-2 ml-5 my-1 mr-2 justify-content-end">
                             <div class="card chatbubble ml-4" style="background-color: #3b75f2; color: white;">
