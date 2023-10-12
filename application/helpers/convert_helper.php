@@ -1,46 +1,63 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// require_once base_url('vendor/autoload.php');
 require_once FCPATH . 'vendor/autoload.php';
 
 use \ConvertApi\ConvertApi;
 
-function convertFileToPdf($file_name)
+class ConvertApiHelper
 {
-    $file_path = FCPATH . 'assets/files/'.$file_name.'.pdf';
-    $savePath = FCPATH . 'assets/text_file/'; // Use FCPATH to specify the project's root directory
+    private static $instance; // Singleton instance
+    private $apiSecret;
 
-    ConvertApi::setApiSecret('vnBLdz401oQwK5Mr');
-    // $result = ConvertApi::convert('pdf', ['File' => $filePath]);
-    $result = ConvertApi::convert(
-        'txt',
-        [
-            // 'File' => base_url('assets/files/'. $file_name . '.php' ),
-            'File' => $file_path,
-        ],
-        'pdf'
-    );
-    // return $result->getFile()->getContents();
-    $result->saveFiles($savePath);
-    // $result->getFile()->save(base_url('assets/text_file'));
+    private function __construct()
+    {
+        $this->apiSecret = 'vnBLdz401oQwK5Mr'; 
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function convertFileToPdf($file_name)
+    {
+        $file_path = FCPATH . 'assets/files/' . $file_name . '.pdf';
+        $savePath = FCPATH . 'assets/text_file/';
+
+        ConvertApi::setApiSecret($this->apiSecret);
+
+        $result = ConvertApi::convert(
+            'txt',
+            [
+                'File' => $file_path,
+            ],
+            'pdf'
+        );
+
+        $result->saveFiles($savePath);
+    }
+
+    public function convertGetThumbnail($file_name)
+    {
+        $file_path = FCPATH . 'assets/files/' . $file_name . '.pdf';
+        $savePath = FCPATH . 'assets/thumbnail/';
+
+        ConvertApi::setApiSecret($this->apiSecret);
+
+        $result = ConvertApi::convert(
+            'png',
+            [
+                'File' => $file_path,
+                'PageRange' => '1',
+            ],
+            'pdf'
+        );
+
+        $result->saveFiles($savePath);
+    }
 }
 
-function convertGetThumbnail($file_name)
-{
-    $file_path = FCPATH . 'assets/files/'.$file_name.'.pdf';
-    $savePath = FCPATH . 'assets/thumbnail/';
-
-    ConvertApi::setApiSecret('vnBLdz401oQwK5Mr');
-    $result = ConvertApi::convert(
-        'png',
-        [
-            // 'File' => base_url('assets/files/'. $file_name . '.php' ),
-            'File' => $file_path,
-            'PageRange' => '1',
-        ],
-        'pdf'
-    );
-    // return $result->getFile()->getContents();
-    $result->saveFiles($savePath);
-}

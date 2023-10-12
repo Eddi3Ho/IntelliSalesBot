@@ -126,9 +126,12 @@ class Document extends CI_Controller
     public function convert_pdf_txt($file_name)
     {
         //Convert pdf to txt file using api
-        convertFileToPdf($file_name);
-        //Get thumbnail(png image file) using api
-        convertGetThumbnail($file_name);
+        $convertApiHelper = ConvertApiHelper::getInstance();
+        $convertApiHelper->convertFileToPdf($file_name);
+        $convertApiHelper->convertGetThumbnail($file_name);
+        // convertFileToPdf($file_name);
+        // //Get thumbnail(png image file) using api
+        // convertGetThumbnail($file_name);
 
         $file_path = FCPATH . 'assets/text_file/' . $file_name . '.txt';
         $file_contents = read_file($file_path);
