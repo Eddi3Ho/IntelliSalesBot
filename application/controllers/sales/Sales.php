@@ -103,8 +103,6 @@ class Sales extends CI_Controller
 		$sale_item_discount = $this->input->post('sale_item_discount');
 		$sale_item_total_price = $this->input->post('sale_item_price');
 
-		// echo $this->input->post('sale_total_price');
-		// die;
 		//if there are no item added
 		if ($this->input->post('sale_total_price') == 0) {
 			$this->session->set_userdata('no_item_message', '<div id = "alert_message" class="alert alert-danger px-4" role="alert">No item selected, please try again</div>');
@@ -274,7 +272,7 @@ class Sales extends CI_Controller
 				[
 					'sale_total_price' => htmlspecialchars($this->input->post('sale_total_price')),
 					'sale_discounted_price' => htmlspecialchars($this->input->post('sale_discounted_price')),
-					'user_id' => 1,
+					'user_id' => $this->session->userdata('user_id'),
 				];
 
 			$this->sales_model->update_sale($data, $sale_id);

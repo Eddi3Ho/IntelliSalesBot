@@ -169,15 +169,7 @@ class Document extends CI_Controller
         //con_id can be 0 which means its new
         $con_id = $this->input->post('con_id');
 
-        //Set up conversation history
-        // $conversation = array();
-
         $sentence = "";
-
-        // $conversation[] = array(
-        //     'role' => 'user',
-        //     'content' => $sentence
-        // );
 
         $document_list = $this->document_chatbot_model->get_documents_detail();
 
@@ -219,11 +211,6 @@ class Document extends CI_Controller
             'content' => $prompt
         );
 
-        //======================= Need to change ========================
-        // $user_prompt = "";
-        // foreach ($conversation as $conversation) {
-        //     $user_prompt .= $conversation['role'] . ": " . $conversation['content'] . "\n";
-        // }
 
         $gpt_response = generate_text($conversation);
 

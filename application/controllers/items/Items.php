@@ -215,10 +215,6 @@ class Items extends CI_Controller
         $data['item_categories_data'] = $this->items_model->select_all_item_categories();
         $data['selected'] = 'items';
 
-        //var_dump($item_id);
-        //die;
-        // var_dump($this->items_model->select_item($item_id)); 
-        // die;
 		$this->load->view('internal_templates/header', $data);
         $this->load->view('internal_templates/sidenav');
         $this->load->view('internal_templates/topbar');
