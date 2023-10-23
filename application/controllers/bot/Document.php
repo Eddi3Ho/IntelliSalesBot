@@ -115,8 +115,7 @@ class Document extends CI_Controller
             }
         } else {
             // File upload failed
-            $error = $this->upload->display_errors();
-            echo $error; // Display error message
+            $response = $this->upload->display_errors();
         }
 
         header('Content-Type: application/json');
